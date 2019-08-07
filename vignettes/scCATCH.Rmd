@@ -46,7 +46,7 @@ Evidence-based score and annotation for each cluster generated from `findmarkerg
 The data.frame containing marker genes and the corresponding expressed cells percentage and average fold change for each cluster from the output of `findmarkergenes`.
 
 ### `species`
-The specie of cells. Select 'Human' or 'Mouse'.
+The species of cells. Select 'Human' or 'Mouse'.
 
 ### `tissue`
 The tissue origin of cells. Select one or more related tissue types in Details.
