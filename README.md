@@ -6,7 +6,7 @@ Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale
 
 # Usage
 
-`library(sxtest)`
+`library(scCATCH)`
 
 __1. Cluster marker genes identification.__
 `findmarkergenes(object, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05)`
