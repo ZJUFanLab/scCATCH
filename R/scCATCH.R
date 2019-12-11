@@ -18,7 +18,8 @@ scCATCH <- function(object, species, tissue) {
     # cellmarkers matching species tissue
     cell_markers1 <- cellmarkers[cellmarkers$speciesType %in% species & cellmarkers$tissueType %in%
         tissue, ]
-
+    cell_markers1<- cell_markers1[cell_markers1$cellType == 'Normal cell',]
+    
     # geneinfo matching species
     humangeneinfo <- geneinfo[geneinfo$species == species, ]
 
