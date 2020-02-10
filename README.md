@@ -56,3 +56,5 @@ clu_ann <- scCATCH(clu_markers, 'Mouse', c('Kidney','Fetal liver'))
 ```
 # Contributors
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
+# How to cite
+Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://doi.org/10.1016/j.isci.2020.100882)
