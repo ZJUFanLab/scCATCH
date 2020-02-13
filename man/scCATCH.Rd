@@ -4,26 +4,358 @@
 \alias{scCATCH}
 \title{Evidence-based score and annotation for each cluster}
 \usage{
-scCATCH(object, species, tissue)
+scCATCH(object, species = NULL, cancer = NULL, tissue = NULL)
 }
 \arguments{
-\item{object}{The data.frame containing marker genes and the corresponding expressed cells percentage and average fold change for each cluster from the output of \code{\link{findmarkergenes}}.}
+\item{object}{The data.frame containing potential marker genes and the corresponding expressed cells percentage and average fold change for each cluster from the output of \code{\link{findmarkergenes}}.}
 
 \item{species}{The specie of cells.'Human' or 'Mouse'.}
 
-\item{tissue}{The tissue origin of cells. Select one or more related tissue types in Details}
+\item{cancer}{If the sample is from cancer tissue and you want to match cell marker genes of cancer tissues in CellMatch, then the cancer type may be defined. Select one or more related cancer types in 1.2 of \strong{Details} for human and 2.2 of \strong{Details} for mouse. The dafult is NULL for tissues without cancer.}
+
+\item{tissue}{The tissue origin of cells. Select one or more related tissue types in \strong{Details}. For tissues without cancer, please refer to 1.1 of \strong{Details} for human tissue types and 2.1 of \strong{Details} for mouse tissue types. For tissues with cancer, please refer to 1.2 of \strong{Details} for human tissue types and 2.2 of \strong{Details} for mouse tissue types.}
 }
 \value{
 A data.frame containing matched cell type for each cluster, related marker genes, evidence-based score and PMID.
 }
 \description{
-Evidence-based score and annotation for each cluster generated from \code{\link{findmarkergenes}} by matching the marker genes with known cell markers in tissue-specific cell taxonomy reference database.
+Evidence-based score and annotation for each cluster by matching the potential marker genes generated from \code{\link{findmarkergenes}} with known cell marker genes in tissue-specific cell taxonomy reference database (CellMatch).
 }
 \details{
-\strong{For human}, tissue include Abdominal adipose tissue, Adipose tissue, Adrenal gland, Adventitia, Airway epithelium, Alveolus, Amniotic fluid, Amniotic membrane, Antecubital vein, Anterior cruciate ligament, Artery, Ascites, Bladder, Blood, Blood vessel, Bone, Bone marrow, Brain, Breast, Bronchoalveolar system, Brown adipose tissue, Cartilage, Chorionic villus, Colon, Colorectum, Cornea, Corneal endothelium, Corneal epithelium, Corpus luteum, Deciduous tooth, Dental pulp, Dermis, Dorsolateral prefrontal cortex, Embryo, Embryoid body, Embryonic brain, Embryonic prefrontal cortex, Embryonic stem cell, Endometrium, Endometrium stroma, Epithelium, Esophagus, Eye, Fat pad, Fetal brain, Fetal gonad, Fetal kidney, Fetal liver, Fetal pancreas, Foreskin, Gastric corpus, Gastric epithelium, Gastric gland, Gastrointestinal tract, Germ, Gingiva, Gonad, Gut, Hair follicle, Heart, Hippocampus, Inferior colliculus, Intervertebral disc, Intestinal crypt, Intestine, Jejunum, Kidney, Lacrimal gland, Large intestine, Laryngeal squamous epithelium, Ligament, Limbal epithelium, Liver, Lung, Lymph, Lymph node, Lymphoid tissue, Mammary epithelium, Meniscus, Midbrain, Molar, Muscle, Myocardium, Myometrium, Nasal concha, Nasal epithelium, Nucleus pulposus, Optic nerve, Oral mucosa, Osteoarthritic cartilage, Ovarian cortex, Ovarian follicle, Ovary, Oviduct, Pancreas, Pancreatic acinar tissue, Pancreatic islet, Periodontal ligament, Periosteum, Peripheral blood, Placenta, Plasma, Pluripotent stem cell, Premolar, Primitive streak, Prostate, Pyloric gland, Renal glomerulus, Retina, Retinal pigment epithelium, Salivary gland, Scalp, Sclerocorneal tissue, Seminal plasma, Serum, Sinonasal mucosa, Skeletal muscle, Skin, Small intestinal crypt, Small intestine, Spinal cord, Spleen, Splenic red pulp, Sputum, Stomach, Subcutaneous adipose tissue, Submandibular gland, Sympathetic ganglion, Synovial fluid, Synovium, Testis, Thymus, Thyroid, Tonsil, Tooth, Umbilical cord, Umbilical cord blood, Umbilical vein, Undefined, Urine, Uterus, Vagina, Venous blood, Visceral adipose tissue, Vocal fold, Whartons jelly, White adipose tissue;
-\strong{For Mouse}, Adipose tissue, Aorta, Artery, Basilar membrane, Bladder, Blood, Blood vessel, Bone, Bone marrow, Brain, Bronchiole, Carotid artery, Cerebellum, Cochlea, Colon, Colon epithelium, Corneal epithelium, Dermis, Embryo, Embryoid body, Embryonic heart, Embryonic stem cell, Epidermis, Epithelium, Esophagus, Eye, Fetal liver, Ganglion cell layer of retina, Gastrointestinal tract, Gonad, Hair follicle, Heart, Heart muscle, Hippocampus, Ileum, Inner Ear, Inner nuclear layer of retina, Intestinal crypt, Intestine, Kidney, Lacrimal gland, Liver, Lung, Lymph node, Lymphoid tissue, Mammary epithelium, Mammary gland, Meniscus, Mesenteric lymph node, Mesonephros, Muscle, Neural tube, Ovary, Pancreas, Pancreatic islet, Peripheral blood, Peritoneal cavity, Peyer patch, Prostate, Retina, Serum, Skeletal muscle, Skin, Small intestine, Spinal cord, Spleen, Stomach, Submandibular gland, Taste bud, Testis, Thymus, Trachea, Umbilical cord, Umbilical cord blood, Undefined, White adipose tissue, Yolk sac.
+\strong{1.1} For \strong{Human} tissue, tissue types are listed as follows:
+
+\strong{Adipose tissue-related}: Abdominal adipose tissue; Adipose tissue; Brown adipose tissue; Fat pad; Subcutaneous adipose tissue; Visceral adipose tissue; White adipose tissue.
+
+\strong{Bladder-related}: Bladder; Urine.
+
+\strong{Blood-related}: Blood; Peripheral blood; Plasma; Serum; Umbilical cord blood; Venous blood.
+
+\strong{Bone-related}: Anterior cruciate ligament; Bone; Bone marrow; Cartilage; Intervertebral disc; Meniscus; Nucleus pulposus; Osteoarthritic cartilage; Periosteum; Skeletal muscle; Spinal cord; Synovial fluid; Synovium.
+
+\strong{Brain-related}: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain.
+
+\strong{Breast-related}: Breast; Mammary epithelium.
+
+\strong{Embryo-related}: Embryo; Embryoid body; Embryonic brain; Embryonic prefrontal cortex; Embryonic stem cell; Germ; Primitive streak.
+
+\strong{Esophagus-related}: Esophagus.
+
+\strong{Eye-related}: Cornea; Corneal endothelium; Corneal epithelium; Eye; Lacrimal gland; Limbal epithelium; Optic nerve; Retina; Retinal pigment epithelium; Sclerocorneal tissue.
+
+\strong{Fetus-related}: Amniotic fluid; Amniotic membrane; Fetal brain; Fetal gonad; Fetal kidney; Fetal liver; Fetal pancreas; Placenta; Umbilical cord; Umbilical cord blood; Umbilical vein.
+
+\strong{Gonad-related}: Corpus luteum; Fetal gonad; Foreskin; Gonad; Ovarian cortex; Ovarian follicle; Ovary; Seminal plasma; Testis.
+
+\strong{Hair-related}: Chorionic villus; Hair follicle; Scalp.
+
+\strong{Heart-related}: Heart; Myocardium.
+
+\strong{Intestine-related}: Colon; Colorectum; Gastrointestinal tract; Gut; Intestinal crypt; Intestine; Jejunum; Large intestine; Small intestinal crypt; Small intestine.
+
+\strong{Kidney-related}: Adrenal gland; Fetal kidney; Kidney; Renal glomerulus.
+
+\strong{Liver-related}: Fetal liver; Liver.
+
+\strong{Lung-related}:Airway epithelium; Alveolus; Bronchoalveolar system; Lung.
+
+\strong{Lymph-related}: Lymph; Lymph node; Lymphoid tissue.
+
+\strong{Muscle-related}: Muscle; Skeletal muscle.
+
+\strong{Nose-related}: Nasal concha; Nasal epithelium; Sinonasal mucosa.
+
+\strong{Oral cavity-related}: Laryngeal squamous epithelium; Oral mucosa; Salivary gland; Sputum; Submandibular gland; Thyroid; Tonsil; Vocal fold.
+
+\strong{Ovary-related}: Corpus luteum; Ovarian cortex; Ovarian follicle; Ovary; Oviduct.
+
+\strong{Pancreas-related}: Fetal pancreas; Pancreas; Pancreatic acinar tissue; Pancreatic islet.
+
+\strong{Prostate-related}: Prostate.
+
+\strong{Skin-related}: Dermis; Skin.
+
+\strong{Spleen-related}: Spleen; Splenic red pulp.
+
+\strong{Stomach-related}: Gastric corpus; Gastric epithelium; Gastric gland; Gastrointestinal tract; Pyloric gland; Stomach.
+
+\strong{Testis-related}: Testis.
+
+\strong{Tooth-related}: Deciduous tooth; Dental pulp; Gingiva; Molar; Periodontal ligament; Premolar; Tooth.
+
+\strong{Uterus-related}: Endometrium; Endometrium stroma; Myometrium; Uterus.
+
+\strong{Vessel-related}: Adventitia; Antecubital vein; Artery; Blood vessel; Umbilical vein.
+
+\strong{Others}: Ascites; Epithelium; Ligament; Pluripotent stem cell; Thymus; Whartons jelly.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\strong{1.2} For \strong{Human} tissue about cancer, cancer types and the corresponding tissue types are listed as follows:
+
+Acute Myelogenous Leukemia: Blood.
+
+Acute Myeloid Leukemia: Bone marrow.
+
+Adenoid Cystic Carcinoma: Salivary gland.
+
+Alveolar Cell Carcinoma: Serum.
+
+Astrocytoma: Brain.
+
+B-Cell Lymphoma: Lymphoid tissue.
+
+Bladder Cancer: Bladder.
+
+Brain Cancer: Blood vessel; Brain.
+
+Breast Cancer: Blood: Breast; Mammary gland.
+
+Cholangiocarcinoma: Liver; Serum.
+
+Chronic Lymphocytic Leukemia: Blood.
+
+Chronic Myeloid Leukemia: Blood.
+
+CNS Primitive Neuroectodermal Tumor: Brain.
+
+Colon Cancer: Blood; Colon; Serum.
+
+Colorectal Cancer: Blood; Colon; Colorectum; Gastrointestinal tract; Intestine; Liver; Lung; Venous blood.
+
+Cutaneous Squamous Cell Carcinoma: Skin.
+
+Endometrial Cancer: Endometrium.
+
+Ependymoma: Brain.
+
+Esophageal Adenocarcinoma: Esophagus.
+
+Fibroid: Myometrium.
+
+Follicular Lymphoma: Lymph node.
+
+Gallbladder Cancer: Gall bladder; Gastrointestinal tract.
+
+Gastric Cancer: Blood; Peripheral blood; Serum; Stomach.
+
+Glioblastoma: Blood; Brain.
+
+Glioma: Blood vessel; Brain.
+
+Gonadoblastoma: Embryo.
+
+Head and Neck Cancer: Blood; Brain; Oral cavity.
+
+Hepatoblastoma: Liver.
+
+Hepatocellular Cancer: Blood; Bone marrow; Embryo; Liver.
+
+High-grade glioma: Brain.
+
+Infantile Hemangiomas: Placenta.
+
+Intestinal Cancer: Gastrointestinal tract.
+
+Intracranial Aneurysm: Brain.
+
+Kaposi's Sarcoma: Lymph node.
+
+Larynx Cancer: Larynx.
+
+Leukemia: Bone marrow; Peripheral blood.
+
+Lipoma: Adipose tissue.
+
+Liver Cancer: Blood; Liver.
+
+Lung Adenocarcinoma: Lung.
+
+Lung Cancer: Blood; Lung.
+
+Lung Squamous Cell Carcinoma: Lung.
+
+Lymphoma: Blood; Brain; Kidney; Liver; Lymph; Lymph node.
+
+Malignant Insulinoma: Pancreas.
+
+Malignant Mesothelioma: Lung; Pleura.
+
+Malignant Peripheral Nerve Sheath Tumor: Brain.
+
+Medulloblastoma: Brain.
+
+Melanoma: Blood; Peripheral blood; Skin.
+
+Mucoepidermoid Carcinoma: Salivary gland.
+
+Multiple Myeloma: Bone marrow; Peripheral blood.
+
+Myeloma: Bone marrow.
+
+Natural Killer Cell Lymphoma: Lymph node.
+
+Nephroblastoma: Kidney.
+
+Non-Small Cell Lung Cancer: Blood; Lung; Peripheral blood.
+
+Oesophageal Cancer: Blood.
+
+Oligodendroglioma: Brain.
+
+Oral Cancer: Oral cavity.
+
+Oral Squamous Cell Carcinoma: Oral cavity; Peripheral blood.
+
+Osteosarcoma: Bone.
+
+Ovarian Cancer: Ascites; Ovarian cortex; Ovary; Peripheral blood.
+
+Pancreatic Cancer: Blood vessel; Pancreas.
+
+Pancreatic Ductal Adenocarcinomas: Pancreas.
+
+Papillary Thyroid Carcinoma: Thyroid.
+
+Prostate Cancer: Blood; Peripheral blood; Prostate.
+
+Renal Cell Carcinoma: Kidney; Serum.
+
+Renal Clear Cell Carcinoma: Lymph node.
+
+Retinoblastoma: Eye.
+
+Salivary Gland Tumor: Parotid gland; Salivary gland.
+
+Sarcoma: Muscle.
+
+Small Cell Lung Cancer: Lung.
+
+Testicular Germ Cell Tumor: Peripheral blood; Testis.
+
+Thyroid Cancer: Thyroid.
+
+Tongue Cancer: Tongue.
+
+Uterine Leiomyoma: Uterus.
+
+Vascular Tumour: Lymph node.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\strong{2.1} For \strong{Mouse} tissue, tissue types are listed as follows:
+
+\strong{Adipose tissue-related}: Adipose tissue; White adipose tissue.
+
+\strong{Bladder-related}: Bladder.
+
+\strong{Blood-related}: Blood; Peripheral blood; Serum; Umbilical cord blood.
+
+\strong{Bone-related}: Bone; Bone marrow; Meniscus; Skeletal muscle; Spinal cord.
+
+\strong{Brain-related}: Brain; Cerebellum; Fetal brain; Hippocampus; Neural tube.
+
+\strong{Breast-related}: Mammary epithelium; Mammary gland.
+
+\strong{Calvaria-related}: Calvaria.
+
+\strong{Ear-related}: Cochlea; Inner Ear.
+
+\strong{Embryo-related}: Embryo; Embryoid body; Embryonic heart; Embryonic stem cell.
+
+\strong{Esophagus-related}: Esophagus.
+
+\strong{Eye-related}: Corneal epithelium; Eye; Ganglion cell layer of retina; Inner nuclear layer of retina; Lacrimal gland; Retina.
+
+\strong{Fetus-related}: Fetal brain; Fetal intestine; Fetal liver; Fetal lung; Fetal stomach; Placenta; Umbilical cord; Umbilical cord blood.
+
+\strong{Gonad-related}: Gonad; Ovary; Testis; Yolk sac.
+
+\strong{Hair-related}: Hair follicle.
+
+\strong{Heart-related}: Embryonic heart; Heart; Heart muscle; Neonatal heart.
+
+\strong{Intestine-related}: Colon; Colon epithelium; Fetal intestine; Gastrointestinal tract; Ileum; Intestinal crypt; Intestine; Mesenteric lymph node; Small intestine.
+
+\strong{Kidney-related}: Kidney; Mesonephros.
+
+\strong{Liver-related}: Fetal liver; Liver.
+
+\strong{Lung-related}: Bronchiole; Fetal lung; Lung; Trachea.
+
+\strong{Lymph-related}: Lymph node; Lymphoid tissue; Mesenteric lymph node; Peyer patch.
+
+\strong{Muscle-related}: Heart muscle; Muscle; Neonatal muscle; Skeletal muscle.
+
+\strong{Neonate-related}: Neonatal calvaria; Neonatal heart; Neonatal muscle; Neonatal pancreas; Neonatal rib; Neonatal skin.
+
+\strong{Oral cavity-related}: Submandibular gland; Taste bud.
+
+\strong{Ovary-related}: Ovary; Yolk sac.
+
+\strong{Pancreas-related}: Neonatal pancreas; Pancreas; Pancreatic islet.
+
+\strong{Prostate-related}: Prostate.
+
+\strong{Skin-related}: Dermis; Epidermis; Neonatal skin; Skin.
+
+\strong{Spleen-related}: Spleen.
+
+\strong{Stomach-related}: Fetal stomach; Gastrointestinal tract; Stomach.
+
+\strong{Testis-related}: Testis.
+
+\strong{Uterus-related}: Uterus.
+
+\strong{Vessel-related}: Aorta; Artery; Blood vessel; Carotid artery.
+
+\strong{Others}: Basilar membrane; Epithelium; Peritoneal cavity; Thymus.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\strong{2.2} For \strong{Mouse} tissue about cancer, cancer types and the corresponding tissue types are listed as follows:
+
+Breast Cancer: Lymph node; Breast; Lung.
+
+Chronic Myeloid Leukemia: Blood.
+
+Colon Cancer: Colon.
+
+Colorectal Cancer: Lymph node; Colon; Colorectum.
+
+Cutaneous Squamous Cell Carcinoma: Skin.
+
+Hepatocellular Cancer: Blood; Liver.
+
+Liver Cancer: Liver.
+
+Lung Cancer: Lung.
+
+Melanoma: Lung.
+
+Pancreatic Cancer: Blood.
+
+Papillary Thyroid Carcinoma: Thyroid.
+
+Prostate Cancer: Prostate.
+
+Renal Cell Carcinoma: Kidney.
+
+Supratentorial Primitive Neuroectodermal Tumor: Brain.
+\url{https://github.com/ZJUFanLab/scCATCH}
 }
 \examples{
-clu_markers <- findmarkergenes(mouse_kidney_203_Seurat, 0.25, 0.25, 0.05)
-clu_ann <- scCATCH(clu_markers, 'Mouse', 'Kidney')
+clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat, species = 'Mouse')
+clu_annotation <- scCATCH(object = clu_markers$clu_markers,
+                          species = 'Mouse',
+                          tissue = 'Kidney')
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
+                               species = 'Mouse',
+                               cluster = c('1','2'),
+                               match_CellMatch = TRUE,
+                               tissue = c('Kidney','Mesonephros'))
+clu_annotation <- scCATCH(object = clu_markers$clu_markers,
+                          species = 'Mouse',
+                          tissue = c('Kidney','Mesonephros'))
 }

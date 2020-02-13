@@ -1,5 +1,18 @@
-# scCATCH
-Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale transcriptional characterization of thousands of cells in multiple complex tissues, in which accurate cell type identification becomes the prerequisite and vital step for scRNA-seq studies. Currently, the common practice in cell type annotation is to map the highly expressed marker genes with known cell markers manually based on the identified clusters, which requires the priori knowledge and tends to be subjective on the choice of which marker genes to use. Besides, such manual annotation is usually time-consuming. To address these problems, we introduce a single cell Cluster-based auto-Annotation Toolkit for Cellular Heterogeneity (scCATCH) from cluster marker genes identification to cluster annotation based on evidence-based score by matching the marker genes with known cell markers in tissue-specific cell taxonomy reference database. The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automated annotation for each identified clusters. 
+# Updated scCATCH 2.0
+Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale transcriptional characterization of thousands of cells in multiple complex tissues, in which accurate cell type identification becomes the prerequisite and vital step for scRNA-seq studies. Currently, the common practice in cell type annotation is to map the highly expressed marker genes with known cell markers manually based on the identified clusters, which requires the priori knowledge and tends to be subjective on the choice of which marker genes to use. Besides, such manual annotation is usually time-consuming.
+
+To address these problems, we introduce a single cell Cluster-based auto-Annotation Toolkit for Cellular Heterogeneity (scCATCH) from cluster marker genes identification to cluster annotation based on evidence-based score by matching the identified potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
+
+<font color=orange>CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, 20,792 cell-specific marker genes and 2,097 references of human and mouse.</font>
+
+The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automatic annotation for each identified cluster. 
+
+For more information, please refer to our work: Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://doi.org/10.1016/j.isci.2020.100882).
+
+# News
+<font size = 3>1. scCATCH can be used to annotate scRNA-seq data from __tissue with cancer.__</font>
+
+<font size = 3>2. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
 
 # Install
 `devtools::install_github('ZJUFanLab/scCATCH')`
@@ -8,13 +21,39 @@ Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale
 
 `library(scCATCH)`
 
-__1. Cluster marker genes identification.__
-`findmarkergenes(object, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05)`
+<font size=5>1. Cluster marker genes identification.</font>
 
-Identify marker genes for each cluster from a Seurat object (>= 3.0.0) after log10 normaliztion and cluser analysis. The marker gene in each cluster is identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a cluster marker gene.
+```(r)
+clu_markers <- findmarkergenes(object,
+                               species = NULL,
+                               cluster = 'All',
+                               match_CellMatch = FALSE,
+                               cancer = NULL,
+                               tissue = NULL,
+                               cell_min_pct = 0.25,
+                               logfc = 0.25,
+                               pvalue = 0.05)
+```
+
+Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after log10 normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in Jan. 10, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes will be removed.
 
 `object` 
-Seurat object (>= 3.0.0) after log10 normalization and cluster analysis.
+Seurat object (>= 3.0.0) after log10 normalization and cluster analysis. <font color=red>Please ensure data is log10 normalized data and data has been clustered before running scCATCH pipeline.</font>
+
+`species`
+The specie of cells. The species must be defined. 'Human' or 'Mouse'.
+
+`cluster`
+Select which clusters for potential marker genes identification. e.g. '1', '2', etc. The default is 'All' to find potential makrer genes for each cluster.
+
+`match_CellMatch`
+For large datasets containg > 10,000 cells or > 15 clusters, it is strongly recommended to set match_CellMatch 'TRUE' to match CellMatch database first to include potential marker genes in terms of large system memory it may take.
+
+`cancer`
+If match_CellMatch is set TRUE and the sample is from cancer tissue, then the cancer type may be defined. Select one or more related cancer types in 3.2 of Details for human and 3.2 of Details for mouse. The dafult is NULL for tissues without cancer.
+
+`tissue`
+If match_CellMatch is set TRUE, then the tissue origin of cells must be defined. Select one or more related tissue types in Details. For tissues without cancer, please refer to 3.1.1 of Details for human tissue types and 3.2.1 of Details for mouse tissue types. For tissues with cancer, please refer to 3.1.2 of Details for human tissue types and 3.2.2 of Details for mouse tissue types.
 
 `cell_min_pct`
 Include the gene detected in at least this many cells in each cluster. Default is 0.25.
@@ -25,10 +64,21 @@ Include the gene with at least this fold change of average gene expression compa
 `pvalue`
 Include the significantly highly expressed gene with this cutoff of p value from wilcox test compared to every other clusters. Default is 0.05.
 
-__2. Cluster annotation__
-`scCATCH(object, species, tissue)`
+<font size=4>Output</font>
 
-Evidence-based score and annotation for each cluster generated from `findmarkergenes` by matching the marker genes with known cell markers in tissue-specific cell taxonomy reference database.
+`clu_markers` 
+A list include a new data matrix wherein genes are revised by official gene symbols according to NCBI Gene symbols (updated in Jan. 10, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes are removed as well as a data.frame containing potential marker genes of each selected cluster and the corresponding expressed cells percentage and average fold change for each cluster.
+
+<font size=5>2. Cluster annotation</font>
+
+```(r)
+clu_ann <- scCATCH(object,
+                   species = NULL,
+                   cancer = NULL,
+                   tissue = NULL)
+```
+
+Evidence-based score and annotation for each cluster by matching the potential marker genes generated from `findmarkergenes` with known cell marker genes in tissue-specific cell taxonomy reference database (CellMatch).
 
 `object` 
 The data.frame containing marker genes and the corresponding expressed cells percentage and average fold change for each cluster from the output of `findmarkergenes`.
@@ -36,25 +86,383 @@ The data.frame containing marker genes and the corresponding expressed cells per
 `species`
 The species of cells. Select 'Human' or 'Mouse'.
 
+`cancer`
+If the sample is from cancer tissue and you want to match cell marker genes of cancer tissues in CellMatch, then the cancer type may be defined. Select one or more related cancer types in 3.1.2 of Details for human and 3.2.2 of Details for mouse. The dafult is NULL for tissues without cancer.
+
 `tissue`
-The tissue origin of cells. Select one or more related tissue types in Details.
+The tissue origin of cells. Select one or more related tissue types in Details. For tissues without cancer, please refer to 3.1.1 of Details for human tissue types and 3.2.1 of Details for mouse tissue types. For tissues with cancer, please refer to 3.1.2 of Details for human tissue types and 3.2.2 of Details for mouse tissue types.
 
-__Details__
+<font size=4>Output</font>
 
-__For human cells__, `tissue` include Abdominal adipose tissue, Adipose tissue, Adrenal gland, Adventitia, Airway epithelium, Alveolus, Amniotic fluid, Amniotic membrane, Antecubital vein, Anterior cruciate ligament, Artery, Ascites, Bladder, Blood, Blood vessel, Bone, Bone marrow, Brain, Breast, Bronchoalveolar system, Brown adipose tissue, Cartilage, Chorionic villus, Colon, Colorectum, Cornea, Corneal endothelium, Corneal epithelium, Corpus luteum, Deciduous tooth, Dental pulp, Dermis, Dorsolateral prefrontal cortex, Embryo, Embryoid body, Embryonic brain, Embryonic prefrontal cortex, Embryonic stem cell, Endometrium, Endometrium stroma, Epithelium, Esophagus, Eye, Fat pad, Fetal brain, Fetal gonad, Fetal kidney, Fetal liver, Fetal pancreas, Foreskin, Gastric corpus, Gastric epithelium, Gastric gland, Gastrointestinal tract, Germ, Gingiva, Gonad, Gut, Hair follicle, Heart, Hippocampus, Inferior colliculus, Intervertebral disc, Intestinal crypt, Intestine, Jejunum, Kidney, Lacrimal gland, Large intestine, Laryngeal squamous epithelium, Ligament, Limbal epithelium, Liver, Lung, Lymph, Lymph node, Lymphoid tissue, Mammary epithelium, Meniscus, Midbrain, Molar, Muscle, Myocardium, Myometrium, Nasal concha, Nasal epithelium, Nucleus pulposus, Optic nerve, Oral mucosa, Osteoarthritic cartilage, Ovarian cortex, Ovarian follicle, Ovary, Oviduct, Pancreas, Pancreatic acinar tissue, Pancreatic islet, Periodontal ligament, Periosteum, Peripheral blood, Placenta, Plasma, Pluripotent stem cell, Premolar, Primitive streak, Prostate, Pyloric gland, Renal glomerulus, Retina, Retinal pigment epithelium, Salivary gland, Scalp, Sclerocorneal tissue, Seminal plasma, Serum, Sinonasal mucosa, Skeletal muscle, Skin, Small intestinal crypt, Small intestine, Spinal cord, Spleen, Splenic red pulp, Sputum, Stomach, Subcutaneous adipose tissue, Submandibular gland, Sympathetic ganglion, Synovial fluid, Synovium, Testis, Thymus, Thyroid, Tonsil, Tooth, Umbilical cord, Umbilical cord blood, Umbilical vein, Undefined, Urine, Uterus, Vagina, Venous blood, Visceral adipose tissue, Vocal fold, Whartons jelly, White adipose tissue.
+`clu_ann`
+A data.frame containing matched cell type for each cluster, related marker genes, evidence-based score and PMID.
 
-__For Mouse cells__, `tissue` include 
-Adipose tissue, Aorta, Artery, Basilar membrane, Bladder, Blood, Blood vessel, Bone, Bone marrow, Brain, Bronchiole, Carotid artery, Cerebellum, Cochlea, Colon, Colon epithelium, Corneal epithelium, Dermis, Embryo, Embryoid body, Embryonic heart, Embryonic stem cell, Epidermis, Epithelium, Esophagus, Eye, Fetal liver, Ganglion cell layer of retina, Gastrointestinal tract, Gonad, Hair follicle, Heart, Heart muscle, Hippocampus, Ileum, Inner Ear, Inner nuclear layer of retina, Intestinal crypt, Intestine, Kidney, Lacrimal gland, Liver, Lung, Lymph node, Lymphoid tissue, Mammary epithelium, Mammary gland, Meniscus, Mesenteric lymph node, Mesonephros, Muscle, Neural tube, Ovary, Pancreas, Pancreatic islet, Peripheral blood, Peritoneal cavity, Peyer patch, Prostate, Retina, Serum, Skeletal muscle, Skin, Small intestine, Spinal cord, Spleen, Stomach, Submandibular gland, Taste bud, Testis, Thymus, Trachea, Umbilical cord, Umbilical cord blood, Undefined, White adipose tissue, Yolk sac.
+<font size=5>3. Details</font>
+
+<font size=3 color=green>3.1.1 For __Human__ tissue, tissue types are listed as follows:</font>
+
+__Adipose tissue-related__: Abdominal adipose tissue; Adipose tissue; Brown adipose tissue; Fat pad; Subcutaneous adipose tissue; Visceral adipose tissue; White adipose tissue.
+
+__Bladder-related__: Bladder; Urine.
+
+__Blood-related__: Blood; Peripheral blood; Plasma; Serum; Umbilical cord blood; Venous blood.
+
+__Bone-related__: Anterior cruciate ligament; Bone; Bone marrow; Cartilage; Intervertebral disc; Meniscus; Nucleus pulposus; Osteoarthritic cartilage; Periosteum; Skeletal muscle; Spinal cord; Synovial fluid; Synovium.
+
+__Brain-related__: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain.
+
+__Breast-related__: Breast; Mammary epithelium.
+
+__Embryo-related__: Embryo; Embryoid body; Embryonic brain; Embryonic prefrontal cortex; Embryonic stem cell; Germ; Primitive streak.
+
+__Esophagus-related__: Esophagus.
+
+__Eye-related__: Cornea; Corneal endothelium; Corneal epithelium; Eye; Lacrimal gland; Limbal epithelium; Optic nerve; Retina; Retinal pigment epithelium; Sclerocorneal tissue.
+
+__Fetus-related__: Amniotic fluid; Amniotic membrane; Fetal brain; Fetal gonad; Fetal kidney; Fetal liver; Fetal pancreas; Placenta; Umbilical cord; Umbilical cord blood; Umbilical vein.
+
+__Gonad-related__: Corpus luteum; Fetal gonad; Foreskin; Gonad; Ovarian cortex; Ovarian follicle; Ovary; Seminal plasma; Testis.
+
+__Hair-related__: Chorionic villus; Hair follicle; Scalp.
+
+__Heart-related__: Heart; Myocardium.
+
+__Intestine-related__: Colon; Colorectum; Gastrointestinal tract; Gut; Intestinal crypt; Intestine; Jejunum; Large intestine; Small intestinal crypt; Small intestine.
+
+__Kidney-related__: Adrenal gland; Fetal kidney; Kidney; Renal glomerulus.
+
+__Liver-related__: Fetal liver; Liver.
+
+__Lung-related__:Airway epithelium; Alveolus; Bronchoalveolar system; Lung.
+
+__Lymph-related__: Lymph; Lymph node; Lymphoid tissue.
+
+__Muscle-related__: Muscle; Skeletal muscle.
+
+__Nose-related__: Nasal concha; Nasal epithelium; Sinonasal mucosa.
+
+__Oral cavity-related__: Laryngeal squamous epithelium; Oral mucosa; Salivary gland; Sputum; Submandibular gland; Thyroid; Tonsil; Vocal fold. 
+
+__Ovary-related__: Corpus luteum; Ovarian cortex; Ovarian follicle; Ovary; Oviduct.
+
+__Pancreas-related__: Fetal pancreas; Pancreas; Pancreatic acinar tissue; Pancreatic islet.
+
+__Prostate-related__: Prostate.
+
+__Skin-related__: Dermis; Skin.
+
+__Spleen-related__: Spleen; Splenic red pulp.
+
+__Stomach-related__: Gastric corpus; Gastric epithelium; Gastric gland; Gastrointestinal tract; Pyloric gland; Stomach.
+
+__Testis-related__: Testis.
+
+__Tooth-related__: Deciduous tooth; Dental pulp; Gingiva; Molar; Periodontal ligament; Premolar; Tooth.
+
+__Uterus-related__: Endometrium; Endometrium stroma; Myometrium; Uterus.
+
+__Vessel-related__: Adventitia; Antecubital vein; Artery; Blood vessel; Umbilical vein.
+
+__Others__: Ascites; Epithelium; Ligament; Pluripotent stem cell; Thymus; Whartons jelly.
+
+<font size=3 color=green>3.1.2 For __Human__ tissue about cancer, cancer types and the corresponding tissue types are listed as follows:</font>
+
+Acute Myelogenous Leukemia: Blood.
+
+Acute Myeloid Leukemia: Bone marrow.
+
+Adenoid Cystic Carcinoma: Salivary gland.
+
+Alveolar Cell Carcinoma: Serum.
+
+Astrocytoma: Brain.
+
+B-Cell Lymphoma: Lymphoid tissue.
+
+Bladder Cancer: Bladder.
+
+Brain Cancer: Blood vessel; Brain.
+
+Breast Cancer: Blood: Breast; Mammary gland.
+
+Cholangiocarcinoma: Liver; Serum.
+
+Chronic Lymphocytic Leukemia: Blood.
+
+Chronic Myeloid Leukemia: Blood.
+
+CNS Primitive Neuroectodermal Tumor: Brain.
+
+Colon Cancer: Blood; Colon; Serum.
+
+Colorectal Cancer: Blood; Colon; Colorectum; Gastrointestinal tract; Intestine; Liver; Lung; Venous blood.
+
+Cutaneous Squamous Cell Carcinoma: Skin.
+
+Endometrial Cancer: Endometrium.
+
+Ependymoma: Brain.
+
+Esophageal Adenocarcinoma: Esophagus.
+
+Fibroid: Myometrium.
+
+Follicular Lymphoma: Lymph node.
+
+Gallbladder Cancer: Gall bladder; Gastrointestinal tract.
+
+Gastric Cancer: Blood; Peripheral blood; Serum; Stomach.
+
+Glioblastoma: Blood; Brain.
+
+Glioma: Blood vessel; Brain.
+
+Gonadoblastoma: Embryo.
+
+Head and Neck Cancer: Blood; Brain; Oral cavity.
+
+Hepatoblastoma: Liver.
+
+Hepatocellular Cancer: Blood; Bone marrow; Embryo; Liver.
+
+High-grade glioma: Brain.
+
+Infantile Hemangiomas: Placenta.
+
+Intestinal Cancer: Gastrointestinal tract.
+
+Intracranial Aneurysm: Brain.
+
+Kaposi's Sarcoma: Lymph node.
+
+Larynx Cancer: Larynx.
+
+Leukemia: Bone marrow; Peripheral blood.
+
+Lipoma: Adipose tissue.
+
+Liver Cancer: Blood; Liver.
+
+Lung Adenocarcinoma: Lung.
+
+Lung Cancer: Blood; Lung.
+
+Lung Squamous Cell Carcinoma: Lung.
+
+Lymphoma: Blood; Brain; Kidney; Liver; Lymph; Lymph node.
+
+Malignant Insulinoma: Pancreas.
+
+Malignant Mesothelioma: Lung; Pleura.
+
+Malignant Peripheral Nerve Sheath Tumor: Brain.
+
+Medulloblastoma: Brain.
+
+Melanoma: Blood; Peripheral blood; Skin.
+
+Mucoepidermoid Carcinoma: Salivary gland.
+
+Multiple Myeloma: Bone marrow; Peripheral blood.
+
+Myeloma: Bone marrow.
+
+Natural Killer Cell Lymphoma: Lymph node.
+
+Nephroblastoma: Kidney.
+
+Non-Small Cell Lung Cancer: Blood; Lung; Peripheral blood.
+
+Oesophageal Cancer: Blood.
+
+Oligodendroglioma: Brain.
+
+Oral Cancer: Oral cavity.
+
+Oral Squamous Cell Carcinoma: Oral cavity; Peripheral blood.
+
+Osteosarcoma: Bone.
+
+Ovarian Cancer: Ascites; Ovarian cortex; Ovary; Peripheral blood.
+
+Pancreatic Cancer: Blood vessel; Pancreas.
+
+Pancreatic Ductal Adenocarcinomas: Pancreas.
+
+Papillary Thyroid Carcinoma: Thyroid.
+
+Prostate Cancer: Blood; Peripheral blood; Prostate.
+
+Renal Cell Carcinoma: Kidney; Serum.
+
+Renal Clear Cell Carcinoma: Lymph node.
+
+Retinoblastoma: Eye.
+
+Salivary Gland Tumor: Parotid gland; Salivary gland.
+
+Sarcoma: Muscle.
+
+Small Cell Lung Cancer: Lung.
+
+Testicular Germ Cell Tumor: Peripheral blood; Testis.
+
+Thyroid Cancer: Thyroid.
+
+Tongue Cancer: Tongue.
+
+Uterine Leiomyoma: Uterus.
+
+Vascular Tumour: Lymph node.
+
+<font size=3 color=green>3.2.1 For __Mouse__ tissue, tissue types are listed as follows:</font>
+
+__Adipose tissue-related__: Adipose tissue; White adipose tissue.
+
+__Bladder-related__: Bladder.
+
+__Blood-related__: Blood; Peripheral blood; Serum; Umbilical cord blood.
+
+__Bone-related__: Bone; Bone marrow; Meniscus; Skeletal muscle; Spinal cord.
+
+__Brain-related__: Brain; Cerebellum; Fetal brain; Hippocampus; Neural tube.
+
+__Breast-related__: Mammary epithelium; Mammary gland.
+
+__Calvaria-related__: Calvaria.
+
+__Ear-related__: Cochlea; Inner Ear.
+
+__Embryo-related__: Embryo; Embryoid body; Embryonic heart; Embryonic stem cell.
+
+__Esophagus-related__: Esophagus.
+
+__Eye-related__: Corneal epithelium; Eye; Ganglion cell layer of retina; Inner nuclear layer of retina; Lacrimal gland; Retina.
+
+__Fetus-related__: Fetal brain; Fetal intestine; Fetal liver; Fetal lung; Fetal stomach; Placenta; Umbilical cord; Umbilical cord blood.
+
+__Gonad-related__: Gonad; Ovary; Testis; Yolk sac.
+
+__Hair-related__: Hair follicle.
+
+__Heart-related__: Embryonic heart; Heart; Heart muscle; Neonatal heart.
+
+__Intestine-related__: Colon; Colon epithelium; Fetal intestine; Gastrointestinal tract; Ileum; Intestinal crypt; Intestine; Mesenteric lymph node; Small intestine.
+
+__Kidney-related__: Kidney; Mesonephros.
+
+__Liver-related__: Fetal liver; Liver.
+
+__Lung-related__: Bronchiole; Fetal lung; Lung; Trachea.
+
+__Lymph-related__: Lymph node; Lymphoid tissue; Mesenteric lymph node; Peyer patch.
+
+__Muscle-related__: Heart muscle; Muscle; Neonatal muscle; Skeletal muscle.
+
+__Neonate-related__: Neonatal calvaria; Neonatal heart; Neonatal muscle; Neonatal pancreas; Neonatal rib; Neonatal skin.
+
+__Oral cavity-related__: Submandibular gland; Taste bud. 
+
+__Ovary-related__: Ovary; Yolk sac.
+
+__Pancreas-related__: Neonatal pancreas; Pancreas; Pancreatic islet.
+
+__Prostate-related__: Prostate.
+
+__Skin-related__: Dermis; Epidermis; Neonatal skin; Skin.
+
+__Spleen-related__: Spleen.
+
+__Stomach-related__: Fetal stomach; Gastrointestinal tract; Stomach.
+
+__Testis-related__: Testis.
+
+__Uterus-related__: Uterus.
+
+__Vessel-related__: Aorta; Artery; Blood vessel; Carotid artery.
+
+__Others__: Basilar membrane; Epithelium; Peritoneal cavity; Thymus.
+
+<font size=3 color=green>3.2.2 For __Mouse__ tissue about cancer, cancer types and the corresponding tissue types are listed as follows:</font>
+
+Breast Cancer: Lymph node; Breast; Lung.
+
+Chronic Myeloid Leukemia: Blood.
+
+Colon Cancer: Colon.
+
+Colorectal Cancer: Lymph node; Colon; Colorectum.
+
+Cutaneous Squamous Cell Carcinoma: Skin.
+
+Hepatocellular Cancer: Blood; Liver.
+
+Liver Cancer: Liver.
+
+Lung Cancer: Lung.
+
+Melanoma: Lung.
+
+Pancreatic Cancer: Blood.
+
+Papillary Thyroid Carcinoma: Thyroid.
+
+Prostate Cancer: Prostate.
+
+Renal Cell Carcinoma: Kidney.
+
+Supratentorial Primitive Neuroectodermal Tumor: Brain.
 
 # Examples
 ```(r)
-clu_markers <- findmarkergenes(mouse_kidney_203_Seurat, 0.25, 0.25, 0.05)  
-clu_ann <- scCATCH(clu_markers, 'Mouse', 'Kidney')
+# Step 1: prepare a Seurat object containing log10 normalized single-cell transcriptomic data matrix and the information of cell clusters.
+# Note: please define the species for revising gene symbols. Human or Mouse. The default is to find potential marker genes for all clusters with the percentage of expressed cells (≥25%), using WRS test (P<0.05) and a log10 fold change of ≥0.25. These parameters are adjustable for users.
 
-clu_markers <- findmarkergenes(mouse_kidney_203_Seurat, 0.5, 0.25, 0.01)
-clu_ann <- scCATCH(clu_markers, 'Mouse', c('Kidney','Fetal liver'))
+clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
+                               species = 'Mouse'
+                               cluster = 'All',
+                               match_CellMatch = FALSE,
+                               cancer = NULL,
+                               tissue = NULL,
+                               cell_min_pct = 0.25,
+                               logfc = 0.25,
+                               pvalue = 0.05)
+                               
+# Note: for large datasets, please set match_CellMatch as TRUE and provided tissue types. For tissue with cancer, users may provided the cancer types and corresponding tissue types. See Details. 
+```
+
+```(r)
+# Step 2: evidence-based scoring and annotaion for identified potential marker genes of each cluster generated from findmarkergenes function.
+
+clu_ann <- scCATCH(object = clu_markers$clu_markers,
+                   species = 'Mouse',
+                   cancer = NULL,
+                   tissue = 'Kidney')
+
+```
+
+```(r)
+# Users can also use scCATCH by selecting multiple cluster, cancer types, tissue types as follows:
+clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
+                               species = 'Mouse'
+                               cluster = '1',
+                               match_CellMatch = TRUE,
+                               cancer = NULL,
+                               tissue = 'Kidney',
+                               cell_min_pct = 0.1,
+                               logfc = 0.1,
+                               pvalue = 0.01)
+                               
+clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
+                               species = 'Mouse'
+                               cluster = c('1','2'),
+                               match_CellMatch = TRUE,
+                               cancer = NULL,
+                               tissue = c('Kidney','Mesonephros'))
+Note: please select the right cancer type and the corresponding tissue type (See Details).
 ```
 # Contributors
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
+
 # How to cite
 Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://doi.org/10.1016/j.isci.2020.100882)

@@ -4,7 +4,7 @@
 \name{mouse_kidney_203_Seurat}
 \alias{mouse_kidney_203_Seurat}
 \title{mouse_kidney_203_Seurat}
-\format{An object of class \code{Seurat} with 46959 rows and 203 columns.}
+\format{An object of class \code{Seurat} with 1564 rows and 203 columns.}
 \source{
 \url{https://www.ncbi.nlm.nih.gov/pubmed/?term=29089413}
 }
