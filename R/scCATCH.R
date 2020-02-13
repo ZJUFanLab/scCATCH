@@ -25,7 +25,7 @@
 #' @details \strong{Bladder-related}: Bladder; Urine.
 #' @details \strong{Blood-related}: Blood; Peripheral blood; Plasma; Serum; Umbilical cord blood; Venous blood.
 #' @details \strong{Bone-related}: Anterior cruciate ligament; Bone; Bone marrow; Cartilage; Intervertebral disc; Meniscus; Nucleus pulposus; Osteoarthritic cartilage; Periosteum; Skeletal muscle; Spinal cord; Synovial fluid; Synovium.
-#' @details \strong{Brain-related}: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain.
+#' @details \strong{Brain-related}: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain; Sympathetic ganglion.
 #' @details \strong{Breast-related}: Breast; Mammary epithelium.
 #' @details \strong{Embryo-related}: Embryo; Embryoid body; Embryonic brain; Embryonic prefrontal cortex; Embryonic stem cell; Germ; Primitive streak.
 #' @details \strong{Esophagus-related}: Esophagus.
@@ -50,7 +50,7 @@
 #' @details \strong{Stomach-related}: Gastric corpus; Gastric epithelium; Gastric gland; Gastrointestinal tract; Pyloric gland; Stomach.
 #' @details \strong{Testis-related}: Testis.
 #' @details \strong{Tooth-related}: Deciduous tooth; Dental pulp; Gingiva; Molar; Periodontal ligament; Premolar; Tooth.
-#' @details \strong{Uterus-related}: Endometrium; Endometrium stroma; Myometrium; Uterus.
+#' @details \strong{Uterus-related}: Endometrium; Endometrium stroma; Myometrium; Uterus; Vagina.
 #' @details \strong{Vessel-related}: Adventitia; Antecubital vein; Artery; Blood vessel; Umbilical vein.
 #' @details \strong{Others}: Ascites; Epithelium; Ligament; Pluripotent stem cell; Thymus; Whartons jelly.
 #' 
@@ -139,7 +139,7 @@
 #' @details \strong{Bone-related}: Bone; Bone marrow; Meniscus; Skeletal muscle; Spinal cord.
 #' @details \strong{Brain-related}: Brain; Cerebellum; Fetal brain; Hippocampus; Neural tube.
 #' @details \strong{Breast-related}: Mammary epithelium; Mammary gland.
-#' @details \strong{Calvaria-related}: Calvaria.
+#' @details \strong{Calvaria-related}: Neonatal calvaria.
 #' @details \strong{Ear-related}: Cochlea; Inner Ear.
 #' @details \strong{Embryo-related}: Embryo; Embryoid body; Embryonic heart; Embryonic stem cell.
 #' @details \strong{Esophagus-related}: Esophagus.

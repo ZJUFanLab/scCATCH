@@ -114,7 +114,7 @@ __Blood-related__: Blood; Peripheral blood; Plasma; Serum; Umbilical cord blood;
 
 __Bone-related__: Anterior cruciate ligament; Bone; Bone marrow; Cartilage; Intervertebral disc; Meniscus; Nucleus pulposus; Osteoarthritic cartilage; Periosteum; Skeletal muscle; Spinal cord; Synovial fluid; Synovium.
 
-__Brain-related__: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain.
+__Brain-related__: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain; Sympathetic ganglion.
 
 __Breast-related__: Breast; Mammary epithelium.
 
@@ -164,7 +164,7 @@ __Testis-related__: Testis.
 
 __Tooth-related__: Deciduous tooth; Dental pulp; Gingiva; Molar; Periodontal ligament; Premolar; Tooth.
 
-__Uterus-related__: Endometrium; Endometrium stroma; Myometrium; Uterus.
+__Uterus-related__: Endometrium; Endometrium stroma; Myometrium; Uterus; Vagina.
 
 __Vessel-related__: Adventitia; Antecubital vein; Artery; Blood vessel; Umbilical vein.
 
@@ -334,7 +334,7 @@ __Brain-related__: Brain; Cerebellum; Fetal brain; Hippocampus; Neural tube.
 
 __Breast-related__: Mammary epithelium; Mammary gland.
 
-__Calvaria-related__: Calvaria.
+__Calvaria-related__: Neonatal calvaria.
 
 __Ear-related__: Cochlea; Inner Ear.
 

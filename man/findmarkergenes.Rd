@@ -44,7 +44,7 @@ Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0)
 
 \strong{Bone-related}: Anterior cruciate ligament; Bone; Bone marrow; Cartilage; Intervertebral disc; Meniscus; Nucleus pulposus; Osteoarthritic cartilage; Periosteum; Skeletal muscle; Spinal cord; Synovial fluid; Synovium.
 
-\strong{Brain-related}: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain.
+\strong{Brain-related}: Brain; Dorsolateral prefrontal cortex; Embryonic brain; Embryonic prefrontal cortex; Fetal brain; Hippocampus; Inferior colliculus; Midbrain; Sympathetic ganglion.
 
 \strong{Breast-related}: Breast; Mammary epithelium.
 
@@ -94,7 +94,7 @@ Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0)
 
 \strong{Tooth-related}: Deciduous tooth; Dental pulp; Gingiva; Molar; Periodontal ligament; Premolar; Tooth.
 
-\strong{Uterus-related}: Endometrium; Endometrium stroma; Myometrium; Uterus.
+\strong{Uterus-related}: Endometrium; Endometrium stroma; Myometrium; Uterus; Vagina.
 
 \strong{Vessel-related}: Adventitia; Antecubital vein; Artery; Blood vessel; Umbilical vein.
 
@@ -268,7 +268,7 @@ Vascular Tumour: Lymph node.
 
 \strong{Breast-related}: Mammary epithelium; Mammary gland.
 
-\strong{Calvaria-related}: Calvaria.
+\strong{Calvaria-related}: Neonatal calvaria.
 
 \strong{Ear-related}: Cochlea; Inner Ear.
 
