@@ -7,10 +7,10 @@ To address these problems, we introduce a single cell Cluster-based auto-Annotat
 
 The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automatic annotation for each identified cluster. 
 
-For more information, please refer to our work: Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://doi.org/10.1016/j.isci.2020.100882).
+For more information, please refer to our work: Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663).
 
 # News
-<font size = 3>1. scCATCH can be used to annotate scRNA-seq data from __tissue with cancer.__</font>
+<font size = 3>1. scCATCH can be used to annotate scRNA-seq data from __tissue with cancer and tissue without cancer.__</font>
 
 <font size = 3>2. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
 
@@ -465,4 +465,4 @@ Note: please select the right cancer type and the corresponding tissue type (See
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
 
 # How to cite
-Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://doi.org/10.1016/j.isci.2020.100882)
+Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663)
