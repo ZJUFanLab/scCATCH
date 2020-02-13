@@ -1,5 +1,6 @@
 # Updated scCATCH 2.0
-<font size = 5>Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data</font>
+
+<font size = 5>__Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data__</font>
 
 Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale transcriptional characterization of thousands of cells in multiple complex tissues, in which accurate cell type identification becomes the prerequisite and vital step for scRNA-seq studies. Currently, the common practice in cell type annotation is to map the highly expressed marker genes with known cell markers manually based on the identified clusters, which requires the priori knowledge and tends to be subjective on the choice of which marker genes to use. Besides, such manual annotation is usually time-consuming.
 
