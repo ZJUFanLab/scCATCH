@@ -12,21 +12,6 @@
 #' @param pvalue Include the significantly highly expressed gene with this cutoff of p value from wilcox test compared to every other clusters.
 #' @return A list include a new data matrix wherein genes are revised by official gene symbols according to NCBI Gene symbols (updated in Jan. 10, 2020, \url{https://www.ncbi.nlm.nih.gov/gene}) and no matched genes and duplicated genes are removed as well as a data.frame containing potential marker genes of each selected cluster and the corresponding expressed cells percentage and average fold change for each cluster.
 #' @examples clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat, species = 'Mouse')
-#'
-#' @examples clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
-#'                                species = 'Mouse',
-#'                                cluster = '1',
-#'                                match_CellMatch = TRUE,
-#'                                tissue = 'Kidney',
-#'                                cell_min_pct = 0.1,
-#'                                logfc = 0.1,
-#'                                pvalue = 0.01)
-#'
-#' @examples clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
-#'                                species = 'Mouse',
-#'                                cluster = c('1','2'),
-#'                                match_CellMatch = TRUE,
-#'                                tissue = c('Kidney','Mesonephros'))
 #' @details \strong{1.1} For \strong{Human} tissue, tissue types are listed as follows:
 #' @details \strong{Adipose tissue-related}: Abdominal adipose tissue; Adipose tissue; Brown adipose tissue; Fat pad; Subcutaneous adipose tissue; Visceral adipose tissue; White adipose tissue.
 #' @details \strong{Bladder-related}: Bladder; Urine.
@@ -406,18 +391,20 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
         if (nrow(clu_marker1) > 0) {
             d1 <- as.data.frame(table(clu_marker1$gene), stringsAsFactors = F)
             d1 <- d1[d1$Freq == (length(clu_num) - 1), ]
-            clu_marker1 <- clu_marker1[clu_marker1$gene %in% d1$Var1, ]
-            clu_marker_gene <- unique(clu_marker1$gene)
-            clu_marker_gene <- clu_marker_gene[order(clu_marker_gene)]
-            avg_logfc <- NULL
-            for (j in 1:length(clu_marker_gene)) {
+            if (nrow(d1) > 1) {
+              clu_marker1 <- clu_marker1[clu_marker1$gene %in% d1$Var1, ]
+              clu_marker_gene <- unique(clu_marker1$gene)
+              clu_marker_gene <- clu_marker_gene[order(clu_marker_gene)]
+              avg_logfc <- NULL
+              for (j in 1:length(clu_marker_gene)) {
                 clu_marker_avg_logfc <- clu_marker1[clu_marker1$gene == clu_marker_gene[j], ]
                 avg_logfc[j] <- mean(clu_marker_avg_logfc$avg_logfc)
+              }
+              clu_marker1 <- unique(clu_marker1[, c("cluster", "gene", "pct")])
+              clu_marker1 <- clu_marker1[order(clu_marker1$gene), ]
+              clu_marker1$avg_logfc <- avg_logfc
+              clu_marker <- rbind(clu_marker, clu_marker1)
             }
-            clu_marker1 <- unique(clu_marker1[, c("cluster", "gene", "pct")])
-            clu_marker1 <- clu_marker1[order(clu_marker1$gene), ]
-            clu_marker1$avg_logfc <- avg_logfc
-            clu_marker <- rbind(clu_marker, clu_marker1)
         }
         cat("***Done***", "\n")
         Sys.sleep(2)

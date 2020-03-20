@@ -7,19 +7,8 @@
 #' @param tissue The tissue origin of cells. Select one or more related tissue types in \strong{Details}. For tissues without cancer, please refer to 1.1 of \strong{Details} for human tissue types and 2.1 of \strong{Details} for mouse tissue types. For tissues with cancer, please refer to 1.2 of \strong{Details} for human tissue types and 2.2 of \strong{Details} for mouse tissue types.
 #' @return A data.frame containing matched cell type for each cluster, related marker genes, evidence-based score and PMID.
 #' @examples clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat, species = 'Mouse')
-#' @examples clu_annotation <- scCATCH(object = clu_markers$clu_markers,
-#'                           species = 'Mouse',
-#'                           tissue = 'Kidney')
+#' clu_annotation <- scCATCH(object = clu_markers$clu_markers,species = 'Mouse',tissue = 'Kidney')
 #' 
-#' ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#' @examples clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
-#'                                species = 'Mouse',
-#'                                cluster = c('1','2'),
-#'                                match_CellMatch = TRUE,
-#'                                tissue = c('Kidney','Mesonephros'))
-#' @examples clu_annotation <- scCATCH(object = clu_markers$clu_markers,
-#'                           species = 'Mouse',
-#'                           tissue = c('Kidney','Mesonephros'))
 #' @details \strong{1.1} For \strong{Human} tissue, tissue types are listed as follows:
 #' @details \strong{Adipose tissue-related}: Abdominal adipose tissue; Adipose tissue; Brown adipose tissue; Fat pad; Subcutaneous adipose tissue; Visceral adipose tissue; White adipose tissue.
 #' @details \strong{Bladder-related}: Bladder; Urine.

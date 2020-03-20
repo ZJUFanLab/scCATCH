@@ -345,17 +345,6 @@ Supratentorial Primitive Neuroectodermal Tumor: Brain.
 }
 \examples{
 clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat, species = 'Mouse')
-clu_annotation <- scCATCH(object = clu_markers$clu_markers,
-                          species = 'Mouse',
-                          tissue = 'Kidney')
+clu_annotation <- scCATCH(object = clu_markers$clu_markers,species = 'Mouse',tissue = 'Kidney')
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
-                               species = 'Mouse',
-                               cluster = c('1','2'),
-                               match_CellMatch = TRUE,
-                               tissue = c('Kidney','Mesonephros'))
-clu_annotation <- scCATCH(object = clu_markers$clu_markers,
-                          species = 'Mouse',
-                          tissue = c('Kidney','Mesonephros'))
 }
