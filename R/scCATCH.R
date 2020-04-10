@@ -772,6 +772,10 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
             }
         }
         
+        if (length(rescluster_marker1) == 0){
+          rescluster_marker1<- 'NA'
+        }
+        
         # processing the format of cell type
         d1 <- rescluster_marker1[1]
         if (length(rescluster_marker1) > 1) {
@@ -828,14 +832,6 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
             }
         }
         clu_marker <- d1
-        
-        d1 <- celltype_score[1]
-        if (length(celltype_score) > 1) {
-            for (j in 2:length(celltype_score)) {
-                d1 <- paste(d1, celltype_score[j], sep = ", ")
-            }
-        }
-        celltype_score <- d1
         
         d1 <- PMID[1]
         if (length(PMID) > 1) {
