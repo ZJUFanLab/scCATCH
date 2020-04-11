@@ -1,5 +1,5 @@
 # Updated scCATCH 2.0
-[![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-blue.svg)</a> [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
+[![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-blue.svg)</a> [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
 
@@ -9,13 +9,16 @@ Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale
 
 To address these problems, we introduce a __single cell Cluster-based Annotation Toolkit for Cellular Heterogeneity (scCATCH)__ from cluster marker genes identification to cluster annotation based on evidence-based score by matching the identified potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
 
-[![download CellMatch](https://img.shields.io/badge/download-CellMatch-brightgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/cellmatch.rds)
+[![download CellMatch](https://img.shields.io/badge/download-CellMatch-orange.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/cellmatch.rds)
 
 __CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, 20,792 cell-specific marker genes and 2,097 references of human and mouse.__
 
-The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automatic annotation for each identified cluster. 
+The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
 
-For more information, please refer to our work: Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663).
+# Cite
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
+
+Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, Volume 23, Issue 3, 27 March 2020. PMID:[32062421](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
 
 # <a name='devtools'>News</a>
 <font size = 3>1. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
@@ -471,6 +474,3 @@ Note: please select the right cancer type and the corresponding tissue type (See
 ```
 # Contributors
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
-
-# How to cite
-Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663)
