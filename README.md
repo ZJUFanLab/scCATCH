@@ -18,7 +18,7 @@ The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to real
 # Cite
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
 
-Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, Volume 23, Issue 3, 27 March 2020. PMID:[32062421](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
+Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). PMID:[32062421](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
 
 # <a name='devtools'>News</a>
 <font size = 3>1. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
@@ -110,6 +110,8 @@ A data.frame containing matched cell type for each cluster, related marker genes
 
 <font size=5>3. Details</font>
 
+<img src='https://img.shields.io/badge/human-tissue-red.svg'>
+
 <font size=3 color=green>3.1.1 For __Human__ tissue, tissue types are listed as follows:</font>
 
 __Adipose tissue-related__: Abdominal adipose tissue; Adipose tissue; Brown adipose tissue; Fat pad; Subcutaneous adipose tissue; Visceral adipose tissue; White adipose tissue.
@@ -175,6 +177,8 @@ __Uterus-related__: Endometrium; Endometrium stroma; Myometrium; Uterus; Vagina.
 __Vessel-related__: Adventitia; Antecubital vein; Artery; Blood vessel; Umbilical vein.
 
 __Others__: Ascites; Epithelium; Ligament; Pluripotent stem cell; Thymus; Whartons jelly.
+
+<img src='https://img.shields.io/badge/human-cancer-red.svg'>
 
 <font size=3 color=green>3.1.2 For __Human__ tissue about cancer, cancer types and the corresponding tissue types are listed as follows:</font>
 
@@ -326,6 +330,8 @@ Uterine Leiomyoma: Uterus.
 
 Vascular Tumour: Lymph node.
 
+<img src='https://img.shields.io/badge/mouse-tissue-red.svg'>
+
 <font size=3 color=green>3.2.1 For __Mouse__ tissue, tissue types are listed as follows:</font>
 
 __Adipose tissue-related__: Adipose tissue; White adipose tissue.
@@ -393,6 +399,8 @@ __Uterus-related__: Uterus.
 __Vessel-related__: Aorta; Artery; Blood vessel; Carotid artery.
 
 __Others__: Basilar membrane; Epithelium; Peritoneal cavity; Thymus.
+
+<img src='https://img.shields.io/badge/mouse-cancer-red.svg'>
 
 <font size=3 color=green>3.2.2 For __Mouse__ tissue about cancer, cancer types and the corresponding tissue types are listed as follows:</font>
 
