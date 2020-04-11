@@ -1,7 +1,9 @@
 # Updated scCATCH 2.0
-[![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-brightgreen.svg)</a> [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
+[![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-blue.svg)</a> [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
+
+<img src='https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/Overview.png'>
 
 Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale transcriptional characterization of thousands of cells in multiple complex tissues, in which accurate cell type identification becomes the prerequisite and vital step for scRNA-seq studies. Currently, the common practice in cell type annotation is to map the highly expressed marker genes with known cell markers manually based on the identified clusters, which requires the priori knowledge and tends to be subjective on the choice of which marker genes to use. Besides, such manual annotation is usually time-consuming.
 
@@ -15,12 +17,12 @@ The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to real
 
 For more information, please refer to our work: Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience (2020), [https://doi.org/10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663).
 
-# News
+# <a name='devtools'>News</a>
 <font size = 3>1. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
 
 <font size = 3>2. scCATCH can also be used to annotate scRNA-seq data from __tissue with cancer.__</font>
 
-# <a name='devtools'>Install</a>
+# Install
 `devtools::install_github('ZJUFanLab/scCATCH')`
 
 # Usage
