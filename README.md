@@ -1,5 +1,5 @@
 # Updated scCATCH 2.0
-![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg) ![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-brightgreen.svg) 
+[![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-brightgreen.svg)</a> [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
 
@@ -7,7 +7,7 @@ Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale
 
 To address these problems, we introduce a __single cell Cluster-based Annotation Toolkit for Cellular Heterogeneity (scCATCH)__ from cluster marker genes identification to cluster annotation based on evidence-based score by matching the identified potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
 
-[![download CellMatch](https://img.shields.io/badge/download-CellMatch-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/cellmatch.rds)
+[![download CellMatch](https://img.shields.io/badge/download-CellMatch-brightgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/cellmatch.rds)
 
 __CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, 20,792 cell-specific marker genes and 2,097 references of human and mouse.__
 
@@ -20,7 +20,7 @@ For more information, please refer to our work: Shao et al., scCATCH:Automatic A
 
 <font size = 3>2. scCATCH can also be used to annotate scRNA-seq data from __tissue with cancer.__</font>
 
-# Install
+# <a name='devtools'>Install</a>
 `devtools::install_github('ZJUFanLab/scCATCH')`
 
 # Usage
