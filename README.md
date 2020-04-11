@@ -20,7 +20,7 @@ The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to real
 
 Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). PMID:[32062421](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
 
-# <a name='devtools'>News</a>
+# <img src='https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/icons/news.svg'><a name='devtools'>News</a>
 <font size = 3>1. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
 
 <font size = 3>2. scCATCH can also be used to annotate scRNA-seq data from __tissue with cancer.__</font>
