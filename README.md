@@ -480,5 +480,12 @@ clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
                                tissue = c('Kidney','Mesonephros'))
 Note: please select the right cancer type and the corresponding tissue type (See Details).
 ```
+# Issues
+[![bug](https://img.shields.io/badge/reported-bug-orange.svg)](https://github.com/ZJUFanLab/scCATCH/issues?q=is%3Aissue+is%3Aclosed) [![error](https://img.shields.io/badge/reported-error-red.svg)](https://github.com/ZJUFanLab/scCATCH/issues?q=is%3Aissue+is%3Aclosed)
+
+Solutions for possilble bugs and errors. Please refer to closed [Issues1](https://github.com/ZJUFanLab/scCATCH/issues?q=is%3Aissue+is%3Aclosed) and [Issues2](https://github.com/ZJUFanLab/scCATCH_performance_comparison/issues/1)
+
 # Contributors
+![Xin Shao](https://img.shields.io/badge/Xin-Shao-brightgreen.svg) ![Xiaohui Fan](https://img.shields.io/badge/Xiaohui-Fan-green.svg)
+
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
