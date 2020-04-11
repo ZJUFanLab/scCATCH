@@ -1,10 +1,13 @@
 # Updated scCATCH 2.0
+![R >3.6](https://img.shields.io/badge/R-%3E3.6-brightgreen.svg) ![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-brightgreen.svg) 
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
 
 Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale transcriptional characterization of thousands of cells in multiple complex tissues, in which accurate cell type identification becomes the prerequisite and vital step for scRNA-seq studies. Currently, the common practice in cell type annotation is to map the highly expressed marker genes with known cell markers manually based on the identified clusters, which requires the priori knowledge and tends to be subjective on the choice of which marker genes to use. Besides, such manual annotation is usually time-consuming.
 
 To address these problems, we introduce a __single cell Cluster-based Annotation Toolkit for Cellular Heterogeneity (scCATCH)__ from cluster marker genes identification to cluster annotation based on evidence-based score by matching the identified potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
+
+[![download CellMatch](https://img.shields.io/badge/download-CellMatch-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/cellmatch.rds)
 
 __CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, 20,792 cell-specific marker genes and 2,097 references of human and mouse.__
 
