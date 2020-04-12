@@ -1,5 +1,5 @@
 # Updated scCATCH 2.0
-[![R >3.5](https://img.shields.io/badge/R-%3E3.5-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-blue.svg)</a> [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
+[![R >3.5](https://img.shields.io/badge/R-%3E3.5-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-blue.svg)</a> 
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
 
@@ -26,7 +26,20 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 <font size = 3>2. scCATCH can also be used to annotate scRNA-seq data from __tissue with cancer.__</font>
 
 # Install
-`devtools::install_github('ZJUFanLab/scCATCH')`
+[![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
+
+```
+# download the source package of scCATCH_2.0.tar.gz and install it
+install.packages(pkgs = 'scCATCH_2.0.tar.gz')
+```
+
+or
+
+```
+# install devtools and install scCATCH
+install.packages(pkgs = 'devtools')
+devtools::install_github('ZJUFanLab/scCATCH')
+```
 
 # Usage
 
