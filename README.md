@@ -59,10 +59,10 @@ clu_markers <- findmarkergenes(object,
                                pvalue = 0.05)
 ```
 
-Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after log10 normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in Jan. 10, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes will be removed.
+Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after the default log1p normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in Jan. 10, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes will be removed.
 
 `object` 
-Seurat object (>= 3.0.0) after log10 normalization and cluster analysis. <font color=red>Please ensure data is log10 normalized data and data has been clustered before running scCATCH pipeline.</font>
+Seurat object (>= 3.0.0) after the default log1p normalization and cluster analysis. <font color=red>Please ensure data is log1p normalized data and data has been clustered before running scCATCH pipeline.</font>
 
 `species`
 The specie of cells. The species must be defined. 'Human' or 'Mouse'.
@@ -447,8 +447,8 @@ Supratentorial Primitive Neuroectodermal Tumor: Brain.
 
 # Examples
 ```(r)
-# Step 1: prepare a Seurat object containing log10 normalized single-cell transcriptomic data matrix and the information of cell clusters.
-# Note: please define the species for revising gene symbols. Human or Mouse. The default is to find potential marker genes for all clusters with the percentage of expressed cells (≥25%), using WRS test (P<0.05) and a log10 fold change of ≥0.25. These parameters are adjustable for users.
+# Step 1: prepare a Seurat object containing log1p normalized single-cell transcriptomic data matrix and the information of cell clusters.
+# Note: please define the species for revising gene symbols. Human or Mouse. The default is to find potential marker genes for all clusters with the percentage of expressed cells (≥25%), using WRS test (P<0.05) and a log1p fold change of ≥0.25. These parameters are adjustable for users.
 
 clu_markers <- findmarkergenes(object = mouse_kidney_203_Seurat,
                                species = 'Mouse'
