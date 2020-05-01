@@ -9,7 +9,7 @@ findmarkergenes(object, species = NULL, cluster = "All",
   cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05)
 }
 \arguments{
-\item{object}{Seurat object (>= 3.0.0) after log10 normalization and cluster analysis. Please ensure data is log10 normalized data and data has been clustered before running scCATCH pipeline.}
+\item{object}{Seurat object (>= 3.0.0) after log1p normalization and cluster analysis. Please ensure data is log1p normalized data and data has been clustered before running scCATCH pipeline.}
 
 \item{species}{The specie of cells. The species must be defined. 'Human' or 'Mouse'.}
 
@@ -31,7 +31,7 @@ findmarkergenes(object, species = NULL, cluster = "All",
 A list include a new data matrix wherein genes are revised by official gene symbols according to NCBI Gene symbols (updated in Jan. 10, 2020, \url{https://www.ncbi.nlm.nih.gov/gene}) and no matched genes and duplicated genes are removed as well as a data.frame containing potential marker genes of each selected cluster and the corresponding expressed cells percentage and average fold change for each cluster.
 }
 \description{
-Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after log10 normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in Jan. 10, 2020, \url{https://www.ncbi.nlm.nih.gov/gene}) and no matched genes and duplicated genes will be removed.
+Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after log1p normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in Jan. 10, 2020, \url{https://www.ncbi.nlm.nih.gov/gene}) and no matched genes and duplicated genes will be removed.
 }
 \details{
 \strong{1.1} For \strong{Human} tissue, tissue types are listed as follows:
