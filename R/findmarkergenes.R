@@ -177,6 +177,7 @@
 #' @details Supratentorial Primitive Neuroectodermal Tumor: Brain.
 #' @seealso \url{https://github.com/ZJUFanLab/scCATCH}
 #' @import Seurat stats
+#' @import Matrix rowMeans
 #' @export findmarkergenes
 
 findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, cancer = NULL, 
@@ -226,7 +227,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
     genedata1 <- as.data.frame(table(genedata$new_name), stringsAsFactors = F)
     genedata1 <- genedata1[genedata1$Freq == 1, ]
     genedata <- genedata[genedata$new_name %in% genedata1$Var1, ]
-    ndata <- ndata[genedata$raw_name, ]
+    ndata <- ndata[genedata$raw_name, , drop=FALSE ]
     rownames(ndata) <- genedata$new_name
     cat('\n')
     cat("Note: the new data matrix includes", ncol(ndata), "cells and", nrow(ndata), "genes.", "\n")
