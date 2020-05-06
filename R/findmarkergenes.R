@@ -177,7 +177,7 @@
 #' @details Supratentorial Primitive Neuroectodermal Tumor: Brain.
 #' @seealso \url{https://github.com/ZJUFanLab/scCATCH}
 #' @import Seurat stats
-#' @import Matrix rowMeans
+#' @importFrom Matrix rowMeans
 #' @export findmarkergenes
 
 findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, cancer = NULL, 
