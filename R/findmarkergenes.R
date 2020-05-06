@@ -177,7 +177,6 @@
 #' @details Supratentorial Primitive Neuroectodermal Tumor: Brain.
 #' @seealso \url{https://github.com/ZJUFanLab/scCATCH}
 #' @import Seurat stats
-#' @importFrom Matrix rowMeans
 #' @export findmarkergenes
 
 findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, cancer = NULL, 
@@ -371,7 +370,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
             # assigning clusters and avg_logfc
             clu_marker2$cluster <- clu_pair1$cluster1[j]
             clu_marker2$comp_cluster <- clu_pair1$cluster2[j]
-            clu_marker2$avg_logfc <- rowMeans(ndata1) - rowMeans(ndata2)
+            clu_marker2$avg_logfc <- Matrix::rowMeans(ndata1) - Matrix::rowMeans(ndata2)
             # assigning pct and pvalue
             for (k in 1:nrow(clu_marker2)) {
                 genedata1 <- as.numeric(ndata1[k, ])
