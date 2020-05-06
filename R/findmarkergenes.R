@@ -182,7 +182,7 @@
 findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, cancer = NULL, 
     tissue = NULL, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05) {
     # extract normalized data from Seurat object
-    ndata <- as.data.frame(object[["RNA"]]@data)
+    ndata <- object[["RNA"]]@data
     # extract cluster information of all single cells
     clu_info <- Seurat::Idents(object = object)
     clu_info <- data.frame(cell = names(clu_info), cluster = as.character(clu_info), stringsAsFactors = F)
@@ -226,7 +226,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
     genedata1 <- as.data.frame(table(genedata$new_name), stringsAsFactors = F)
     genedata1 <- genedata1[genedata1$Freq == 1, ]
     genedata <- genedata[genedata$new_name %in% genedata1$Var1, ]
-    ndata <- ndata[genedata$raw_name, ]
+    ndata <- ndata[genedata$raw_name, , drop=FALSE ]
     rownames(ndata) <- genedata$new_name
     cat('\n')
     cat("Note: the new data matrix includes", ncol(ndata), "cells and", nrow(ndata), "genes.", "\n")
@@ -370,7 +370,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
             # assigning clusters and avg_logfc
             clu_marker2$cluster <- clu_pair1$cluster1[j]
             clu_marker2$comp_cluster <- clu_pair1$cluster2[j]
-            clu_marker2$avg_logfc <- rowMeans(ndata1) - rowMeans(ndata2)
+            clu_marker2$avg_logfc <- Matrix::rowMeans(ndata1) - Matrix::rowMeans(ndata2)
             # assigning pct and pvalue
             for (k in 1:nrow(clu_marker2)) {
                 genedata1 <- as.numeric(ndata1[k, ])
