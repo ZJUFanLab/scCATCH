@@ -2,6 +2,7 @@
 
 export(findmarkergenes)
 export(scCATCH)
+import(Matrix)
 import(Seurat)
 import(data.table)
 import(stats)

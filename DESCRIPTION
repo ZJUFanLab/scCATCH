@@ -13,7 +13,8 @@ RoxygenNote: 6.1.1
 Imports: 
     Seurat (>= 3.0.0),
     stats,
-    data.table
+    data.table,
+    Matrix
 Suggests: 
     knitr,
     rmarkdown,
