@@ -182,7 +182,7 @@
 findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, cancer = NULL, 
     tissue = NULL, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05) {
     # extract normalized data from Seurat object
-    ndata <- as.data.frame(object[["RNA"]]@data)
+    ndata <- object[["RNA"]]@data
     # extract cluster information of all single cells
     clu_info <- Seurat::Idents(object = object)
     clu_info <- data.frame(cell = names(clu_info), cluster = as.character(clu_info), stringsAsFactors = F)
