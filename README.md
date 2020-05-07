@@ -26,7 +26,7 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 <font size = 3>2. scCATCH can also be used to annotate scRNA-seq data from __tissue with cancer.__</font>
 
 # Install
-[![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH_performance_comparison/blob/master/scCATCH_2.0.tar.gz)
+[![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH/releases/download/v2.0/scCATCH_2.0.tar.gz)
 
 ```
 # download the source package of scCATCH_2.0.tar.gz and install it
