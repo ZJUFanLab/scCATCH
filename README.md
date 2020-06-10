@@ -68,13 +68,13 @@ Seurat object (>= 3.0.0) after the default log1p normalization and cluster analy
 The specie of cells. The species must be defined. 'Human' or 'Mouse'.
 
 `cluster`
-Select which clusters for potential marker genes identification. e.g. '1', '2', etc. The default is 'All' to find potential makrer genes for each cluster.
+Select which clusters for potential marker genes identification. e.g. '1', '2', etc. The default is 'All' to find potential marker genes for each cluster.
 
 `match_CellMatch`
 For large datasets containg > 10,000 cells or > 15 clusters, it is strongly recommended to set match_CellMatch 'TRUE' to match CellMatch database first to include potential marker genes in terms of large system memory it may take.
 
 `cancer`
-If match_CellMatch is set TRUE and the sample is from cancer tissue, then the cancer type may be defined. Select one or more related cancer types in 3.2 of Details for human and 3.2 of Details for mouse. The dafult is NULL for tissues without cancer.
+If match_CellMatch is set TRUE and the sample is from cancer tissue, then the cancer type may be defined. Select one or more related cancer types in 3.2 of Details for human and 3.2 of Details for mouse. The default is NULL for tissues without cancer.
 
 `tissue`
 If match_CellMatch is set TRUE, then the tissue origin of cells must be defined. Select one or more related tissue types in Details. For tissues without cancer, please refer to 3.1.1 of Details for human tissue types and 3.2.1 of Details for mouse tissue types. For tissues with cancer, please refer to 3.1.2 of Details for human tissue types and 3.2.2 of Details for mouse tissue types.
