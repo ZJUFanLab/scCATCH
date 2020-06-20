@@ -33,7 +33,7 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 - Add a progress bar for `findmarkergenes` and `scCATCH`.
 
 # Install
-[![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://codeload.github.com/ZJUFanLab/scCATCH/tar.gz/v2.1)
+[![source package scCATCH-2.1.tar.gz](https://img.shields.io/badge/source%20package-scCATCH--2.1.tar.gz-yellowgreen)](https://codeload.github.com/ZJUFanLab/scCATCH/tar.gz/v2.1)
 
 ```
 # download the source package of scCATCH-2.1.tar.gz and install it
