@@ -176,11 +176,12 @@
 #' @details Renal Cell Carcinoma: Kidney.
 #' @details Supratentorial Primitive Neuroectodermal Tumor: Brain.
 #' @seealso \url{https://github.com/ZJUFanLab/scCATCH}
-#' @import Seurat stats Matrix
+#' @import Seurat stats progress
+#' @importFrom Matrix rowMeans
 #' @export findmarkergenes
 
-findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, cancer = NULL, 
-    tissue = NULL, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05) {
+findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellMatch = FALSE, 
+    cancer = NULL, tissue = NULL, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05) {
     # extract normalized data from Seurat object
     ndata <- object[["RNA"]]@data
     # extract cluster information of all single cells
@@ -195,17 +196,23 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
     clu_num2 <- clu_num2[order(clu_num2)]
     clu_num <- c(clu_num1, clu_num2)
     rm(object)
-    cat("Note: the raw data matrix includes", ncol(ndata), "cells and", nrow(ndata), "genes.", "\n")
+    cat("Note: the raw data matrix includes", ncol(ndata), "cells and", nrow(ndata), "genes.", 
+        "\n")
+    
+    if (length(clu_num) == 1) {
+        stop("There is only one cluster, please do clustering analysis or select more clusters for Seurat object!")
+    }
+    
     Sys.sleep(2)
     clu_num1 <- clu_num
     if (is.null(species)) {
-        cat('\n')
+        cat("\n")
         stop("Please define the species! 'Human' or 'Mouse'.")
     }
     geneinfo <- geneinfo[geneinfo$species == species, ]
     # revise gene symbol
-    cat('\n')
-    cat("---Revising gene symbols according to NCBI Gene symbols (updated in Jan. 10, 2020, https://www.ncbi.nlm.nih.gov/gene) and no matched genes and duplicated genes will be removed.", 
+    cat("\n")
+    cat("---Revising gene symbols according to NCBI Gene symbols (updated in June 19, 2020, https://www.ncbi.nlm.nih.gov/gene) and no matched genes and duplicated genes will be removed.", 
         "\n")
     Sys.sleep(2)
     genename <- rownames(ndata)
@@ -226,20 +233,21 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
     genedata1 <- as.data.frame(table(genedata$new_name), stringsAsFactors = F)
     genedata1 <- genedata1[genedata1$Freq == 1, ]
     genedata <- genedata[genedata$new_name %in% genedata1$Var1, ]
-    ndata <- ndata[genedata$raw_name,]
+    ndata <- ndata[genedata$raw_name, ]
     rownames(ndata) <- genedata$new_name
-    cat('\n')
-    cat("Note: the new data matrix includes", ncol(ndata), "cells and", nrow(ndata), "genes.", "\n")
+    cat("\n")
+    cat("Note: the new data matrix includes", ncol(ndata), "cells and", nrow(ndata), "genes.", 
+        "\n")
     Sys.sleep(2)
     if (match_CellMatch) {
         ndata3 <- ndata
         # tissue without cancer
         if (is.null(cancer)) {
-            CellMatch <- CellMatch[CellMatch$speciesType == species & CellMatch$cancerType == "Normal", 
-                ]
+            CellMatch <- CellMatch[CellMatch$speciesType == species & CellMatch$cancerType == 
+                "Normal", ]
             # check tissue
             if (is.null(tissue)) {
-                cat('\n')
+                cat("\n")
                 stop("Please define the origin tissue of cells! Select one or more related tissue types.")
             }
             tissue_match <- NULL
@@ -247,7 +255,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
             tissue_match <- tissue %in% CellMatch$tissueType
             tissue_match <- which(tissue_match == "FALSE")
             if (length(tissue_match) > 0) {
-                cat('\n')
+                cat("\n")
                 stop(paste(tissue[tissue_match], ", not matched with the tissue types in CellMatch database! Please select one or more related tissue types.", 
                   sep = ""))
             }
@@ -260,12 +268,12 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
                 }
             }
             if (length(cellmarker_num) < 100) {
-                cat('\n')
+                cat("\n")
                 cat(paste("Warning: there are only ", length(cellmarker_num), " potential marker genes in CellMatch database for ", 
                   species, " on ", tissue1, "!", sep = ""), "\n")
             }
             if (length(cellmarker_num) >= 100) {
-                cat('\n')
+                cat("\n")
                 cat(paste("Note: there are ", length(cellmarker_num), " potential marker genes in CellMatch database for ", 
                   species, " on ", tissue1, ".", sep = ""), "\n")
             }
@@ -280,14 +288,14 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
             cancer_match <- cancer %in% CellMatch$cancerType
             cancer_match <- which(cancer_match == "FALSE")
             if (length(cancer_match) > 0) {
-                cat('\n')
+                cat("\n")
                 stop(paste(cancer[cancer_match], ", not matched with the cancer types in CellMatch database! Please select one or more related cancer types.", 
                   sep = ""))
             }
             CellMatch <- CellMatch[CellMatch$cancerType %in% cancer, ]
             # check tissue
             if (is.null(tissue)) {
-                cat('\n')
+                cat("\n")
                 stop("Please define the origin tissue of cells! Select one or more related tissue types.")
             }
             tissue_match <- NULL
@@ -295,7 +303,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
             tissue_match <- tissue %in% CellMatch$tissueType
             tissue_match <- which(tissue_match == "FALSE")
             if (length(tissue_match) > 0) {
-                cat('\n')
+                cat("\n")
                 stop(paste(tissue[tissue_match], ", not matched with the tissue types in CellMatch database! Please select one or more related tissue types.", 
                   sep = ""))
             }
@@ -314,12 +322,12 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
                 }
             }
             if (length(cellmarker_num) < 100) {
-                cat('\n')
+                cat("\n")
                 cat(paste("Warning: there are only ", length(cellmarker_num), " potential marker genes in CellMatch database for ", 
                   species, " ", cancer1, " on ", tissue1, "!", sep = ""), "\n")
             }
             if (length(cellmarker_num) >= 100) {
-                cat('\n')
+                cat("\n")
                 cat(paste("Note: there are ", length(cellmarker_num), " potential marker genes in CellMatch database for ", 
                   species, " ", cancer1, " on ", tissue1, ".", sep = ""), "\n")
             }
@@ -327,7 +335,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
         }
     }
     if (nrow(ndata) == 0) {
-        cat('\n')
+        cat("\n")
         stop("There is no matched potential marker genes in the matrix! Please try again to find differential expressed genes by setting match_CellMatch as FALSE!")
     }
     # generating pair-wise clusters
@@ -341,26 +349,32 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
         cluster_match <- cluster %in% clu_num
         cluster_match <- which(cluster_match == "FALSE")
         if (length(cluster_match) > 0) {
-            cat('\n')
+            cat("\n")
             stop(paste(cluster[cluster_match], ", not matched with the cell clusters! Please select one or more related clusters.", 
                 sep = ""))
         }
         clu_pair <- clu_pair[clu_pair$cluster1 %in% cluster, ]
         clu_num1 <- clu_num[clu_num %in% cluster]
     }
+    cat("Note: There are", length(clu_num), "clusters in Seurat object.", "\n")
+    Sys.sleep(2)
+    cat("Preparing to find potential marker genes for", cluster, "cluster(s).", "\n")
     # generating result file
     clu_marker <- NULL
     Sys.sleep(2)
-    cat('\n')
     # calculate the p value and log fold change
     for (i in 1:length(clu_num1)) {
         cat(paste("Finding potential marker genes for cluster", clu_num1[i], sep = " "), "\n")
-        clu_pair1 <- clu_pair[clu_pair$cluster1 == clu_num[i], ]
+        clu_pair1 <- clu_pair[clu_pair$cluster1 == clu_num1[i], ]
         # generating result file for each cluster
         clu_marker1 <- NULL
+        pb <- progress_bar$new(format = "[:bar] Finished::percent Remaining::eta", total = nrow(clu_pair1) * 
+            nrow(ndata), clear = FALSE, width = 60, complete = "+", incomplete = "-")
+        
         for (j in 1:nrow(clu_pair1)) {
             clu_marker2 <- as.data.frame(matrix(data = 0, nrow = nrow(ndata), ncol = 6))
-            colnames(clu_marker2) <- c("cluster", "gene", "pct", "comp_cluster", "avg_logfc", "pvalue")
+            colnames(clu_marker2) <- c("cluster", "gene", "pct", "comp_cluster", "avg_logfc", 
+                "pvalue")
             clu_marker2[, 2] <- rownames(ndata)
             # extract normalized data of pair wise clusters
             ndata1 <- ndata[, clu_info[clu_info$cluster == clu_pair1$cluster1[j], ]$cell]
@@ -379,6 +393,7 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
                   genedata2 <- as.numeric(ndata2[k, ])
                   clu_marker_pvalue[k] <- stats::wilcox.test(genedata1, genedata2, )$p.value
                 }
+                pb$tick()
             }
             clu_marker2$pct <- clu_marker_pct
             clu_marker2$pvalue <- clu_marker_pvalue
@@ -392,21 +407,22 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
             d1 <- as.data.frame(table(clu_marker1$gene), stringsAsFactors = F)
             d1 <- d1[d1$Freq == (length(clu_num) - 1), ]
             if (nrow(d1) > 1) {
-              clu_marker1 <- clu_marker1[clu_marker1$gene %in% d1$Var1, ]
-              clu_marker_gene <- unique(clu_marker1$gene)
-              clu_marker_gene <- clu_marker_gene[order(clu_marker_gene)]
-              avg_logfc <- NULL
-              for (j in 1:length(clu_marker_gene)) {
-                clu_marker_avg_logfc <- clu_marker1[clu_marker1$gene == clu_marker_gene[j], ]
-                avg_logfc[j] <- mean(clu_marker_avg_logfc$avg_logfc)
-              }
-              clu_marker1 <- unique(clu_marker1[, c("cluster", "gene", "pct")])
-              clu_marker1 <- clu_marker1[order(clu_marker1$gene), ]
-              clu_marker1$avg_logfc <- avg_logfc
-              clu_marker <- rbind(clu_marker, clu_marker1)
+                clu_marker1 <- clu_marker1[clu_marker1$gene %in% d1$Var1, ]
+                clu_marker_gene <- unique(clu_marker1$gene)
+                clu_marker_gene <- clu_marker_gene[order(clu_marker_gene)]
+                avg_logfc <- NULL
+                for (j in 1:length(clu_marker_gene)) {
+                  clu_marker_avg_logfc <- clu_marker1[clu_marker1$gene == clu_marker_gene[j], 
+                    ]
+                  avg_logfc[j] <- mean(clu_marker_avg_logfc$avg_logfc)
+                }
+                clu_marker1 <- unique(clu_marker1[, c("cluster", "gene", "pct")])
+                clu_marker1 <- clu_marker1[order(clu_marker1$gene), ]
+                clu_marker1$avg_logfc <- avg_logfc
+                clu_marker <- rbind(clu_marker, clu_marker1)
             }
         }
-        cat("***Done***", "\n")
+        cat("---Done---", "\n")
         Sys.sleep(2)
     }
     rm(ndata1, ndata2)
@@ -422,13 +438,13 @@ findmarkergenes <- function(object, species = NULL, cluster = "All", match_CellM
     res[[2]] <- "NA"
     names(res) <- c("new_data_matrix", "clu_markers")
     if (is.null(clu_marker)) {
-        cat('\n')
+        cat("\n")
         cat("Warning: there is no potential marker genes found in the matrix! You may adjust the cell clusters by applying other clustering algorithm and try again.")
         return(res)
         stop()
     }
     if (nrow(clu_marker) == 0) {
-        cat('\n')
+        cat("\n")
         cat("Warning: there is no potential marker genes found in the matrix! You may adjust the cell clusters by applying other clustering algorithm and try again.")
         return(res)
         stop()

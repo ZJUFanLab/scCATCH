@@ -1,4 +1,4 @@
-# Updated scCATCH 2.0
+# Updated scCATCH 2.1
 [![R >3.5](https://img.shields.io/badge/R-%3E3.5-brightgreen.svg)](https://www.r-project.org/) <a href='#devtools'>![installed with devtools](https://img.shields.io/badge/installed%20with-devtools-blue.svg)</a> 
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
@@ -21,9 +21,16 @@ The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to real
 Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). PMID:[32062421](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
 
 # <a name='devtools'>News</a>
-<font size = 3>1. scCATCH can handle large single-cell transcriptomic dataset containing more than __10,000 cells__ and more than __15 clusters.__</font>
 
-<font size = 3>2. scCATCH can also be used to annotate scRNA-seq data from __tissue with cancer.__</font>
+### v2.0
+- Add `cluster` and `match_CellMatch` parameters to handle large scRNA-seq datasets.
+- Add `cancer` parameters to annotate scRNA-seq data from tissue with cancer.
+
+### v2.1
+- Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in June 19, 2020, https://www.ncbi.nlm.nih.gov/gene). Unmatched marker genes FLJ42102, LOC101928100, LOC200772 and BC017158 are removed.
+- Fix the `Error in intI(j, n = x@Dim[2], dn[[2]], give.dn = FALSE) : invalid character indexing` in `findmarkergenes` by adding a check of cluster number. Refer to [issue 14](https://github.com/ZJUFanLab/scCATCH/issues/14)
+- Fix the `Error in object[object$cluster == clu.num[i], ] : wrong number of dimensions` in `scCATCH` by adding a check of type of input. Refer to [issue 13](https://github.com/ZJUFanLab/scCATCH/issues/13)
+- Add a progress bar for `findmarkergenes` and `scCATCH`.
 
 # Install
 [![source package scCATCH__2.0.tar.gz](https://img.shields.io/badge/source%20package-scCATCH__2.0.tar.gz-yellowgreen.svg)](https://github.com/ZJUFanLab/scCATCH/releases/download/v2.0/scCATCH_2.0.tar.gz)

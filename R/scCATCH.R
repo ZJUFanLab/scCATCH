@@ -173,7 +173,7 @@
 #' @details Renal Cell Carcinoma: Kidney.
 #' @details Supratentorial Primitive Neuroectodermal Tumor: Brain.
 #' \url{https://github.com/ZJUFanLab/scCATCH}
-#' @import data.table
+#' @import data.table progress
 #' @export scCATCH
 
 scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
@@ -182,6 +182,13 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
     }
     # cellmarkers matching species tissue
     CellMatch <- CellMatch[CellMatch$speciesType == species, ]
+    if (!is.data.frame(object)) {
+        if (names(object)[2] != "clu_markers") {
+            stop("Please select the clu_clusters as the input!")
+        }
+        object <- object$clu_markers
+    }
+    
     # revise gene symbols of object
     object$genesymbol <- object$gene
     # tissue without cancer
@@ -216,7 +223,6 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                 species, " on ", tissue1, "!", sep = ""), "\n")
         }
         Sys.sleep(2)
-        cat('\n')
         cellmarker_num <- unique(CellMatch$cellName)
         if (length(cellmarker_num) < 10) {
             cat(paste("Warning: there are only ", length(cellmarker_num), " cell types in CellMatch database for ", 
@@ -274,7 +280,6 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                 species, " ", cancer1, " on ", tissue1, "!", sep = ""), "\n")
         }
         Sys.sleep(2)
-        cat('\n')
         cellmarker_num <- unique(CellMatch$cellName)
         if (length(cellmarker_num) < 10) {
             cat(paste("Warning: there are only ", length(cellmarker_num), " cell types in CellMatch database for ", 
@@ -294,11 +299,14 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
     clu.num <- c(clu.num1, clu.num2)
     # Evidence-based scoring and annotation
     Sys.sleep(2)
-    cat('\n')
     cat("Beginning evidence-based scoring and annotation", "\n")
     Sys.sleep(2)
+    pb <- progress_bar$new(format = "[:bar] Finished::percent Remaining::eta", total = length(clu.num), 
+        clear = FALSE, width = 60, complete = "+", incomplete = "-")
+    
     clu_ann_res <- NULL
     for (i in 1:length(clu.num)) {
+        Sys.sleep(1)
         # Filtering cluster marker
         rescluster_marker1 <- object[object$cluster == clu.num[i], ]$genesymbol
         cellsubtype1 <- "NA"
@@ -336,7 +344,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                 if (nrow(clu_ann_cellname) > 1) {
                   celltype <- clu_ann_cellname$Var1
                   celltype_score <- round(clu_ann_cellname$Freq, digits = 2)
-                  clu_marker <- unique(clu_ann[clu_ann$shortname %in% clu_ann_cellname$Var1, ]$geneSymbol)
+                  clu_marker <- unique(clu_ann[clu_ann$shortname %in% clu_ann_cellname$Var1, 
+                    ]$geneSymbol)
                   PMID <- unique(clu_ann[clu_ann$shortname %in% clu_ann_cellname$Var1, ]$PMID)
                   res <- "III"
                 }
@@ -344,7 +353,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                 if (nrow(clu_ann_cellname) == 1) {
                   celltype <- clu_ann_cellname$Var1
                   celltype_score <- round(clu_ann_cellname$Freq, digits = 2)
-                  clu_marker <- unique(clu_ann[clu_ann$shortname %in% clu_ann_cellname$Var1, ]$geneSymbol)
+                  clu_marker <- unique(clu_ann[clu_ann$shortname %in% clu_ann_cellname$Var1, 
+                    ]$geneSymbol)
                   PMID <- unique(clu_ann[clu_ann$shortname %in% clu_ann_cellname$Var1, ]$PMID)
                   res <- "IV"
                   # matching cell subtype to determine the start
@@ -354,8 +364,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                   clu_ann1$row <- as.character(clu_ann1$row)
                   clu_ann1 <- clu_ann1[, c(6, 1:5)]
                   clu_ann1 <- data.table::as.data.table(clu_ann1)
-                  clu_ann1 <- melt(data = clu_ann1, id.vars = 1:3, measure.vars = c("third", "second", 
-                    "first"))
+                  clu_ann1 <- melt(data = clu_ann1, id.vars = 1:3, measure.vars = c("third", 
+                    "second", "first"))
                   clu_ann1 <- as.data.frame(clu_ann1)
                   clu_ann1$variable <- as.character(clu_ann1$variable)
                   clu_ann1 <- clu_ann1[!is.na(clu_ann1$value), ]
@@ -365,31 +375,36 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                     clu_ann_subcellname <- as.data.frame(table(clu_ann1$value), stringsAsFactors = F)
                     m <- clu_ann_subcellname$Freq + 1
                     clu_ann_subcellname$Freq <- clu_ann_subcellname$Freq/m
-                    clu_ann_subcellname <- clu_ann_subcellname[order(clu_ann_subcellname$Var1), ]
+                    clu_ann_subcellname <- clu_ann_subcellname[order(clu_ann_subcellname$Var1), 
+                      ]
                     
                     clu_ann_subarticle <- unique(clu_ann1[, c("PMID", "value")])
                     
                     clu_ann_subarticle <- as.data.frame(table(clu_ann_subarticle$value), stringsAsFactors = F)
                     m <- clu_ann_subarticle$Freq + 1
                     clu_ann_subarticle$Freq <- clu_ann_subarticle$Freq/m
-                    clu_ann_subarticle <- clu_ann_subarticle[order(clu_ann_subarticle$Var1), ]
+                    clu_ann_subarticle <- clu_ann_subarticle[order(clu_ann_subarticle$Var1), 
+                      ]
                     
                     clu_ann_subcellname$Freq <- sqrt(clu_ann_subcellname$Freq * clu_ann_subarticle$Freq)
                     
                     clu_ann_subcellname <- clu_ann_subcellname[clu_ann_subcellname$Freq == max(clu_ann_subcellname$Freq), 
                       ]
-                    clu_ann_subcellname <- clu_ann_subcellname[clu_ann_subcellname$Freq > 0.5, ]
+                    clu_ann_subcellname <- clu_ann_subcellname[clu_ann_subcellname$Freq > 0.5, 
+                      ]
                     
                     # Number of (cell subtype with max score) == 1 -- determinate cell subtype first/second/third
                     if (nrow(clu_ann_subcellname) == 1) {
-                      clu_ann_for_det <- clu_ann1[clu_ann1$value == clu_ann_subcellname$Var1, ]
+                      clu_ann_for_det <- clu_ann1[clu_ann1$value == clu_ann_subcellname$Var1, 
+                        ]
                       
                       # max cell subtype label exist in first subtype1
                       if (unique(clu_ann_for_det$variable == "first")) {
                         cellsubtype1 <- unique(clu_ann_for_det$value)
                         clu_marker <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype1, 
                           ]$geneSymbol)
-                        PMID <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype1, ]$PMID)
+                        PMID <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype1, 
+                          ]$PMID)
                         
                         clu_ann_for_second <- clu_ann1[clu_ann1$variable == "second", ]
                         
@@ -404,7 +419,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                           clu_second_name <- clu_second_name[order(clu_second_name$Var1), ]
                           
                           clu_second_article <- unique(clu_second[, c("PMID", "value")])
-                          clu_second_article <- as.data.frame(table(clu_second_article$value), stringsAsFactors = F)
+                          clu_second_article <- as.data.frame(table(clu_second_article$value), 
+                            stringsAsFactors = F)
                           m <- clu_second_article$Freq + 1
                           clu_second_article$Freq <- clu_second_article$Freq/m
                           clu_second_article <- clu_second_article[order(clu_second_article$Var1), 
@@ -436,14 +452,16 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                             # cell second subtype2 scoring and compare with max second subtype2 score
                             clu_ann_secondname$Freq <- sqrt(clu_ann_secondname$Freq * clu_ann_secondarticle$Freq)
                             
-                            clu_ann_secondname <- clu_ann_secondname[clu_ann_secondname$Freq == max(clu_ann_secondname$Freq), 
+                            clu_ann_secondname <- clu_ann_secondname[clu_ann_secondname$Freq == 
+                              max(clu_ann_secondname$Freq), ]
+                            clu_ann_secondname <- clu_ann_secondname[(clu_ann_secondname$Freq > 
+                              0.5) & (clu_ann_secondname$Freq >= max(clu_second_name$Freq)), 
                               ]
-                            clu_ann_secondname <- clu_ann_secondname[(clu_ann_secondname$Freq > 0.5) & 
-                              (clu_ann_secondname$Freq >= max(clu_second_name$Freq)), ]
                             
                             if (nrow(clu_ann_secondname) == 1) {
                               cellsubtype2 <- clu_ann_secondname$Var1
-                              clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, ]$geneSymbol)
+                              clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, 
+                                ]$geneSymbol)
                               PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, ]$PMID)
                               
                               clu_ann_for_third <- clu_ann1[clu_ann1$variable == "third", ]
@@ -456,7 +474,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                 clu_third_name <- as.data.frame(table(clu_third$value), stringsAsFactors = F)
                                 m <- clu_third_name$Freq + 1
                                 clu_third_name$Freq <- clu_third_name$Freq/m
-                                clu_third_name <- clu_third_name[order(clu_third_name$Var1), ]
+                                clu_third_name <- clu_third_name[order(clu_third_name$Var1), 
+                                  ]
                                 
                                 clu_third_article <- unique(clu_third[, c("PMID", "value")])
                                 clu_third_article <- as.data.frame(table(clu_third_article$value), 
@@ -471,9 +490,11 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                 # matching cell third subtype3
                                 clu_ann_third <- clu_ann_second[clu_ann_second$second == cellsubtype2, 
                                   ]
-                                clu_ann_third <- clu_ann_third[!is.na(clu_ann_third$second), ]
+                                clu_ann_third <- clu_ann_third[!is.na(clu_ann_third$second), 
+                                  ]
                                 
-                                clu_ann_thirdname <- as.data.frame(table(clu_ann_third$third), stringsAsFactors = F)
+                                clu_ann_thirdname <- as.data.frame(table(clu_ann_third$third), 
+                                  stringsAsFactors = F)
                                 
                                 if (nrow(clu_ann_thirdname) > 0) {
                                   
@@ -496,14 +517,16 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                   clu_ann_thirdname <- clu_ann_thirdname[clu_ann_thirdname$Freq == 
                                     max(clu_ann_thirdname$Freq), ]
                                   clu_ann_thirdname <- clu_ann_thirdname[(clu_ann_thirdname$Freq > 
-                                    0.5) & (clu_ann_thirdname$Freq >= max(clu_third_name$Freq)), ]
+                                    0.5) & (clu_ann_thirdname$Freq >= max(clu_third_name$Freq)), 
+                                    ]
                                   
                                   # Number of (cell third subtype3 with max score) >= 1 -- output -- last
                                   if (nrow(clu_ann_thirdname) >= 1) {
                                     cellsubtype3 <- clu_ann_thirdname$Var1
                                     clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype3, 
                                       ]$geneSymbol)
-                                    PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype3, ]$PMID)
+                                    PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype3, 
+                                      ]$PMID)
                                   }
                                 }
                               }
@@ -517,7 +540,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                         cellsubtype2 <- unique(clu_ann_for_det$value)
                         clu_marker <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype2, 
                           ]$geneSymbol)
-                        PMID <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype2, ]$PMID)
+                        PMID <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype2, 
+                          ]$PMID)
                         
                         clu_ann_for_first <- clu_ann1[clu_ann1$variable == "first", ]
                         
@@ -532,10 +556,12 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                           clu_first_name <- clu_first_name[order(clu_first_name$Var1), ]
                           
                           clu_first_article <- unique(clu_first[, c("PMID", "value")])
-                          clu_first_article <- as.data.frame(table(clu_first_article$value), stringsAsFactors = F)
+                          clu_first_article <- as.data.frame(table(clu_first_article$value), 
+                            stringsAsFactors = F)
                           m <- clu_first_article$Freq + 1
                           clu_first_article$Freq <- clu_first_article$Freq/m
-                          clu_first_article <- clu_first_article[order(clu_first_article$Var1), ]
+                          clu_first_article <- clu_first_article[order(clu_first_article$Var1), 
+                            ]
                           
                           clu_first_name$Freq <- sqrt(clu_first_name$Freq * clu_first_article$Freq)
                           
@@ -563,14 +589,16 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                             # cell first subtype1 scoring and compare with max first subtype1 score
                             clu_ann_firstname$Freq <- sqrt(clu_ann_firstname$Freq * clu_ann_firstarticle$Freq)
                             
-                            clu_ann_firstname <- clu_ann_firstname[clu_ann_firstname$Freq == max(clu_ann_firstname$Freq), 
+                            clu_ann_firstname <- clu_ann_firstname[clu_ann_firstname$Freq == 
+                              max(clu_ann_firstname$Freq), ]
+                            clu_ann_firstname <- clu_ann_firstname[(clu_ann_firstname$Freq > 
+                              0.5) & (clu_ann_firstname$Freq >= max(clu_ann_firstname$Freq)), 
                               ]
-                            clu_ann_firstname <- clu_ann_firstname[(clu_ann_firstname$Freq > 0.5) & 
-                              (clu_ann_firstname$Freq >= max(clu_ann_firstname$Freq)), ]
                             
                             if (nrow(clu_ann_firstname) == 1) {
                               cellsubtype1 <- clu_ann_firstname$Var1
-                              clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype1, ]$geneSymbol)
+                              clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype1, 
+                                ]$geneSymbol)
                               PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype1, ]$PMID)
                               
                               clu_ann_for_third <- clu_ann1[clu_ann1$variable == "third", ]
@@ -583,7 +611,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                 clu_third_name <- as.data.frame(table(clu_third$value), stringsAsFactors = F)
                                 m <- clu_third_name$Freq + 1
                                 clu_third_name$Freq <- clu_third_name$Freq/m
-                                clu_third_name <- clu_third_name[order(clu_third_name$Var1), ]
+                                clu_third_name <- clu_third_name[order(clu_third_name$Var1), 
+                                  ]
                                 
                                 clu_third_article <- unique(clu_third[, c("PMID", "value")])
                                 clu_third_article <- as.data.frame(table(clu_third_article$value), 
@@ -600,7 +629,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                   ]
                                 clu_ann_third <- clu_ann_third[!is.na(clu_ann_third$first), ]
                                 
-                                clu_ann_thirdname <- as.data.frame(table(clu_ann_third$third), stringsAsFactors = F)
+                                clu_ann_thirdname <- as.data.frame(table(clu_ann_third$third), 
+                                  stringsAsFactors = F)
                                 
                                 if (nrow(clu_ann_thirdname) > 0) {
                                   
@@ -623,14 +653,16 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                   clu_ann_thirdname <- clu_ann_thirdname[clu_ann_thirdname$Freq == 
                                     max(clu_ann_thirdname$Freq), ]
                                   clu_ann_thirdname <- clu_ann_thirdname[(clu_ann_thirdname$Freq > 
-                                    0.5) & (clu_ann_thirdname$Freq >= max(clu_third_name$Freq)), ]
+                                    0.5) & (clu_ann_thirdname$Freq >= max(clu_third_name$Freq)), 
+                                    ]
                                   
                                   # Number of (cell third subtype3 with max score) >= 1 -- output -- last
                                   if (nrow(clu_ann_thirdname) >= 1) {
                                     cellsubtype3 <- clu_ann_thirdname$Var1
                                     clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype3, 
                                       ]$geneSymbol)
-                                    PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype3, ]$PMID)
+                                    PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype3, 
+                                      ]$PMID)
                                   }
                                 }
                               }
@@ -644,7 +676,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                         cellsubtype3 <- unique(clu_ann_for_det$value)
                         clu_marker <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype3, 
                           ]$geneSymbol)
-                        PMID <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype3, ]$PMID)
+                        PMID <- unique(clu_ann_for_det[clu_ann_for_det$value %in% cellsubtype3, 
+                          ]$PMID)
                         
                         clu_ann_for_second <- clu_ann1[clu_ann1$variable == "second", ]
                         
@@ -659,7 +692,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                           clu_second_name <- clu_second_name[order(clu_second_name$Var1), ]
                           
                           clu_second_article <- unique(clu_second[, c("PMID", "value")])
-                          clu_second_article <- as.data.frame(table(clu_second_article$value), stringsAsFactors = F)
+                          clu_second_article <- as.data.frame(table(clu_second_article$value), 
+                            stringsAsFactors = F)
                           m <- clu_second_article$Freq + 1
                           clu_second_article$Freq <- clu_second_article$Freq/m
                           clu_second_article <- clu_second_article[order(clu_second_article$Var1), 
@@ -691,14 +725,16 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                             # cell second subtype2 scoring and compare with max second subtype2 score
                             clu_ann_secondname$Freq <- sqrt(clu_ann_secondname$Freq * clu_ann_secondarticle$Freq)
                             
-                            clu_ann_secondname <- clu_ann_secondname[clu_ann_secondname$Freq == max(clu_ann_secondname$Freq), 
+                            clu_ann_secondname <- clu_ann_secondname[clu_ann_secondname$Freq == 
+                              max(clu_ann_secondname$Freq), ]
+                            clu_ann_secondname <- clu_ann_secondname[(clu_ann_secondname$Freq > 
+                              0.5) & (clu_ann_secondname$Freq >= max(clu_second_name$Freq)), 
                               ]
-                            clu_ann_secondname <- clu_ann_secondname[(clu_ann_secondname$Freq > 0.5) & 
-                              (clu_ann_secondname$Freq >= max(clu_second_name$Freq)), ]
                             
                             if (nrow(clu_ann_secondname) == 1) {
                               cellsubtype2 <- clu_ann_secondname$Var1
-                              clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, ]$geneSymbol)
+                              clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, 
+                                ]$geneSymbol)
                               PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, ]$PMID)
                               
                               clu_ann_for_first <- clu_ann1[clu_ann1$variable == "first", ]
@@ -711,7 +747,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                 clu_first_name <- as.data.frame(table(clu_first$value), stringsAsFactors = F)
                                 m <- clu_first_name$Freq + 1
                                 clu_first_name$Freq <- clu_first_name$Freq/m
-                                clu_first_name <- clu_first_name[order(clu_first_name$Var1), ]
+                                clu_first_name <- clu_first_name[order(clu_first_name$Var1), 
+                                  ]
                                 
                                 clu_first_article <- unique(clu_first[, c("PMID", "value")])
                                 clu_first_article <- as.data.frame(table(clu_first_article$value), 
@@ -726,9 +763,11 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                 # matching cell first subtype1
                                 clu_ann_first <- clu_ann_second[clu_ann_second$second == cellsubtype2, 
                                   ]
-                                clu_ann_first <- clu_ann_first[!is.na(clu_ann_first$second), ]
+                                clu_ann_first <- clu_ann_first[!is.na(clu_ann_first$second), 
+                                  ]
                                 
-                                clu_ann_firstname <- as.data.frame(table(clu_ann_first$first), stringsAsFactors = F)
+                                clu_ann_firstname <- as.data.frame(table(clu_ann_first$first), 
+                                  stringsAsFactors = F)
                                 
                                 if (nrow(clu_ann_firstname) > 0) {
                                   
@@ -751,14 +790,16 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
                                   clu_ann_firstname <- clu_ann_firstname[clu_ann_firstname$Freq == 
                                     max(clu_ann_firstname$Freq), ]
                                   clu_ann_firstname <- clu_ann_firstname[(clu_ann_firstname$Freq > 
-                                    0.5) & (clu_ann_firstname$Freq >= max(clu_first_name$Freq)), ]
+                                    0.5) & (clu_ann_firstname$Freq >= max(clu_first_name$Freq)), 
+                                    ]
                                   
                                   # Number of (cell first subtype1 with max score) >= 1 -- output -- last
                                   if (nrow(clu_ann_firstname) >= 1) {
                                     cellsubtype1 <- clu_ann_firstname$Var1
                                     clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype1, 
                                       ]$geneSymbol)
-                                    PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype1, ]$PMID)
+                                    PMID <- unique(clu_ann1[clu_ann1$value %in% cellsubtype1, 
+                                      ]$PMID)
                                   }
                                 }
                               }
@@ -772,8 +813,8 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
             }
         }
         
-        if (length(rescluster_marker1) == 0){
-          rescluster_marker1<- 'NA'
+        if (length(rescluster_marker1) == 0) {
+            rescluster_marker1 <- "NA"
         }
         
         # processing the format of cell type
@@ -846,6 +887,7 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
             celltype_related_marker = clu_marker, PMID = PMID, stringsAsFactors = F)
         
         clu_ann_res <- rbind(clu_ann_res, clu_ann)
+        pb$tick()
     }
     
     for (i in 1:nrow(clu_ann_res)) {
@@ -861,7 +903,7 @@ scCATCH <- function(object, species = NULL, cancer = NULL, tissue = NULL) {
         clu_ann_res[i, "cell_type"] <- d2
     }
     clu_ann_res <- clu_ann_res[, -c(3, 4, 5)]
-    cat("***Done***", "\n")
+    cat("---Done---", "\n")
     Sys.sleep(2)
     return(clu_ann_res)
 }

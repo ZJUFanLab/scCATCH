@@ -2,7 +2,8 @@
 
 export(findmarkergenes)
 export(scCATCH)
-import(Matrix)
 import(Seurat)
 import(data.table)
+import(progress)
 import(stats)
+importFrom(Matrix,rowMeans)
