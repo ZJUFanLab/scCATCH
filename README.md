@@ -67,7 +67,7 @@ clu_markers <- findmarkergenes(object,
                                pvalue = 0.05)
 ```
 
-Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after the default log1p normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in Jan. 10, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes will be removed.
+Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0) after the default log1p normalization and cluster analysis. The potential marker genes in each cluster are identified according to its expression level compared to it in every other clusters. Only significantly highly expressed one in all pair-wise comparison of the cluster will be selected as a potential marker gene for the cluster. Genes will be revised according to NCBI Gene symbols (updated in June 19, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes will be removed.
 
 `object` Seurat object (>= 3.0.0) after the default log1p normalization and cluster analysis. <font color=red>Please ensure data is log1p normalized data and data has been clustered before running scCATCH pipeline.</font>
 
