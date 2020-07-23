@@ -89,7 +89,7 @@ Identify potential marker genes for each cluster from a Seurat object (>= 3.0.0)
 
 __Output__
 
-`clu_markers`A list include a new data matrix wherein genes are revised by official gene symbols according to NCBI Gene symbols (updated in Jan. 10, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes are removed as well as a data.frame containing potential marker genes of each selected cluster and the corresponding expressed cells percentage and average fold change for each cluster.
+`clu_markers`A list include a new data matrix wherein genes are revised by official gene symbols according to NCBI Gene symbols (updated in June 19, 2020, [https://www.ncbi.nlm.nih.gov/gene](https://www.ncbi.nlm.nih.gov/gene)) and no matched genes and duplicated genes are removed as well as a data.frame containing potential marker genes of each selected cluster and the corresponding expressed cells percentage and average fold change for each cluster.
 
 ### Cluster annotation
 
