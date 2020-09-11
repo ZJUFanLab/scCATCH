@@ -31,9 +31,10 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 - Fix the `Error in intI(j, n = x@Dim[2], dn[[2]], give.dn = FALSE) : invalid character indexing` in `findmarkergenes()` by adding a check of cluster number. Refer to [issue 14](https://github.com/ZJUFanLab/scCATCH/issues/14)
 - Fix the `Error in object[object$cluster == clu.num[i], ] : wrong number of dimensions` in `scCATCH()` by adding a check of type of input. Refer to [issue 13](https://github.com/ZJUFanLab/scCATCH/issues/13)
 - Add a progress bar for `findmarkergenes()` and `scCATCH()`.
+- __scCATCH for R > 4.0.0 can be downloaded in [Release](https://github.com/ZJUFanLab/scCATCH/releases/tag/v2.1) page__. 
 
 # Install
-[![source package scCATCH-2.1.tar.gz](https://img.shields.io/badge/source%20package-scCATCH--2.1.tar.gz-yellowgreen)](https://codeload.github.com/ZJUFanLab/scCATCH/tar.gz/v2.1)
+[![scCATCH-2.1.tar.gz R>3.6](https://img.shields.io/badge/scCATCH--2.1-R%3E3.6-brightgreen)](https://codeload.github.com/ZJUFanLab/scCATCH/tar.gz/v2.1) [![scCATCH-2.1.tar.gz R>4.0](https://img.shields.io/badge/scCATCH--2.1-R%3E4.0-blue)](https://github.com/ZJUFanLab/scCATCH/releases/download/v2.1/scCATCH_2.1.R-4.0.tar.gz)
 
 ```
 # download the source package of scCATCH-2.1.tar.gz and install it
