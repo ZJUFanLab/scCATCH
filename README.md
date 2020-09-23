@@ -168,7 +168,5 @@ Note: please select the right cancer type and the corresponding tissue type (See
 
 Solutions for possilble bugs and errors. Please refer to closed [Issues1](https://github.com/ZJUFanLab/scCATCH/issues?q=is%3Aissue+is%3Aclosed) and [Issues2](https://github.com/ZJUFanLab/scCATCH_performance_comparison/issues?q=is%3Aissue+is%3Aclosed)
 
-# Contributors
-![Xin Shao](https://img.shields.io/badge/Xin-Shao-brightgreen.svg) ![Xiaohui Fan](https://img.shields.io/badge/Xiaohui-Fan-green.svg)
-
+# About
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn
