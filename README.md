@@ -13,7 +13,7 @@ To address these problems, we introduce a __single cell Cluster-based Annotation
 
 __CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, and 2,097 references of human and mouse.__
 
-The scCATCH mainly includes two function `findmarkergenes()` and `scCATCH()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
+The scCATCH mainly includes two function `findmarkergene()` and `scCATCH()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
 
 # Cite
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
