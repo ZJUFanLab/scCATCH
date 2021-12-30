@@ -1,23 +1,26 @@
 Package: scCATCH
 Type: Package
 Title: Single Cell Cluster-Based Annotation Toolkit for Cellular Heterogeneity
-Version: 2.1
-Depends: R (>= 3.6.0)
+Version: 3.0
+Depends: R (>= 4.0.0)
 Author: Xin Shao
 Maintainer: Xin Shao<xin_shao@zju.edu.cn>
-Description: This package is an automatic cluster-based annotation pipeline based on evidence-based score by matching the marker genes with known cell markers in tissue-specific cell taxonomy reference database.
-License: GPL-3
+Description: This package is an automatic cluster-based annotation pipeline 
+    based on evidence-based score by matching the marker genes with known cell 
+    markers in tissue-specific cell taxonomy reference database.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
-Imports: 
-    Seurat (>= 3.0.0),
-    stats,
-    data.table,
-    progress,
-    Matrix
+RoxygenNote: 7.1.2
 Suggests: 
-    knitr,
     rmarkdown,
+    knitr,
     testthat
 VignetteBuilder: knitr
+Imports: 
+    Matrix,
+    methods,
+    progress,
+    stats,
+    crayon,
+    reshape2

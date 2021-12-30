@@ -1,0 +1,114 @@
+---
+title: "tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This package is a single cell Cluster-based auto-Annotation Toolkit for Cellular Heterogeneity (scCATCH) from cluster potential marker genes identification to cluster annotation based on evidence-based score by matching the potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
+
+The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automatic annotation for each identified cluster.
+
+scCATCH can be used to annotate scRNA-seq data from tissue with cancer and without cancer.
+
+### General usage
+[1] For scRNA-seq data, we suggest to revise the gene symbols with `rev_gene()`. `geneinfo` is the system data.frame containing the information of human and mouse. To use your own `geneinfo` data.frame, please refer to `demo_geneinfo` to build a new one, e.g., rat, zebrafish, Drosophila, C. elegans, etc.
+```{r setup, echo=TRUE}
+library(scCATCH)
+load(paste0(system.file(package = "scCATCH"), "/extdata/mouse_kidney_203.rda"))
+
+# demo_geneinfo
+demo_geneinfo()
+
+# revise gene symbols
+mouse_kidney_203 <- rev_gene(data = mouse_kidney_203,data_type = "data",species = "Mouse", geneinfo = geneinfo)
+```
+
+[2] create scCATCH object with `createscCATCH()`. Users need to provide the normalized data and the cluster for each cell.
+```{r createscCATCH, echo=TRUE}
+obj <- createscCATCH(data = mouse_kidney_203, cluster = mouse_kidney_203_cluster)
+```
+
+[3] find highly expressed genes with `findmarkergene()`. Users need to provided the speices, tissue, or cancer information. `cellmatch` is the system data.frame containing the known markers of human and mouse. To use your own marker data.frame, please refer to `demo_marker` to build a new one, e.g., rat, zebrafish, Drosophila, C. elegans, etc.
+```{r findmarkergene, echo=TRUE}
+# demo_geneinfo
+demo_marker()
+
+# find highly expressed genes
+obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Kidney")
+```
+
+Note: There two methods to find marker genes. Set `use_method` `1` to compare with every other cluster and `2` to compare with other clusters together like the strategy in `Seurat`. Besides, when setting `use_method` `1`, users can set `comp_cluster`, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller comp_cluster.
+
+```{r findmarkergene_custom, eval=FALSE, include=FALSE}
+# The most strict condition to identify marker genes
+obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Kidney",use_method = "1")
+
+# The most loose condition to identify marker genes
+obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Kidney",use_method = "2")
+
+# Other conditions to identify marker genes
+obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Kidney",use_method = "1",comp_cluster = 1)
+```
+
+Moreover, users can adjust the `cell_min_pct`, `logfc`, and `pvalue` to identify the different marker genes.
+
+[4] Evidence-based score and annotation for each cluster with `findcelltype()`
+```{r findcelltype, echo=TRUE}
+obj <- findcelltype(object = obj)
+```
+
+### Custom usage
+Users are allowed to use the custom `cellmatch` for cell type prediction when [1] users want to select different combination of tissues or cancers for annotation; [2] users want to add more marker genes to `cellmatch` for annotation; [3] users want to use markers from different species other than human and mouse.
+In this way, please set `if_use_custom_marker` `TRUE` in `findmarkergene()` function and do not need to set `species`,`tissue`, and `cancer`
+
+[1] Different combination of tissues or cancers
+```{r findcelltype1, eval=FALSE, include=FALSE}
+# Example
+cellmatch <- cellmatch
+cellmatch <- cellmatch[cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
+obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+
+# Example
+cellmatch <- cellmatch
+cellmatch <- cellmatch[cellmatch$cancer %in% ("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma"),]
+obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+
+# Example
+cellmatch <- cellmatch
+cellmatch <- cellmatch[cellmatch$cancer %in% ("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma") | cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
+obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+
+```
+
+[2] Add more marker genes to `cellmatch` for annotation
+```{r findcelltype2, eval=FALSE, include=FALSE}
+# Example
+cellmatch <- cellmatch
+
+# cellmatch_new is provided by users
+cellmatch <- rbind(cellmatch, cellmatch_new)
+
+# Then use the new cellmatch
+# a. define the species, tissue, and cancer
+obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Lung", cancer = "Lung Cancer")
+
+# b. directly use custom cellmatch
+obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+```
+
+[3] Use markers from different species
+```{r findcelltype3, eval=FALSE, include=FALSE}
+# Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
+# Then use the new marker
+obj <- findmarkergene(object = obj,species = "Rat",marker = new_cellmatch,tissue = "Liver")
+```
