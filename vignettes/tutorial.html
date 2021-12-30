@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <p>This package is a single cell Cluster-based auto-Annotation Toolkit for Cellular Heterogeneity (scCATCH) from cluster potential marker genes identification to cluster annotation based on evidence-based score by matching the potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).</p>
-<p>The scCATCH mainly includes two function <code>findmarkergenes</code> and <code>scCATCH</code> to realize the automatic annotation for each identified cluster.</p>
+<p>The scCATCH mainly includes two function <code>findmarkergene</code> and <code>findcelltype</code> to realize the automatic annotation for each identified cluster.</p>
 <p>scCATCH can be used to annotate scRNA-seq data from tissue with cancer and without cancer.</p>
 <div id="general-usage" class="section level3">
 <h3>General usage</h3>
@@ -184,18 +184,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Note: there are 1764 potential marker genes in CellMatch database for Mouse on Kidney. </span></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
 <p>Note: There two methods to find marker genes. Set <code>use_method</code> <code>1</code> to compare with every other cluster and <code>2</code> to compare with other clusters together like the strategy in <code>Seurat</code>. Besides, when setting <code>use_method</code> <code>1</code>, users can set <code>comp_cluster</code>, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller comp_cluster.</p>
+<pre><code># The most strict condition to identify marker genes
+obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Kidney&quot;,use_method = &quot;1&quot;)
+
+# The most loose condition to identify marker genes
+obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Kidney&quot;,use_method = &quot;2&quot;)
+
+# Other conditions to identify marker genes
+obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Kidney&quot;,use_method = &quot;1&quot;,comp_cluster = 1)</code></pre>
 <p>Moreover, users can adjust the <code>cell_min_pct</code>, <code>logfc</code>, and <code>pvalue</code> to identify the different marker genes.</p>
 <p>[4] Evidence-based score and annotation for each cluster with <code>findcelltype()</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(<span class="at">object =</span> obj)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(<span class="at">object =</span> obj)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
 </div>
 <div id="custom-usage" class="section level3">
 <h3>Custom usage</h3>
 <p>Users are allowed to use the custom <code>cellmatch</code> for cell type prediction when [1] users want to select different combination of tissues or cancers for annotation; [2] users want to add more marker genes to <code>cellmatch</code> for annotation; [3] users want to use markers from different species other than human and mouse. In this way, please set <code>if_use_custom_marker</code> <code>TRUE</code> in <code>findmarkergene()</code> function and do not need to set <code>species</code>,<code>tissue</code>, and <code>cancer</code></p>
 <p>[1] Different combination of tissues or cancers</p>
+<pre><code># Example
+cellmatch &lt;- cellmatch
+cellmatch &lt;- cellmatch[cellmatch$tissue %in% (&quot;Liver&quot;, &quot;Lung&quot;, &quot;Brain&quot;),]
+obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+
+# Example
+cellmatch &lt;- cellmatch
+cellmatch &lt;- cellmatch[cellmatch$cancer %in% (&quot;Oligodendroglioma&quot;, &quot;Astrocytoma&quot;, &quot;CNS Primitive Neuroectodermal Tumor&quot;, &quot;High-grade glioma&quot;),]
+obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+
+# Example
+cellmatch &lt;- cellmatch
+cellmatch &lt;- cellmatch[cellmatch$cancer %in% (&quot;Oligodendroglioma&quot;, &quot;Astrocytoma&quot;, &quot;CNS Primitive Neuroectodermal Tumor&quot;, &quot;High-grade glioma&quot;) | cellmatch$tissue %in% (&quot;Liver&quot;, &quot;Lung&quot;, &quot;Brain&quot;),]
+obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+</code></pre>
 <p>[2] Add more marker genes to <code>cellmatch</code> for annotation</p>
+<pre><code># Example
+cellmatch &lt;- cellmatch
+
+# cellmatch_new is provided by users
+cellmatch &lt;- rbind(cellmatch, cellmatch_new)
+
+# Then use the new cellmatch
+# a. define the species, tissue, and cancer
+obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Lung&quot;, cancer = &quot;Lung Cancer&quot;)
+
+# b. directly use custom cellmatch
+obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)</code></pre>
 <p>[3] Use markers from different species</p>
+<pre><code># Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
+# Then use the new marker
+obj &lt;- findmarkergene(object = obj,species = &quot;Rat&quot;,marker = new_cellmatch,tissue = &quot;Liver&quot;)</code></pre>
 </div>
 
 

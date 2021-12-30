@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 This package is a single cell Cluster-based auto-Annotation Toolkit for Cellular Heterogeneity (scCATCH) from cluster potential marker genes identification to cluster annotation based on evidence-based score by matching the potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
 
-The scCATCH mainly includes two function `findmarkergenes` and `scCATCH` to realize the automatic annotation for each identified cluster.
+The scCATCH mainly includes two function `findmarkergene` and `findcelltype` to realize the automatic annotation for each identified cluster.
 
 scCATCH can be used to annotate scRNA-seq data from tissue with cancer and without cancer.
 
@@ -49,7 +49,7 @@ obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue =
 
 Note: There two methods to find marker genes. Set `use_method` `1` to compare with every other cluster and `2` to compare with other clusters together like the strategy in `Seurat`. Besides, when setting `use_method` `1`, users can set `comp_cluster`, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller comp_cluster.
 
-```{r findmarkergene_custom, eval=FALSE, include=FALSE}
+```
 # The most strict condition to identify marker genes
 obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Kidney",use_method = "1")
 
@@ -72,7 +72,7 @@ Users are allowed to use the custom `cellmatch` for cell type prediction when [1
 In this way, please set `if_use_custom_marker` `TRUE` in `findmarkergene()` function and do not need to set `species`,`tissue`, and `cancer`
 
 [1] Different combination of tissues or cancers
-```{r findcelltype1, eval=FALSE, include=FALSE}
+```
 # Example
 cellmatch <- cellmatch
 cellmatch <- cellmatch[cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
@@ -91,7 +91,7 @@ obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
 ```
 
 [2] Add more marker genes to `cellmatch` for annotation
-```{r findcelltype2, eval=FALSE, include=FALSE}
+```
 # Example
 cellmatch <- cellmatch
 
@@ -107,7 +107,7 @@ obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
 ```
 
 [3] Use markers from different species
-```{r findcelltype3, eval=FALSE, include=FALSE}
+```
 # Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
 # Then use the new marker
 obj <- findmarkergene(object = obj,species = "Rat",marker = new_cellmatch,tissue = "Liver")

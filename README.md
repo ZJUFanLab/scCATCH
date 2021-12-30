@@ -13,7 +13,7 @@ To address these problems, we introduce a __single cell Cluster-based Annotation
 
 __CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, and 2,097 references of human and mouse.__
 
-The scCATCH mainly includes two function `findmarkergene()` and `scCATCH()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
+The scCATCH mainly includes two function `findmarkergene()` and `findcelltype()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
 
 # Cite
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
@@ -23,18 +23,18 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 # <a name='devtools'>News</a>
 ### v3.0
 - Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in June. 30, 2021, https://www.ncbi.nlm.nih.gov/gene).
-- Allow users to use custom `cellmatch`
-- Allow users to select different combination of tissues or cancers for annotation.
-- Allow users to add more marker genes to `cellmatch` for annotation.
-- Allow users to use markers from different species other than human and mouse.
-- Allow users to use more methods to identify highly expressed genes.
+- __Allow users to use custom `cellmatch`__
+- __Allow users to select different combination of tissues or cancers for annotation.__
+- __Allow users to add more marker genes to `cellmatch` for annotation.__
+- __Allow users to use markers from different species other than human and mouse.__
+- __Allow users to use more methods to identify highly expressed genes.__
 
 ### v2.1
 - Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in June 19, 2020, https://www.ncbi.nlm.nih.gov/gene). Unmatched marker genes FLJ42102, LOC101928100, LOC200772 and BC017158 are removed.
 - Fix the `Error in intI(j, n = x@Dim[2], dn[[2]], give.dn = FALSE) : invalid character indexing` in `findmarkergenes()` by adding a check of cluster number. Refer to [issue 14](https://github.com/ZJUFanLab/scCATCH/issues/14)
 - Fix the `Error in object[object$cluster == clu.num[i], ] : wrong number of dimensions` in `scCATCH()` by adding a check of type of input. Refer to [issue 13](https://github.com/ZJUFanLab/scCATCH/issues/13)
 - Add a progress bar for `findmarkergenes()` and `scCATCH()`.
-- __scCATCH for R > 4.0.0 can be downloaded in [Release](https://github.com/ZJUFanLab/scCATCH/releases/tag/v2.1) page__. 
+- scCATCH for R > 4.0.0 can be downloaded in [Release](https://github.com/ZJUFanLab/scCATCH/releases/tag/v2.1) page. 
 
 ### v2.0
 - Add `cluster` and `match_CellMatch` parameters to handle large scRNA-seq datasets.
