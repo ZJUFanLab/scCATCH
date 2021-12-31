@@ -79,17 +79,17 @@ In this way, please set `if_use_custom_marker` `TRUE` in `findmarkergene()` func
 ```
 # Example
 cellmatch <- cellmatch
-cellmatch <- cellmatch[cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
+cellmatch <- cellmatch[cellmatch$tissue %in% c("Liver", "Lung", "Brain"),]
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
 
 # Example
 cellmatch <- cellmatch
-cellmatch <- cellmatch[cellmatch$cancer %in% ("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma"),]
+cellmatch <- cellmatch[cellmatch$cancer %in% c("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma"),]
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
 
 # Example
 cellmatch <- cellmatch
-cellmatch <- cellmatch[cellmatch$cancer %in% ("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma") | cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
+cellmatch <- cellmatch[cellmatch$cancer %in% c("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma") | cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
 
 ```
