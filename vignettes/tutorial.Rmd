@@ -22,6 +22,7 @@ scCATCH can be used to annotate scRNA-seq data from tissue with cancer and witho
 
 ### General usage
 [1] For scRNA-seq data, we suggest to revise the gene symbols with `rev_gene()`. `geneinfo` is the system data.frame containing the information of human and mouse. To use your own `geneinfo` data.frame, please refer to `demo_geneinfo` to build a new one, e.g., rat, zebrafish, Drosophila, C. elegans, etc.
+
 ```{r setup, echo=TRUE}
 library(scCATCH)
 load(paste0(system.file(package = "scCATCH"), "/extdata/mouse_kidney_203.rda"))
@@ -47,7 +48,7 @@ demo_marker()
 obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Kidney")
 ```
 
-Note: There two methods to find marker genes. Set `use_method` `1` to compare with every other cluster and `2` to compare with other clusters together like the strategy in `Seurat`. Besides, when setting `use_method` `1`, users can set `comp_cluster`, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller comp_cluster.
+Note: There two methods to find marker genes. Set `use_method` `1` to compare with every other cluster and `2` to compare with other clusters together like the strategy in `Seurat`. Besides, when setting `use_method` `1`, users can set `comp_cluster`, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller `comp_cluster`.
 
 ```
 # The most strict condition to identify marker genes
@@ -65,6 +66,9 @@ Moreover, users can adjust the `cell_min_pct`, `logfc`, and `pvalue` to identify
 [4] Evidence-based score and annotation for each cluster with `findcelltype()`
 ```{r findcelltype, echo=TRUE}
 obj <- findcelltype(object = obj)
+
+# Results is stored in obj
+obj@celltype
 ```
 
 ### Custom usage
