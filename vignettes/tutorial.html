@@ -229,17 +229,19 @@ obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellm
 cellmatch &lt;- cellmatch
 cellmatch &lt;- cellmatch[cellmatch$tissue %in% c(&quot;Liver&quot;, &quot;Lung&quot;, &quot;Brain&quot;),]
 obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+obj &lt;- findcelltype(obj)
 
 # Example
 cellmatch &lt;- cellmatch
 cellmatch &lt;- cellmatch[cellmatch$cancer %in% c(&quot;Oligodendroglioma&quot;, &quot;Astrocytoma&quot;, &quot;CNS Primitive Neuroectodermal Tumor&quot;, &quot;High-grade glioma&quot;),]
 obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+obj &lt;- findcelltype(obj)
 
 # Example
 cellmatch &lt;- cellmatch
 cellmatch &lt;- cellmatch[cellmatch$cancer %in% c(&quot;Oligodendroglioma&quot;, &quot;Astrocytoma&quot;, &quot;CNS Primitive Neuroectodermal Tumor&quot;, &quot;High-grade glioma&quot;) | cellmatch$tissue %in% (&quot;Liver&quot;, &quot;Lung&quot;, &quot;Brain&quot;),]
 obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
-</code></pre>
+obj &lt;- findcelltype(obj)</code></pre>
 <p>[2] Add more marker genes to <code>cellmatch</code> for annotation</p>
 <pre><code># Example
 cellmatch &lt;- cellmatch
@@ -250,13 +252,16 @@ cellmatch &lt;- rbind(cellmatch, cellmatch_new)
 # Then use the new cellmatch
 # a. define the species, tissue, and cancer
 obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Lung&quot;, cancer = &quot;Lung Cancer&quot;)
+obj &lt;- findcelltype(obj)
 
 # b. directly use custom cellmatch
-obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)</code></pre>
+obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+obj &lt;- findcelltype(obj)</code></pre>
 <p>[3] Use markers from different species</p>
 <pre><code># Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
 # Then use the new marker
-obj &lt;- findmarkergene(object = obj,species = &quot;Rat&quot;,marker = new_cellmatch,tissue = &quot;Liver&quot;)</code></pre>
+obj &lt;- findmarkergene(object = obj,species = &quot;Rat&quot;,marker = new_cellmatch,tissue = &quot;Liver&quot;)
+obj &lt;- findcelltype(obj)</code></pre>
 </div>
 
 

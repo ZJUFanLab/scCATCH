@@ -81,17 +81,19 @@ In this way, please set `if_use_custom_marker` `TRUE` in `findmarkergene()` func
 cellmatch <- cellmatch
 cellmatch <- cellmatch[cellmatch$tissue %in% c("Liver", "Lung", "Brain"),]
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+obj <- findcelltype(obj)
 
 # Example
 cellmatch <- cellmatch
 cellmatch <- cellmatch[cellmatch$cancer %in% c("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma"),]
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+obj <- findcelltype(obj)
 
 # Example
 cellmatch <- cellmatch
 cellmatch <- cellmatch[cellmatch$cancer %in% c("Oligodendroglioma", "Astrocytoma", "CNS Primitive Neuroectodermal Tumor", "High-grade glioma") | cellmatch$tissue %in% ("Liver", "Lung", "Brain"),]
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
-
+obj <- findcelltype(obj)
 ```
 
 [2] Add more marker genes to `cellmatch` for annotation
@@ -105,9 +107,11 @@ cellmatch <- rbind(cellmatch, cellmatch_new)
 # Then use the new cellmatch
 # a. define the species, tissue, and cancer
 obj <- findmarkergene(object = obj,species = "Mouse",marker = cellmatch,tissue = "Lung", cancer = "Lung Cancer")
+obj <- findcelltype(obj)
 
 # b. directly use custom cellmatch
 obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
+obj <- findcelltype(obj)
 ```
 
 [3] Use markers from different species
@@ -115,4 +119,5 @@ obj <- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
 # Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
 # Then use the new marker
 obj <- findmarkergene(object = obj,species = "Rat",marker = new_cellmatch,tissue = "Liver")
+obj <- findcelltype(obj)
 ```
