@@ -159,7 +159,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   Aco1      Aco   Mouse</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># revise gene symbols</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>mouse_kidney_203 <span class="ot">&lt;-</span> <span class="fu">rev_gene</span>(<span class="at">data =</span> mouse_kidney_203,<span class="at">data_type =</span> <span class="st">&quot;data&quot;</span>,<span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">geneinfo =</span> geneinfo)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>mouse_kidney_203 <span class="ot">&lt;-</span> <span class="fu">rev_gene</span>(<span class="at">data =</span> mouse_kidney_203, <span class="at">data_type =</span> <span class="st">&quot;data&quot;</span>, <span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">geneinfo =</span> geneinfo)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 载入需要的程辑包：Matrix</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Revising gene symbols for data matrix </span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
@@ -180,88 +180,110 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        NA   T Cell  ACP5 Single-cell sequencing 28622514</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># find highly expressed genes</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj,<span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>,<span class="at">marker =</span> cellmatch,<span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">marker =</span> cellmatch, <span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>)</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Note: there are 1764 potential marker genes in CellMatch database for Mouse on Kidney. </span></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
-<p>Note: There two methods to find marker genes. Set <code>use_method</code> <code>1</code> to compare with every other cluster and <code>2</code> to compare with other clusters together like the strategy in <code>Seurat</code>. Besides, when setting <code>use_method</code> <code>1</code>, users can set <code>comp_cluster</code>, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller <code>comp_cluster</code>.</p>
-<pre><code># The most strict condition to identify marker genes
-obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Kidney&quot;,use_method = &quot;1&quot;)
-
-# The most loose condition to identify marker genes
-obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Kidney&quot;,use_method = &quot;2&quot;)
-
-# Other conditions to identify marker genes
-obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Kidney&quot;,use_method = &quot;1&quot;,comp_cluster = 1)</code></pre>
-<p>Moreover, users can adjust the <code>cell_min_pct</code>, <code>logfc</code>, and <code>pvalue</code> to identify the different marker genes.</p>
 <p>[4] Evidence-based score and annotation for each cluster with <code>findcelltype()</code></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(<span class="at">object =</span> obj)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Results is stored in obj</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>obj<span class="sc">@</span>celltype</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   cluster</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       1</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       2</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       3</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         cluster_marker</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                                               Sdhd, Ckmt1, Rabac1, Clcn5, Kit, Clcnkb, Atp6v1b1, Pgrmc1, Atp6v0e, Eps8, Cpsf4l, Atp6ap1, Atp6v1e1, Epb41l2, Avpr1a, Uqcr11, Mdh1, Atp6v1c2, Slc26a4, Atp6v1d, Uqcrb, Hexb, Emb, Prkcd, Aco2, Alcam, Pros1, Guca2a, Atp6v0c, Slc4a9, Efhd1, Pam, Rgs2, Atp6v1g3, Mkks, Jag1, Edn3, Car2, Mme, Atp6v0d2, Ociad2, Stap1, Pcolce, Tmem213, Aldh1l1, Itpr2, Ctsc, Atp6ap2, Slc25a4, Plet1, Cox7a2, Car12, Gng11, Mif, Atp6v0b, Atp6v1h, Gadd45a, Etl4, Cox6b1, Fam13a, Slc43a2, Atp6v0a4, Rcan2, Ncoa7, S100g, Serpinb6b, Aqp6, Hepacam2, Oxgr1, Serpinb9, Wnk1, Foxi1, Chchd10, Tdrp, Spink8, Atp6v1a, 9130008F23Rik, Adgrf5, Pde1a, Kng2, Tmem117, Tmem61, Rhbg, Mindy1</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                                                                                              Cav2, Scnn1g, Calm1, Gstt1, Aif1l, Fxyd4, Wdr1, Crip2, Crip1, Cav1, Ctsd, Pea15a, Stc1, Gata3, Dstn, Pls3, Sdc4, Serinc3, Wfdc2, Nudt4, Sptbn1, Btg2, Pgam2, Cdkl1, Fos, Clu, Fstl1, Aqp2, Krt7, Krt18, Ivns1abp, Myl12a, Anxa1, Ptp4a1, Atp1b1, Olfm1, Cst3, S100a11, Tbck, Calb1, Aqp3, Hacd4, Pdzk1ip1, Tmem52b, Arhgdib, Iqgap1, Scnn1b, Avpr2, Sorbs2, Adgrg1, Cdh16, Hsd11b2, Aplp2, Tpm1, Cdo1, Tspan8, R3hdm4, Btg1, Mcoln3, Kcne1, Arglu1, Npnt, Kcnj1, Tmem45b, S100a1, Cystm1, Cd24a, Cldn4, Tmem229a, Tmsb4x, Lgals3, Tacstd2, Junb, Phactr1, Blnk, Pcnp, Akr1c19, Adh1, S100a16, Apela, Btc, Neat1, Cavin1</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Slc22a18, Gm2a, Slc7a7, Folr1, Rhoc, Apoe, Dnase1, Htra1, Cyba, Neu1, Slc47a1, Pipox, Igfbp4, Mapt, Sparc, Cxcl16, Timp3, Tcn2, Acox1, Akr1c21, Slc17a1, Slc34a1, Slc6a19, Ephx2, Cyp2d26, Miox, Cela1, Fhl1, Slc22a1, Mep1a, Lims2, Cndp2, Slc22a6, Fth1, Keg1, Acy3, Cyp2e1, Pecr, Dbi, Lrp2, Cat, Sord, Slc27a2, Pck1, Hao2, Hmgcs2, Bdh2, Ddah1, Ccdc107, Scp2, Akr1a1, Cda, Errfi1, Prom1, Khk, Tmem176b, Nox4, Fah, Acsm2, Msn, Ces1f, 4931406C07Rik, Slc37a4, Calml4, Pth1r, Guca2b, Xylb, Slc17a3, Pdzk1, Degs1, Ttc36, Lap3, Id1, Defb29, Tmem174, Ugt3a2, Cyp2j5, Slc22a30, Them7, Fut9, Tpt1, Slc4a4, Slc22a12, Ugt2b38, Kcnj15, Slc22a28, Glyat, Gpx1, Lgals1, Fbp1, Gm10804, Ass1, G6pc, Rida, Mettl26, Nat8f1, Selenop</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           cell_type celltype_score</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Collecting Duct Intercalated Cell           0.86</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    Collecting Duct Principal Cell           0.86</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3              Proximal Tubule Cell           0.70</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            celltype_related_marker</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                  9130008F23Rik, Atp6v0d2, Atp6v1g3, Car2, Chchd10, Fam13a, Mif, Mme, Oxgr1, Slc25a4, Tmem61, Uqcrb, Aco2, Aldh1l1, Aqp6, Atp6ap1, Atp6ap2, Atp6v0a4, Atp6v0b, Atp6v0c, Atp6v0e, Atp6v1a, Atp6v1b1, Atp6v1c2, Atp6v1d, Atp6v1e1, Atp6v1h, Avpr1a, Car12, Ckmt1, Clcn5, Clcnkb, Cox6b1, Cox7a2, Cpsf4l, Efhd1, Emb, Eps8, Foxi1, Guca2a, Hepacam2, Hexb, Itpr2, Kit, Mdh1, Mkks, Ncoa7, Ociad2, Pam, Pde1a, Pgrmc1, Rcan2, Rgs2, S100g, Sdhd, Serpinb6b, Serpinb9, Slc26a4, Slc4a9, Tdrp, Tmem117, Tmem213, Uqcr11, Mindy1, Adgrf5</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                                                                                                                                                                                                         Adgrg1, Apela, Aqp2, Aqp3, Avpr2, Cav1, Cav2, Cdh16, Cdo1, Cldn4, Fxyd4, Gstt1, Hsd11b2, Ivns1abp, Kcne1, Kcnj1, Npnt, Nudt4, Olfm1, Pdzk1ip1, Phactr1, Scnn1b, Scnn1g, Stc1, Tacstd2, Tbck, Tmem229a, Tmem45b, Tspan8, Wfdc2, Adh1, Aif1l, Akr1c19, Arhgdib, Atp1b1, Btc, Cdkl1, Ctsd, Cystm1, Fstl1, Krt18, Krt7, Lgals3, Neat1, Cd24a</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 4931406C07Rik, Acox1, Acsm2, Acy3, Akr1a1, Akr1c21, Ass1, Bdh2, Calml4, Cat, Ccdc107, Cda, Cela1, Ces1f, Cndp2, Cyp2d26, Cyp2e1, Cyp2j5, Defb29, Dnase1, Ephx2, Errfi1, Fah, Fbp1, Folr1, Fth1, Fut9, G6pc, Glyat, Gm10804, Gpx1, Guca2b, Hao2, Kcnj15, Keg1, Khk, Lap3, Lrp2, Mep1a, Miox, Neu1, Nox4, Pck1, Pdzk1, Pecr, Pipox, Scp2, Slc17a1, Slc17a3, Slc22a1, Slc22a12, Slc22a18, Slc22a28, Slc22a30, Slc22a6, Slc27a2, Slc34a1, Slc37a4, Slc47a1, Slc4a4, Slc6a19, Slc7a7, Sord, Tcn2, Them7, Tmem174, Ttc36, Ugt2b38, Ugt3a2, Xylb, Mettl26, Nat8f1, Rida</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           PMID</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 29622724, 28851704, 29775597</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 29622724, 28851704, 29775597</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                     29622724</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(<span class="at">object =</span> obj)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Results is stored in obj</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>obj<span class="sc">@</span>celltype</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   cluster</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       1</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       2</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       3</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         cluster_marker</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                                               Sdhd, Ckmt1, Rabac1, Clcn5, Kit, Clcnkb, Atp6v1b1, Pgrmc1, Atp6v0e, Eps8, Cpsf4l, Atp6ap1, Atp6v1e1, Epb41l2, Avpr1a, Uqcr11, Mdh1, Atp6v1c2, Slc26a4, Atp6v1d, Uqcrb, Hexb, Emb, Prkcd, Aco2, Alcam, Pros1, Guca2a, Atp6v0c, Slc4a9, Efhd1, Pam, Rgs2, Atp6v1g3, Mkks, Jag1, Edn3, Car2, Mme, Atp6v0d2, Ociad2, Stap1, Pcolce, Tmem213, Aldh1l1, Itpr2, Ctsc, Atp6ap2, Slc25a4, Plet1, Cox7a2, Car12, Gng11, Mif, Atp6v0b, Atp6v1h, Gadd45a, Etl4, Cox6b1, Fam13a, Slc43a2, Atp6v0a4, Rcan2, Ncoa7, S100g, Serpinb6b, Aqp6, Hepacam2, Oxgr1, Serpinb9, Wnk1, Foxi1, Chchd10, Tdrp, Spink8, Atp6v1a, 9130008F23Rik, Adgrf5, Pde1a, Kng2, Tmem117, Tmem61, Rhbg, Mindy1</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                                                                                              Cav2, Scnn1g, Calm1, Gstt1, Aif1l, Fxyd4, Wdr1, Crip2, Crip1, Cav1, Ctsd, Pea15a, Stc1, Gata3, Dstn, Pls3, Sdc4, Serinc3, Wfdc2, Nudt4, Sptbn1, Btg2, Pgam2, Cdkl1, Fos, Clu, Fstl1, Aqp2, Krt7, Krt18, Ivns1abp, Myl12a, Anxa1, Ptp4a1, Atp1b1, Olfm1, Cst3, S100a11, Tbck, Calb1, Aqp3, Hacd4, Pdzk1ip1, Tmem52b, Arhgdib, Iqgap1, Scnn1b, Avpr2, Sorbs2, Adgrg1, Cdh16, Hsd11b2, Aplp2, Tpm1, Cdo1, Tspan8, R3hdm4, Btg1, Mcoln3, Kcne1, Arglu1, Npnt, Kcnj1, Tmem45b, S100a1, Cystm1, Cd24a, Cldn4, Tmem229a, Tmsb4x, Lgals3, Tacstd2, Junb, Phactr1, Blnk, Pcnp, Akr1c19, Adh1, S100a16, Apela, Btc, Neat1, Cavin1</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Slc22a18, Gm2a, Slc7a7, Folr1, Rhoc, Apoe, Dnase1, Htra1, Cyba, Neu1, Slc47a1, Pipox, Igfbp4, Mapt, Sparc, Cxcl16, Timp3, Tcn2, Acox1, Akr1c21, Slc17a1, Slc34a1, Slc6a19, Ephx2, Cyp2d26, Miox, Cela1, Fhl1, Slc22a1, Mep1a, Lims2, Cndp2, Slc22a6, Fth1, Keg1, Acy3, Cyp2e1, Pecr, Dbi, Lrp2, Cat, Sord, Slc27a2, Pck1, Hao2, Hmgcs2, Bdh2, Ddah1, Ccdc107, Scp2, Akr1a1, Cda, Errfi1, Prom1, Khk, Tmem176b, Nox4, Fah, Acsm2, Msn, Ces1f, 4931406C07Rik, Slc37a4, Calml4, Pth1r, Guca2b, Xylb, Slc17a3, Pdzk1, Degs1, Ttc36, Lap3, Id1, Defb29, Tmem174, Ugt3a2, Cyp2j5, Slc22a30, Them7, Fut9, Tpt1, Slc4a4, Slc22a12, Ugt2b38, Kcnj15, Slc22a28, Glyat, Gpx1, Lgals1, Fbp1, Gm10804, Ass1, G6pc, Rida, Mettl26, Nat8f1, Selenop</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           cell_type celltype_score</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Collecting Duct Intercalated Cell           0.86</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    Collecting Duct Principal Cell           0.86</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3              Proximal Tubule Cell           0.70</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            celltype_related_marker</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                  9130008F23Rik, Atp6v0d2, Atp6v1g3, Car2, Chchd10, Fam13a, Mif, Mme, Oxgr1, Slc25a4, Tmem61, Uqcrb, Aco2, Aldh1l1, Aqp6, Atp6ap1, Atp6ap2, Atp6v0a4, Atp6v0b, Atp6v0c, Atp6v0e, Atp6v1a, Atp6v1b1, Atp6v1c2, Atp6v1d, Atp6v1e1, Atp6v1h, Avpr1a, Car12, Ckmt1, Clcn5, Clcnkb, Cox6b1, Cox7a2, Cpsf4l, Efhd1, Emb, Eps8, Foxi1, Guca2a, Hepacam2, Hexb, Itpr2, Kit, Mdh1, Mkks, Ncoa7, Ociad2, Pam, Pde1a, Pgrmc1, Rcan2, Rgs2, S100g, Sdhd, Serpinb6b, Serpinb9, Slc26a4, Slc4a9, Tdrp, Tmem117, Tmem213, Uqcr11, Mindy1, Adgrf5</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                                                                                                                                                                                                         Adgrg1, Apela, Aqp2, Aqp3, Avpr2, Cav1, Cav2, Cdh16, Cdo1, Cldn4, Fxyd4, Gstt1, Hsd11b2, Ivns1abp, Kcne1, Kcnj1, Npnt, Nudt4, Olfm1, Pdzk1ip1, Phactr1, Scnn1b, Scnn1g, Stc1, Tacstd2, Tbck, Tmem229a, Tmem45b, Tspan8, Wfdc2, Adh1, Aif1l, Akr1c19, Arhgdib, Atp1b1, Btc, Cdkl1, Ctsd, Cystm1, Fstl1, Krt18, Krt7, Lgals3, Neat1, Cd24a</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 4931406C07Rik, Acox1, Acsm2, Acy3, Akr1a1, Akr1c21, Ass1, Bdh2, Calml4, Cat, Ccdc107, Cda, Cela1, Ces1f, Cndp2, Cyp2d26, Cyp2e1, Cyp2j5, Defb29, Dnase1, Ephx2, Errfi1, Fah, Fbp1, Folr1, Fth1, Fut9, G6pc, Glyat, Gm10804, Gpx1, Guca2b, Hao2, Kcnj15, Keg1, Khk, Lap3, Lrp2, Mep1a, Miox, Neu1, Nox4, Pck1, Pdzk1, Pecr, Pipox, Scp2, Slc17a1, Slc17a3, Slc22a1, Slc22a12, Slc22a18, Slc22a28, Slc22a30, Slc22a6, Slc27a2, Slc34a1, Slc37a4, Slc47a1, Slc4a4, Slc6a19, Slc7a7, Sord, Tcn2, Them7, Tmem174, Ttc36, Ugt2b38, Ugt3a2, Xylb, Mettl26, Nat8f1, Rida</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           PMID</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 29622724, 28851704, 29775597</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 29622724, 28851704, 29775597</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                     29622724</span></span></code></pre></div>
+<p>Note: There two methods to find marker genes. Set <code>use_method</code> <code>1</code> to compare with every other cluster and <code>2</code> to compare with other clusters together like the strategy in <code>Seurat</code>. Besides, when setting <code>use_method</code> <code>1</code>, users can set <code>comp_cluster</code>, it represent the number of clusters to compare. Default is to compare all other cluster for each cluster. Set it between 1 and length of unique clusters. More marker genes will be obtained for smaller <code>comp_cluster</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The most strict condition to identify marker genes</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">marker =</span> cellmatch,<span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>, <span class="at">use_method =</span> <span class="st">&quot;1&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Note: there are 1764 potential marker genes in CellMatch database for Mouse on Kidney. </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The most loose condition to identify marker genes</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">marker =</span> cellmatch, <span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>, <span class="at">use_method =</span> <span class="st">&quot;2&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Note: there are 1764 potential marker genes in CellMatch database for Mouse on Kidney. </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Other conditions to identify marker genes</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj,<span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">marker =</span> cellmatch, <span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>, <span class="at">use_method =</span> <span class="st">&quot;1&quot;</span>, <span class="at">comp_cluster =</span> <span class="dv">1</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Note: there are 1764 potential marker genes in CellMatch database for Mouse on Kidney. </span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
+<p>Moreover, users can adjust the <code>cell_min_pct</code>, <code>logfc</code>, and <code>pvalue</code> to identify the different marker genes.</p>
 </div>
 <div id="custom-usage" class="section level3">
 <h3>Custom usage</h3>
 <p>Users are allowed to use the custom <code>cellmatch</code> for cell type prediction when [1] users want to select different combination of tissues or cancers for annotation; [2] users want to add more marker genes to <code>cellmatch</code> for annotation; [3] users want to use markers from different species other than human and mouse. In this way, please set <code>if_use_custom_marker</code> <code>TRUE</code> in <code>findmarkergene()</code> function and do not need to set <code>species</code>,<code>tissue</code>, and <code>cancer</code></p>
 <p>[1] Different combination of tissues or cancers</p>
-<pre><code># Example
-cellmatch &lt;- cellmatch
-cellmatch &lt;- cellmatch[cellmatch$tissue %in% c(&quot;Liver&quot;, &quot;Lung&quot;, &quot;Brain&quot;),]
-obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
-obj &lt;- findcelltype(obj)
-
-# Example
-cellmatch &lt;- cellmatch
-cellmatch &lt;- cellmatch[cellmatch$cancer %in% c(&quot;Oligodendroglioma&quot;, &quot;Astrocytoma&quot;, &quot;CNS Primitive Neuroectodermal Tumor&quot;, &quot;High-grade glioma&quot;),]
-obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
-obj &lt;- findcelltype(obj)
-
-# Example
-cellmatch &lt;- cellmatch
-cellmatch &lt;- cellmatch[cellmatch$cancer %in% c(&quot;Oligodendroglioma&quot;, &quot;Astrocytoma&quot;, &quot;CNS Primitive Neuroectodermal Tumor&quot;, &quot;High-grade glioma&quot;) | cellmatch$tissue %in% (&quot;Liver&quot;, &quot;Lung&quot;, &quot;Brain&quot;),]
-obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
-obj &lt;- findcelltype(obj)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cellmatch_new <span class="ot">&lt;-</span> cellmatch[cellmatch<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Mouse&quot;</span> <span class="sc">&amp;</span> cellmatch<span class="sc">$</span>tissue <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Kidney&quot;</span>, <span class="st">&quot;Liver&quot;</span>, <span class="st">&quot;Lung&quot;</span>, <span class="st">&quot;Brain&quot;</span>), ]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">if_use_custom_marker =</span> T, <span class="at">marker =</span> cellmatch_new)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(obj)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Example</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>cellmatch_new <span class="ot">&lt;-</span> cellmatch[cellmatch<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Mouse&quot;</span> <span class="sc">&amp;</span> cellmatch<span class="sc">$</span>cancer <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Lung Cancer&quot;</span>, <span class="st">&quot;Lymph node&quot;</span>, <span class="st">&quot;Renal Cell Carcinoma&quot;</span>, <span class="st">&quot;Prostate Cancer&quot;</span>), ]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">if_use_custom_marker =</span> T, <span class="at">marker =</span> cellmatch_new)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(obj)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Example</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>cellmatch_new <span class="ot">&lt;-</span> cellmatch[cellmatch<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;Mouse&quot;</span>, ]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>cellmatch_new <span class="ot">&lt;-</span> cellmatch[cellmatch<span class="sc">$</span>cancer <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Lung Cancer&quot;</span>, <span class="st">&quot;Lymph node&quot;</span>, <span class="st">&quot;Renal Cell Carcinoma&quot;</span>, <span class="st">&quot;Prostate Cancer&quot;</span>) <span class="sc">|</span> cellmatch<span class="sc">$</span>tissue <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Kidney&quot;</span>, <span class="st">&quot;Liver&quot;</span>, <span class="st">&quot;Lung&quot;</span>, <span class="st">&quot;Brain&quot;</span>), ]</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">if_use_custom_marker =</span> T, <span class="at">marker =</span> cellmatch_new)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(obj)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
 <p>[2] Add more marker genes to <code>cellmatch</code> for annotation</p>
-<pre><code># Example
-cellmatch &lt;- cellmatch
-
-# cellmatch_new is provided by users
-cellmatch &lt;- rbind(cellmatch, cellmatch_new)
-
-# Then use the new cellmatch
-# a. define the species, tissue, and cancer
-obj &lt;- findmarkergene(object = obj,species = &quot;Mouse&quot;,marker = cellmatch,tissue = &quot;Lung&quot;, cancer = &quot;Lung Cancer&quot;)
-obj &lt;- findcelltype(obj)
-
-# b. directly use custom cellmatch
-obj &lt;- findmarkergene(object = obj,if_use_custom_marker = T, marker = cellmatch)
-obj &lt;- findcelltype(obj)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cellmatch_new is provided by users</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cellmatch_new &lt;- rbind(cellmatch, cellmatch_new)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Then use the new cellmatch</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># a. define the species, tissue, and cancer</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">species =</span> <span class="st">&quot;Mouse&quot;</span>, <span class="at">marker =</span> cellmatch_new, <span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Note: there are 1764 potential marker genes in CellMatch database for Mouse on Kidney. </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(obj)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># b. directly use custom cellmatch</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">if_use_custom_marker =</span> T, <span class="at">marker =</span> cellmatch_new)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(obj)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
 <p>[3] Use markers from different species</p>
-<pre><code># Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
-# Then use the new marker
-obj &lt;- findmarkergene(object = obj,species = &quot;Rat&quot;,marker = new_cellmatch,tissue = &quot;Liver&quot;)
-obj &lt;- findcelltype(obj)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Then use the new marker</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findmarkergene</span>(<span class="at">object =</span> obj, <span class="at">species =</span> <span class="st">&quot;Rat&quot;</span>, <span class="at">if_use_custom_marker =</span> T, <span class="at">marker =</span> cellmatch_new, <span class="at">tissue =</span> <span class="st">&quot;Kidney&quot;</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">findcelltype</span>(obj)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Beginning evidence-based scoring and annotation </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ***Done***</span></span></code></pre></div>
 </div>
 
 
