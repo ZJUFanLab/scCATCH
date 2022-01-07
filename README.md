@@ -32,7 +32,7 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 
 # Install
 ```
-install.packages("scCATCH") # from CRAN
+install.packages("scCATCH")
 ```
 
 # Usage
