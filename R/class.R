@@ -32,13 +32,14 @@ setClass("scCATCH", representation(data = "list", meta = "data.frame", para = "l
 #' @param cell_min_pct Include the gene detected in at least this many cells in each cluster.
 #' @param logfc Include the gene with at least this fold change of average gene expression compared to every other clusters.
 #' @param pvalue Include the significantly highly expressed gene with this cutoff of p value from wilcox test compared to every other clusters.
+#' @param verbose Show progress messages.
 #' @return scCATCH object
 #' @details Details of available tissues see \url{https://github.com/ZJUFanLab/scCATCH/wiki}
 #' @import methods
 #' @export
 
-setGeneric("findmarkergene", def = function(object, species = NULL, cluster = "All", if_use_custom_marker = F, marker = NULL,
-    cancer = "Normal", tissue = NULL, use_method = "1", comp_cluster = NULL, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05) {
+setGeneric("findmarkergene", def = function(object, species = NULL, cluster = "All", if_use_custom_marker = FALSE, marker = NULL,
+    cancer = "Normal", tissue = NULL, use_method = "1", comp_cluster = NULL, cell_min_pct = 0.25, logfc = 0.25, pvalue = 0.05, verbose = TRUE) {
     standardGeneric("findmarkergene")
 })
 
@@ -46,10 +47,11 @@ setGeneric("findmarkergene", def = function(object, species = NULL, cluster = "A
 #'
 #' @description Evidence-based score and annotation for each cluster.
 #' @param object scCATCH object generated from \code{\link{findmarkergene}}.
+#' @param verbose Show progress messages.
 #' @return scCATCH object containing the results of predicted cell types for each cluster.
 #' @import methods
 #' @export
 
-setGeneric("findcelltype", def = function(object) {
+setGeneric("findcelltype", def = function(object, verbose = TRUE) {
     standardGeneric("findcelltype")
 })

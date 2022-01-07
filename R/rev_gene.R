@@ -1,12 +1,11 @@
 #' @title Pre-processing step: revising gene symbols
 #'
-#' @description Revise genes according to NCBI Gene symbols updated in Jan. 1, 2022 for count matrix, user-custom cell marker data.frame.
+#' @description Revise genes according to NCBI Gene symbols updated in Jan. 2, 2022 for count matrix, user-custom cell marker data.frame.
 #' @param data A matrix or dgCMatrix containing count or normalized data, each column representing a spot or a cell, each row representing a gene; Or a data.frame containing cell markers, use \code{\link{demo_marker}}.
 #' @param data_type A character to define the type of \code{data}, select \code{'data'} for the data matrix, \code{'marker'} for the data.frame containing cell markers.
 #' @param species Species of the data.\code{'Human'} or \code{'Mouse'}.
 #' @param geneinfo A data.frame of the system data containing gene symbols of \code{'Human'} and \code{'Mouse'} updated on Jan. 1, 2022.
 #' @return A new matrix or data.frame.
-#' @importFrom crayon red cyan green
 #' @export rev_gene
 
 rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = NULL) {
@@ -41,7 +40,6 @@ rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = N
         } else {
             data <- as(data, Class = "dgCMatrix")
         }
-        cat(crayon::cyan("Revising gene symbols for data matrix", "\n"))
         Sys.sleep(1)
         # revise gene symbols
         genename <- rownames(data)
@@ -62,9 +60,9 @@ rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = N
                 }
                 genename3 <- c(genename1, genename3)
                 genename4 <- c(genename1, genename4)
-                genedata <- data.frame(raw_name = genename3, new_name = genename4, stringsAsFactors = F)
+                genedata <- data.frame(raw_name = genename3, new_name = genename4, stringsAsFactors = FALSE)
                 genedata <- genedata[!genedata$new_name == "NA", ]
-                genedata1 <- as.data.frame(table(genedata$new_name), stringsAsFactors = F)
+                genedata1 <- as.data.frame(table(genedata$new_name), stringsAsFactors = FALSE)
                 genedata1 <- genedata1[genedata1$Freq == 1, ]
                 genedata <- genedata[genedata$new_name %in% genedata1$Var1, ]
                 data <- data[genedata$raw_name, ]
@@ -73,15 +71,12 @@ rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = N
         } else {
             data <- data[rownames(data) %in% geneinfo$symbol, ]
         }
-        cat(crayon::green("***Done***", "\n"))
-        Sys.sleep(2)
     }
     # revise lrpairs
     if (data_type == "marker") {
         if (!is.data.frame(data)) {
             stop("data must be a data.frame when data_type is 'marker'!")
         }
-        cat(crayon::cyan("Revising gene symbols for marker data.frame", "\n"))
         Sys.sleep(1)
         markers <- demo_marker()
         if (all(colnames(markers) %in% colnames(data))) {
@@ -108,8 +103,6 @@ rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = N
         } else {
             stop("Please provide a correct marker data.frame! See demo_marker()!")
         }
-        cat(crayon::green("***Done***", "\n"))
-        Sys.sleep(2)
     }
     return(data)
 }

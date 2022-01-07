@@ -6,6 +6,9 @@
 \usage{
 demo_geneinfo()
 }
+\value{
+A demo geneinfo data.frame.
+}
 \description{
 Demo data of geneinfo
 }

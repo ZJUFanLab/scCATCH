@@ -7,7 +7,7 @@
 demo_data()
 }
 \value{
-A matrix.
+A demo data matrix.
 }
 \description{
 Demo data of single-cell RNA-seq data

@@ -6,6 +6,9 @@
 \usage{
 demo_marker()
 }
+\value{
+A demo marker data.frame.
+}
 \description{
 Demo data of markers
 }

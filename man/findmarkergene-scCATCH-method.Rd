@@ -8,7 +8,7 @@
   object,
   species = NULL,
   cluster = "All",
-  if_use_custom_marker = F,
+  if_use_custom_marker = FALSE,
   marker = NULL,
   cancer = "Normal",
   tissue = NULL,
@@ -16,7 +16,8 @@
   comp_cluster = NULL,
   cell_min_pct = 0.25,
   logfc = 0.25,
-  pvalue = 0.05
+  pvalue = 0.05,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -43,6 +44,8 @@
 \item{logfc}{Include the gene with at least this fold change of average gene expression compared to every other clusters.}
 
 \item{pvalue}{Include the significantly highly expressed gene with this cutoff of p value from wilcox test compared to every other clusters.}
+
+\item{verbose}{Show progress messages.}
 }
 \value{
 scCATCH object

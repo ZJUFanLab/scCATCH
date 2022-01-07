@@ -5,9 +5,8 @@ Version: 3.0
 Depends: R (>= 4.0.0)
 Author: Xin Shao
 Maintainer: Xin Shao<xin_shao@zju.edu.cn>
-Description: This package is an automatic cluster-based annotation pipeline 
-    based on evidence-based score by matching the marker genes with known cell 
-    markers in tissue-specific cell taxonomy reference database.
+Description: An automatic cluster-based annotation pipeline based on evidence-based score by matching the marker genes with known cell markers in tissue-specific cell taxonomy reference database for single-cell RNA-seq data. See Shao X, et al (2020) <doi:10.1016/j.isci.2020.100882> for more details.
+URL: https://github.com/ZJUFanLab/scCATCH
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -21,7 +21,7 @@ The scCATCH mainly includes two function `findmarkergene` and `findcelltype` to 
 scCATCH can be used to annotate scRNA-seq data from tissue with cancer and without cancer.
 
 ### General usage
-[1] For scRNA-seq data, we suggest to revise the gene symbols with `rev_gene()`. `geneinfo` is the system data.frame containing the information of human and mouse. To use your own `geneinfo` data.frame, please refer to `demo_geneinfo` to build a new one, e.g., rat, zebrafish, Drosophila, C. elegans, etc.
+[1] For scRNA-seq data, we suggest to revise the gene symbols with `rev_gene()`. `geneinfo` is the system data.frame containing the information of human and mouse from NCBI gene(updated in Jan. 2, 2022). To use your own `geneinfo` data.frame, please refer to `demo_geneinfo` to build a new one, e.g., rat, zebrafish, Drosophila, C. elegans, etc.
 
 ```{r setup, echo=TRUE}
 library(scCATCH)
@@ -79,18 +79,18 @@ In this way, please set `if_use_custom_marker` `TRUE` in `findmarkergene()` func
 ```{r findcelltype1, echo=TRUE}
 # Example
 cellmatch_new <- cellmatch[cellmatch$species == "Mouse" & cellmatch$tissue %in% c("Kidney", "Liver", "Lung", "Brain"), ]
-obj <- findmarkergene(object = obj, if_use_custom_marker = T, marker = cellmatch_new)
+obj <- findmarkergene(object = obj, if_use_custom_marker = TRUE, marker = cellmatch_new)
 obj <- findcelltype(obj)
 
 # Example
 cellmatch_new <- cellmatch[cellmatch$species == "Mouse" & cellmatch$cancer %in% c("Lung Cancer", "Lymph node", "Renal Cell Carcinoma", "Prostate Cancer"), ]
-obj <- findmarkergene(object = obj, if_use_custom_marker = T, marker = cellmatch_new)
+obj <- findmarkergene(object = obj, if_use_custom_marker = TRUE, marker = cellmatch_new)
 obj <- findcelltype(obj)
 
 # Example
 cellmatch_new <- cellmatch[cellmatch$species == "Mouse", ]
 cellmatch_new <- cellmatch[cellmatch$cancer %in% c("Lung Cancer", "Lymph node", "Renal Cell Carcinoma", "Prostate Cancer") | cellmatch$tissue %in% c("Kidney", "Liver", "Lung", "Brain"), ]
-obj <- findmarkergene(object = obj, if_use_custom_marker = T, marker = cellmatch_new)
+obj <- findmarkergene(object = obj, if_use_custom_marker = TRUE, marker = cellmatch_new)
 obj <- findcelltype(obj)
 ```
 
@@ -107,7 +107,7 @@ obj <- findmarkergene(object = obj, species = "Mouse", marker = cellmatch_new, t
 obj <- findcelltype(obj)
 
 # b. directly use custom cellmatch
-obj <- findmarkergene(object = obj, if_use_custom_marker = T, marker = cellmatch_new)
+obj <- findmarkergene(object = obj, if_use_custom_marker = TRUE, marker = cellmatch_new)
 obj <- findcelltype(obj)
 ```
 
@@ -115,6 +115,12 @@ obj <- findcelltype(obj)
 ```{r findcelltype3, echo=TRUE}
 # Please refer to demo_marker to build a marker data.frame (new_cellmatch) for another species, e.g., rat
 # Then use the new marker
-obj <- findmarkergene(object = obj, species = "Rat", if_use_custom_marker = T, marker = cellmatch_new, tissue = "Kidney")
+obj <- findmarkergene(object = obj, species = "Rat", if_use_custom_marker = TRUE, marker = cellmatch_new, tissue = "Kidney")
 obj <- findcelltype(obj)
 ```
+
+### About
+Please refer to the [scCATCH](https://github.com/ZJUFanLab/scCATCH) on GitHub for more information. Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)
+
+### Cite
+Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)

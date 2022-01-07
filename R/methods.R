@@ -21,7 +21,7 @@ createscCATCH <- function(data, cluster) {
     if (length(cluster) != ncol(data)) {
         stop("Length of cluster is not equal to the ncol of the data!")
     }
-    meta <- data.frame(cell = colnames(data), cluster = cluster, stringsAsFactors = F)
+    meta <- data.frame(cell = colnames(data), cluster = cluster, stringsAsFactors = FALSE)
     object <- new("scCATCH", data = list(ndata = data), meta = meta)
     return(object)
 }
@@ -41,16 +41,16 @@ createscCATCH <- function(data, cluster) {
 #' @param cell_min_pct Include the gene detected in at least this many cells in each cluster.
 #' @param logfc Include the gene with at least this fold change of average gene expression compared to every other clusters.
 #' @param pvalue Include the significantly highly expressed gene with this cutoff of p value from wilcox test compared to every other clusters.
+#' @param verbose Show progress messages.
 #' @return scCATCH object
 #' @details Details of available tissues see \url{https://github.com/ZJUFanLab/scCATCH/wiki}
 #' @import methods progress
 #' @importFrom stats wilcox.test
-#' @importFrom crayon green
 #' @export
 
-setMethod("findmarkergene", signature("scCATCH"), function(object, species = NULL, cluster = "All", if_use_custom_marker = F,
+setMethod("findmarkergene", signature("scCATCH"), function(object, species = NULL, cluster = "All", if_use_custom_marker = FALSE,
     marker = NULL, cancer = "Normal", tissue = NULL, use_method = "1", comp_cluster = NULL, cell_min_pct = 0.25, logfc = 0.25,
-    pvalue = 0.05) {
+    pvalue = 0.05, verbose = TRUE) {
     if (!is(object, "scCATCH")) {
         stop("object must be scCATCH obect generated from createscCATCH()!")
     }
@@ -73,16 +73,16 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
     clu_pair <- clu_pair[[1]]
     cluster <- unique(meta$cluster)
     if (use_method == "1") {
-        clu_marker <- .get_marker_scCATCH1(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue, comp_cluster)
+        clu_marker <- .get_marker_scCATCH1(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue, comp_cluster, verbose)
     }
     if (use_method == "2") {
-        clu_marker <- .get_marker_scCATCH2(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue)
+        clu_marker <- .get_marker_scCATCH2(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue, verbose)
     }
     if (is.null(clu_marker)) {
-        cat("Warning: there is no potential marker genes found in the matrix! You may adjust the cell clusters by applying other clustering algorithm and try again.")
+        warning("No potential marker genes found in the matrix! You may adjust the cell clusters by applying other clustering algorithm and try again.")
     }
     if (nrow(clu_marker) == 0) {
-        cat("Warning: there is no potential marker genes found in the matrix! You may adjust the cell clusters by applying other clustering algorithm and try again.")
+        warning("No potential marker genes found in the matrix! You may adjust the cell clusters by applying other clustering algorithm and try again.")
     }
     if (nrow(clu_marker) > 0) {
         object@markergene <- clu_marker
@@ -91,7 +91,6 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
         use_method = use_method, cell_min_pct = cell_min_pct, logfc = logfc, pvalue = pvalue)
     object@para <- para
     object@marker <- marker
-    cat(crayon::green("***Done***", "\n"))
     return(object)
 })
 
@@ -99,13 +98,13 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
 #'
 #' @description Evidence-based score and annotation for each cluster.
 #' @param object scCATCH object generated from \code{\link{findmarkergene}}.
+#' @param verbose Show progress messages.
 #' @return scCATCH object containing the results of predicted cell types for each cluster.
 #' @import methods progress
 #' @importFrom reshape2 melt
-#' @importFrom crayon green
 #' @export
 
-setMethod("findcelltype", signature("scCATCH"), function(object) {
+setMethod("findcelltype", signature("scCATCH"), function(object, verbose = TRUE) {
     if (!is(object, "scCATCH")) {
         stop("object must be scCATCH obect generated from createscCATCH()!")
     }
@@ -115,8 +114,6 @@ setMethod("findcelltype", signature("scCATCH"), function(object) {
         stop("No marker genes found!")
     }
     # Evidence-based scoring and annotation
-    Sys.sleep(2)
-    cat("Beginning evidence-based scoring and annotation", "\n")
     Sys.sleep(2)
     clu_num <- unique(markergene$cluster)
     pb <- progress::progress_bar$new(format = "[:bar] Finished::percent Time :elapsedfull", total = length(clu_num), clear = FALSE, width = 60,
@@ -202,9 +199,11 @@ setMethod("findcelltype", signature("scCATCH"), function(object) {
         PMID <- d1
         clu_ann <- data.frame(cluster = clu_num[i], cluster_marker = clu_markergene, cellsubtype3 = cellsubtype3, cellsubtype2 = cellsubtype2,
             cellsubtype1 = cellsubtype1, cell_type = celltype, celltype_score = celltype_score, celltype_related_marker = clu_marker,
-            PMID = PMID, stringsAsFactors = F)
+            PMID = PMID, stringsAsFactors = FALSE)
         clu_ann_res <- rbind(clu_ann_res, clu_ann)
-        pb$tick()
+        if (verbose) {
+            pb$tick()
+        }
     }
     for (i in 1:nrow(clu_ann_res)) {
       d1 <- as.character(clu_ann_res[i, c("cellsubtype3", "cellsubtype2", "cellsubtype1", "cell_type")])
@@ -219,8 +218,6 @@ setMethod("findcelltype", signature("scCATCH"), function(object) {
       clu_ann_res[i, "cell_type"] <- d2
     }
     clu_ann_res <- clu_ann_res[, -c(3, 4, 5)]
-    cat(crayon::green("***Done***", "\n"))
-    Sys.sleep(2)
     object@celltype <- clu_ann_res
     return(object)
 })

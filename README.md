@@ -9,20 +9,21 @@ Recent advance in single-cell RNA sequencing (scRNA-seq) has enabled large-scale
 
 To address these problems, we introduce a __single cell Cluster-based Annotation Toolkit for Cellular Heterogeneity (scCATCH)__ from cluster marker genes identification to cluster annotation based on evidence-based score by matching the identified potential marker genes with known cell markers in tissue-specific cell taxonomy reference database (CellMatch).
 
-[![download CellMatch](https://img.shields.io/badge/download-CellMatch-orange.svg)](https://github.com/ZJUFanLab/scCATCH/blob/master/cellmatch.rda)
+[![download CellMatch](https://img.shields.io/badge/download-CellMatch-orange.svg)](https://github.com/ZJUFanLab/scCATCH/tree/master/data)
 
 __CellMatch includes a panel of 353 cell types and related 686 subtypes associated with 184 tissue types, and 2,097 references of human and mouse.__
 
 The scCATCH mainly includes two function `findmarkergene()` and `findcelltype()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
 
 # Cite
-[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://pubmed.ncbi.nlm.nih.gov/32062421/)
 
-Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). PMID:[32062421](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7031312/)
+Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)
 
 # <a name='devtools'>News</a>
 ### v3.0
-- Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in June. 30, 2021, https://www.ncbi.nlm.nih.gov/gene).
+- __`scCATCH` is available on CRAN__
+- Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in Jan. 2, 2022, https://www.ncbi.nlm.nih.gov/gene).
 - __Allow users to use custom `cellmatch`__
 - __Allow users to select different combination of tissues or cancers for annotation.__
 - __Allow users to add more marker genes to `cellmatch` for annotation.__
@@ -31,16 +32,7 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 
 # Install
 ```
-# install devtools and install scCATCH
-install.packages(pkgs = 'devtools')
-devtools::install_github('ZJUFanLab/scCATCH')
-```
-or
-
-```
-# download the source package of scCATCH-3.0.tar.gz and install it
-# ensure the right directory for scCATCH-3.0.tar.gz
-install.packages(pkgs = 'scCATCH-3.0.tar.gz',repos = NULL, type = "source")
+install.packages("scCATCH") # from CRAN
 ```
 
 # Usage

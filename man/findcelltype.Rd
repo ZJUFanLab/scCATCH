@@ -4,10 +4,12 @@
 \alias{findcelltype}
 \title{Evidence-based score and annotation for each cluster}
 \usage{
-findcelltype(object)
+findcelltype(object, verbose = TRUE)
 }
 \arguments{
 \item{object}{scCATCH object generated from \code{\link{findmarkergene}}.}
+
+\item{verbose}{Show progress messages.}
 }
 \value{
 scCATCH object containing the results of predicted cell types for each cluster.

@@ -28,7 +28,7 @@
         tissue_match <- NULL
         # check the tissue
         tissue_match <- tissue %in% marker$tissue
-        tissue_match <- which(tissue_match == "FALSE")
+        tissue_match <- which(tissue_match == FALSE)
         if (length(tissue_match) > 0) {
             stop(paste(tissue[tissue_match], ", not matched with the tissue types in CellMatch database!", sep = ""))
         }
@@ -41,19 +41,19 @@
             }
         }
         if (length(cellmarkers) < 100) {
-            cat(paste("Warning: there are only ", length(cellmarkers), " potential marker genes in CellMatch database for ",
-                species, " on ", tissue1, "!", sep = ""), "\n")
+            warning(paste("There are only ", length(cellmarkers), " potential marker genes in CellMatch database for ",
+                species, " on ", tissue1, "!", sep = ""))
         }
         if (length(cellmarkers) >= 100) {
-            cat(paste("Note: there are ", length(cellmarkers), " potential marker genes in CellMatch database for ", species,
-                " on ", tissue1, ".", sep = ""), "\n")
+            message(paste("There are ", length(cellmarkers), " potential marker genes in CellMatch database for ", species,
+                " on ", tissue1, ".", sep = ""))
         }
     } else {
         # check cancer
         cancer_match <- NULL
         # check the tissue
         cancer_match <- cancer %in% marker$cancer
-        cancer_match <- which(cancer_match == "FALSE")
+        cancer_match <- which(cancer_match == FALSE)
         if (length(cancer_match) > 0) {
             stop(paste(cancer[cancer_match], ", not matched with the cancer types in CellMatch database!", sep = ""))
         }
@@ -65,7 +65,7 @@
         tissue_match <- NULL
         # check the tissue
         tissue_match <- tissue %in% marker$tissue
-        tissue_match <- which(tissue_match == "FALSE")
+        tissue_match <- which(tissue_match == FALSE)
         if (length(tissue_match) > 0) {
             stop(paste(tissue[tissue_match], ", not matched with the tissue types in CellMatch database!", sep = ""))
         }
@@ -84,14 +84,12 @@
             }
         }
         if (length(cellmarkers) < 100) {
-            cat("\n")
-            cat(paste("Warning: there are only ", length(cellmarkers), " potential marker genes in CellMatch database for ",
-                species, " ", cancer1, " on ", tissue1, "!", sep = ""), "\n")
+            warning(paste("There are only ", length(cellmarkers), " potential marker genes in CellMatch database for ",
+                species, " ", cancer1, " on ", tissue1, "!", sep = ""))
         }
         if (length(cellmarkers) >= 100) {
-            cat("\n")
-            cat(paste("Note: there are ", length(cellmarkers), " potential marker genes in CellMatch database for ", species,
-                " ", cancer1, " on ", tissue1, ".", sep = ""), "\n")
+            message(paste("There are ", length(cellmarkers), " potential marker genes in CellMatch database for ", species,
+                " ", cancer1, " on ", tissue1, ".", sep = ""))
         }
     }
     return(marker)
@@ -101,12 +99,12 @@
     clu_num <- unique(meta$cluster)
     clu_pair <- NULL
     for (i in 1:length(clu_num)) {
-        d1 <- data.frame(cluster1 = rep(clu_num[i], (length(clu_num) - 1)), cluster2 = clu_num[-i], stringsAsFactors = F)
+        d1 <- data.frame(cluster1 = rep(clu_num[i], (length(clu_num) - 1)), cluster2 = clu_num[-i], stringsAsFactors = FALSE)
         clu_pair <- rbind(clu_pair, d1)
     }
     if (cluster[1] != "All") {
         cluster_match <- cluster %in% clu_num
-        cluster_match <- which(cluster_match == "FALSE")
+        cluster_match <- which(cluster_match == FALSE)
         if (length(cluster_match) > 0) {
             stop(paste(cluster[cluster_match], ", not matched with the cell clusters! Please select one or more related clusters.",
                 sep = ""))
@@ -117,7 +115,6 @@
     } else {
         return(list(clu_pair = clu_pair, clu_num = clu_num))
     }
-    cat("Note: There are", length(clu_num), "clusters in Seurat object.", "\n")
 }
 
 .get_pct_ndata1 <- function(ndata1) {
@@ -131,7 +128,7 @@
     for (k in 1:nrow(ndata1)) {
         genedata1 <- as.numeric(ndata1[k, ])
         genedata2 <- as.numeric(ndata2[k, ])
-        clu_marker_pvalue[k] <- as.numeric(stats::wilcox.test(genedata1, genedata2, alternative = "greater", paired = F)$p.value)
+        clu_marker_pvalue[k] <- as.numeric(stats::wilcox.test(genedata1, genedata2, alternative = "greater", paired = FALSE)$p.value)
     }
     return(clu_marker_pvalue)
 }
@@ -151,15 +148,14 @@
         clu_marker2$logfc <- as.numeric(apply(ndata1, 1, mean)) - as.numeric(apply(ndata2, 1, mean))
         clu_marker2$pvalue <- .get_pvalue(ndata1, ndata2)
         # filtering genes with cell_min_pct logfc
-        clu_marker2 <- clu_marker2[clu_marker2$pct >= cell_min_pct & clu_marker2$logfc >= logfc & clu_marker2$pvalue < pvalue,
-            ]
+        clu_marker2 <- clu_marker2[clu_marker2$pct >= cell_min_pct & clu_marker2$logfc >= logfc & clu_marker2$pvalue < pvalue, ]
         # combine the results for each cluster
         clu_marker1 <- rbind(clu_marker1, clu_marker2)
     }
     return(clu_marker1)
 }
 
-.get_marker_scCATCH1 <- function(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue, comp_cluster) {
+.get_marker_scCATCH1 <- function(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue, comp_cluster, verbose) {
     # generating result file
     clu_marker <- NULL
     # calculate the p value and log fold change
@@ -182,7 +178,7 @@
         }
         if (!is.null(clu_marker1)) {
             if (nrow(clu_marker1) > 0) {
-                d1 <- as.data.frame(table(clu_marker1$gene), stringsAsFactors = F)
+                d1 <- as.data.frame(table(clu_marker1$gene), stringsAsFactors = FALSE)
                 d1 <- d1[d1$Freq >= comp_cluster, ]
                 if (nrow(d1) > 0) {
                   clu_marker1 <- clu_marker1[clu_marker1$gene %in% d1$Var1, ]
@@ -190,12 +186,14 @@
                 }
             }
         }
-        pb$tick()
+        if (verbose) {
+          pb$tick()
+        }
     }
     return(clu_marker)
 }
 
-.get_marker_scCATCH2 <- function(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue) {
+.get_marker_scCATCH2 <- function(ndata, meta, cluster, clu_num, clu_pair, cell_min_pct, logfc, pvalue, verbose) {
     # generating result file
     clu_marker <- NULL
     # calculate the p value and log fold change
@@ -218,11 +216,12 @@
         clu_marker2$logfc <- as.numeric(apply(ndata1, 1, mean)) - as.numeric(apply(ndata2, 1, mean))
         clu_marker2$pvalue <- .get_pvalue(ndata1, ndata2)
         # filtering genes with cell_min_pct logfc
-        clu_marker2 <- clu_marker2[clu_marker2$pct >= cell_min_pct & clu_marker2$logfc >= logfc & clu_marker2$pvalue < pvalue,
-            ]
+        clu_marker2 <- clu_marker2[clu_marker2$pct >= cell_min_pct & clu_marker2$logfc >= logfc & clu_marker2$pvalue < pvalue, ]
         # combine the results for each cluster
         clu_marker <- rbind(clu_marker, clu_marker2)
-        pb$tick()
+        if (verbose) {
+            pb$tick()
+        }
     }
     Sys.sleep(2)
     return(clu_marker)
@@ -230,13 +229,13 @@
 
 .get_score <- function(clu_ann) {
     # [1]
-    clu_ann_cellname <- as.data.frame(table(clu_ann$celltype), stringsAsFactors = F)
+    clu_ann_cellname <- as.data.frame(table(clu_ann$celltype), stringsAsFactors = FALSE)
     m <- clu_ann_cellname$Freq + 1
     clu_ann_cellname$Freq <- clu_ann_cellname$Freq/m
     clu_ann_cellname <- clu_ann_cellname[order(clu_ann_cellname$Var1), ]
     # [2]
     clu_ann_article <- unique(clu_ann[, c("pmid", "celltype")])
-    clu_ann_article <- as.data.frame(table(clu_ann_article$celltype), stringsAsFactors = F)
+    clu_ann_article <- as.data.frame(table(clu_ann_article$celltype), stringsAsFactors = FALSE)
     m <- clu_ann_article$Freq + 1
     clu_ann_article$Freq <- clu_ann_article$Freq/m
     clu_ann_article <- clu_ann_article[order(clu_ann_article$Var1), ]
@@ -247,12 +246,12 @@
 }
 
 .get_score_subtype <- function(clu_ann1) {
-    clu_ann_subcellname <- as.data.frame(table(clu_ann1$value), stringsAsFactors = F)
+    clu_ann_subcellname <- as.data.frame(table(clu_ann1$value), stringsAsFactors = FALSE)
     m <- clu_ann_subcellname$Freq + 1
     clu_ann_subcellname$Freq <- clu_ann_subcellname$Freq/m
     clu_ann_subcellname <- clu_ann_subcellname[order(clu_ann_subcellname$Var1), ]
     clu_ann_subarticle <- unique(clu_ann1[, c("pmid", "value")])
-    clu_ann_subarticle <- as.data.frame(table(clu_ann_subarticle$value), stringsAsFactors = F)
+    clu_ann_subarticle <- as.data.frame(table(clu_ann_subarticle$value), stringsAsFactors = FALSE)
     m <- clu_ann_subarticle$Freq + 1
     clu_ann_subarticle$Freq <- clu_ann_subarticle$Freq/m
     clu_ann_subarticle <- clu_ann_subarticle[order(clu_ann_subarticle$Var1), ]
@@ -306,13 +305,13 @@
                 if (nrow(clu_ann_for_second) > 0) {
                   # calculting the second cell subtype2 max score of the same cell type -- short name.
                   clu_second <- clu_ann1[clu_ann1$variable == "subtype2", ]
-                  clu_second_name <- as.data.frame(table(clu_second$value), stringsAsFactors = F)
+                  clu_second_name <- as.data.frame(table(clu_second$value), stringsAsFactors = FALSE)
                   m <- clu_second_name$Freq + 1
                   clu_second_name$Freq <- clu_second_name$Freq/m
                   clu_second_name <- clu_second_name[order(clu_second_name$Var1), ]
 
                   clu_second_article <- unique(clu_second[, c("pmid", "value")])
-                  clu_second_article <- as.data.frame(table(clu_second_article$value), stringsAsFactors = F)
+                  clu_second_article <- as.data.frame(table(clu_second_article$value), stringsAsFactors = FALSE)
                   m <- clu_second_article$Freq + 1
                   clu_second_article$Freq <- clu_second_article$Freq/m
                   clu_second_article <- clu_second_article[order(clu_second_article$Var1), ]
@@ -320,13 +319,13 @@
                   # matching cell second subtype2
                   clu_ann_second <- clu_ann[clu_ann$first == cellsubtype1, ]
                   clu_ann_second <- clu_ann_second[!is.na(clu_ann_second$subtype1), ]
-                  clu_ann_secondname <- as.data.frame(table(clu_ann_second$subtype2), stringsAsFactors = F)
+                  clu_ann_secondname <- as.data.frame(table(clu_ann_second$subtype2), stringsAsFactors = FALSE)
                   if (nrow(clu_ann_secondname) > 0) {
                     m <- clu_ann_secondname$Freq + 1
                     clu_ann_secondname$Freq <- clu_ann_secondname$Freq/m
                     clu_ann_secondname <- clu_ann_secondname[order(clu_ann_secondname$Var1), ]
                     clu_ann_secondarticle <- unique(clu_ann_second[, c("pmid", "subtype2")])
-                    clu_ann_secondarticle <- as.data.frame(table(clu_ann_secondarticle$subtype2), stringsAsFactors = F)
+                    clu_ann_secondarticle <- as.data.frame(table(clu_ann_secondarticle$subtype2), stringsAsFactors = FALSE)
                     m <- clu_ann_secondarticle$Freq + 1
                     clu_ann_secondarticle$Freq <- clu_ann_secondarticle$Freq/m
                     clu_ann_secondarticle <- clu_ann_secondarticle[order(clu_ann_secondarticle$Var1), ]
@@ -343,12 +342,12 @@
                       if (nrow(clu_ann_for_third) > 0) {
                         # calculting the third cell subtype3 max score of the same cell type -- short name.
                         clu_third <- clu_ann1[clu_ann1$variable == "subtype3", ]
-                        clu_third_name <- as.data.frame(table(clu_third$value), stringsAsFactors = F)
+                        clu_third_name <- as.data.frame(table(clu_third$value), stringsAsFactors = FALSE)
                         m <- clu_third_name$Freq + 1
                         clu_third_name$Freq <- clu_third_name$Freq/m
                         clu_third_name <- clu_third_name[order(clu_third_name$Var1), ]
                         clu_third_article <- unique(clu_third[, c("pmid", "value")])
-                        clu_third_article <- as.data.frame(table(clu_third_article$value), stringsAsFactors = F)
+                        clu_third_article <- as.data.frame(table(clu_third_article$value), stringsAsFactors = FALSE)
                         m <- clu_third_article$Freq + 1
                         clu_third_article$Freq <- clu_third_article$Freq/m
                         clu_third_article <- clu_third_article[order(clu_third_article$Var1), ]
@@ -356,13 +355,13 @@
                         # matching cell third subtype3
                         clu_ann_third <- clu_ann_second[clu_ann_second$subtype2 == cellsubtype2, ]
                         clu_ann_third <- clu_ann_third[!is.na(clu_ann_third$subtype2), ]
-                        clu_ann_thirdname <- as.data.frame(table(clu_ann_third$subtype3), stringsAsFactors = F)
+                        clu_ann_thirdname <- as.data.frame(table(clu_ann_third$subtype3), stringsAsFactors = FALSE)
                         if (nrow(clu_ann_thirdname) > 0) {
                           m <- clu_ann_thirdname$Freq + 1
                           clu_ann_thirdname$Freq <- clu_ann_thirdname$Freq/m
                           clu_ann_thirdname <- clu_ann_thirdname[order(clu_ann_thirdname$Var1), ]
                           clu_ann_thirdarticle <- unique(clu_ann_third[, c("pmid", "subtype3")])
-                          clu_ann_thirdarticle <- as.data.frame(table(clu_ann_thirdarticle$subtype3), stringsAsFactors = F)
+                          clu_ann_thirdarticle <- as.data.frame(table(clu_ann_thirdarticle$subtype3), stringsAsFactors = FALSE)
                           m <- clu_ann_thirdarticle$Freq + 1
                           clu_ann_thirdarticle$Freq <- clu_ann_thirdarticle$Freq/m
                           clu_ann_thirdarticle <- clu_ann_thirdarticle[order(clu_ann_thirdarticle$Var1), ]
@@ -392,12 +391,12 @@
                 if (nrow(clu_ann_for_first) > 0) {
                   # calculting the cell first subtype1 max score of the same cell type -- short name.
                   clu_first <- clu_ann1[clu_ann1$variable == "subtype1", ]
-                  clu_first_name <- as.data.frame(table(clu_first$value), stringsAsFactors = F)
+                  clu_first_name <- as.data.frame(table(clu_first$value), stringsAsFactors = FALSE)
                   m <- clu_first_name$Freq + 1
                   clu_first_name$Freq <- clu_first_name$Freq/m
                   clu_first_name <- clu_first_name[order(clu_first_name$Var1), ]
                   clu_first_article <- unique(clu_first[, c("pmid", "value")])
-                  clu_first_article <- as.data.frame(table(clu_first_article$value), stringsAsFactors = F)
+                  clu_first_article <- as.data.frame(table(clu_first_article$value), stringsAsFactors = FALSE)
                   m <- clu_first_article$Freq + 1
                   clu_first_article$Freq <- clu_first_article$Freq/m
                   clu_first_article <- clu_first_article[order(clu_first_article$Var1), ]
@@ -405,13 +404,13 @@
                   # matching cell first subtype1
                   clu_ann_first <- clu_ann[clu_ann$subtype2 == cellsubtype2, ]
                   clu_ann_first <- clu_ann_first[!is.na(clu_ann_first$subtype2), ]
-                  clu_ann_firstname <- as.data.frame(table(clu_ann_first$subtype1), stringsAsFactors = F)
+                  clu_ann_firstname <- as.data.frame(table(clu_ann_first$subtype1), stringsAsFactors = FALSE)
                   if (nrow(clu_ann_firstname) > 0) {
                     m <- clu_ann_firstname$Freq + 1
                     clu_ann_firstname$Freq <- clu_ann_firstname$Freq/m
                     clu_ann_firstname <- clu_ann_firstname[order(clu_ann_firstname$Var1), ]
                     clu_ann_firstarticle <- unique(clu_ann_first[, c("pmid", "subtype1")])
-                    clu_ann_firstarticle <- as.data.frame(table(clu_ann_firstarticle$subtype1), stringsAsFactors = F)
+                    clu_ann_firstarticle <- as.data.frame(table(clu_ann_firstarticle$subtype1), stringsAsFactors = FALSE)
                     m <- clu_ann_firstarticle$Freq + 1
                     clu_ann_firstarticle$Freq <- clu_ann_firstarticle$Freq/m
                     clu_ann_firstarticle <- clu_ann_firstarticle[order(clu_ann_firstarticle$Var1), ]
@@ -428,12 +427,12 @@
                       if (nrow(clu_ann_for_third) > 0) {
                         # calculting the third cell subtype3 max score of the same cell type -- short name.
                         clu_third <- clu_ann1[clu_ann1$variable == "subtype3", ]
-                        clu_third_name <- as.data.frame(table(clu_third$value), stringsAsFactors = F)
+                        clu_third_name <- as.data.frame(table(clu_third$value), stringsAsFactors = FALSE)
                         m <- clu_third_name$Freq + 1
                         clu_third_name$Freq <- clu_third_name$Freq/m
                         clu_third_name <- clu_third_name[order(clu_third_name$Var1), ]
                         clu_third_article <- unique(clu_third[, c("pmid", "value")])
-                        clu_third_article <- as.data.frame(table(clu_third_article$value), stringsAsFactors = F)
+                        clu_third_article <- as.data.frame(table(clu_third_article$value), stringsAsFactors = FALSE)
                         m <- clu_third_article$Freq + 1
                         clu_third_article$Freq <- clu_third_article$Freq/m
                         clu_third_article <- clu_third_article[order(clu_third_article$Var1), ]
@@ -441,13 +440,13 @@
                         # matching cell third subtype3
                         clu_ann_third <- clu_ann_first[clu_ann_first$subtype1 == cellsubtype1, ]
                         clu_ann_third <- clu_ann_third[!is.na(clu_ann_third$subtype1), ]
-                        clu_ann_thirdname <- as.data.frame(table(clu_ann_third$subtype3), stringsAsFactors = F)
+                        clu_ann_thirdname <- as.data.frame(table(clu_ann_third$subtype3), stringsAsFactors = FALSE)
                         if (nrow(clu_ann_thirdname) > 0) {
                           m <- clu_ann_thirdname$Freq + 1
                           clu_ann_thirdname$Freq <- clu_ann_thirdname$Freq/m
                           clu_ann_thirdname <- clu_ann_thirdname[order(clu_ann_thirdname$Var1), ]
                           clu_ann_thirdarticle <- unique(clu_ann_third[, c("pmid", "subtype3")])
-                          clu_ann_thirdarticle <- as.data.frame(table(clu_ann_thirdarticle$subtype3), stringsAsFactors = F)
+                          clu_ann_thirdarticle <- as.data.frame(table(clu_ann_thirdarticle$subtype3), stringsAsFactors = FALSE)
                           m <- clu_ann_thirdarticle$Freq + 1
                           clu_ann_thirdarticle$Freq <- clu_ann_thirdarticle$Freq/m
                           clu_ann_thirdarticle <- clu_ann_thirdarticle[order(clu_ann_thirdarticle$Var1), ]
@@ -478,12 +477,12 @@
                 if (nrow(clu_ann_for_second) > 0) {
                   # calculting the second cell subtype2 max score of the same cell type
                   clu_second <- clu_ann1[clu_ann1$variable == "subtype2", ]
-                  clu_second_name <- as.data.frame(table(clu_second$value), stringsAsFactors = F)
+                  clu_second_name <- as.data.frame(table(clu_second$value), stringsAsFactors = FALSE)
                   m <- clu_second_name$Freq + 1
                   clu_second_name$Freq <- clu_second_name$Freq/m
                   clu_second_name <- clu_second_name[order(clu_second_name$Var1), ]
                   clu_second_article <- unique(clu_second[, c("pmid", "value")])
-                  clu_second_article <- as.data.frame(table(clu_second_article$value), stringsAsFactors = F)
+                  clu_second_article <- as.data.frame(table(clu_second_article$value), stringsAsFactors = FALSE)
                   m <- clu_second_article$Freq + 1
                   clu_second_article$Freq <- clu_second_article$Freq/m
                   clu_second_article <- clu_second_article[order(clu_second_article$Var1), ]
@@ -491,21 +490,20 @@
                   # matching cell second subtype2
                   clu_ann_second <- clu_ann[clu_ann$subtype3 == cellsubtype3, ]
                   clu_ann_second <- clu_ann_second[!is.na(clu_ann_second$subtype3), ]
-                  clu_ann_secondname <- as.data.frame(table(clu_ann_second$subtype2), stringsAsFactors = F)
+                  clu_ann_secondname <- as.data.frame(table(clu_ann_second$subtype2), stringsAsFactors = FALSE)
                   if (nrow(clu_ann_secondname) > 0) {
                     m <- clu_ann_secondname$Freq + 1
                     clu_ann_secondname$Freq <- clu_ann_secondname$Freq/m
                     clu_ann_secondname <- clu_ann_secondname[order(clu_ann_secondname$Var1), ]
                     clu_ann_secondarticle <- unique(clu_ann_second[, c("pmid", "subtype2")])
-                    clu_ann_secondarticle <- as.data.frame(table(clu_ann_secondarticle$subtype2), stringsAsFactors = F)
+                    clu_ann_secondarticle <- as.data.frame(table(clu_ann_secondarticle$subtype2), stringsAsFactors = FALSE)
                     m <- clu_ann_secondarticle$Freq + 1
                     clu_ann_secondarticle$Freq <- clu_ann_secondarticle$Freq/m
                     clu_ann_secondarticle <- clu_ann_secondarticle[order(clu_ann_secondarticle$Var1), ]
                     # cell second subtype2 scoring and compare with max second subtype2 score
                     clu_ann_secondname$Freq <- sqrt(clu_ann_secondname$Freq * clu_ann_secondarticle$Freq)
                     clu_ann_secondname <- clu_ann_secondname[clu_ann_secondname$Freq == max(clu_ann_secondname$Freq), ]
-                    clu_ann_secondname <- clu_ann_secondname[(clu_ann_secondname$Freq > 0.5) & (clu_ann_secondname$Freq >= max(clu_second_name$Freq)),
-                      ]
+                    clu_ann_secondname <- clu_ann_secondname[(clu_ann_secondname$Freq > 0.5) & (clu_ann_secondname$Freq >= max(clu_second_name$Freq)), ]
                     if (nrow(clu_ann_secondname) == 1) {
                       cellsubtype2 <- clu_ann_secondname$Var1
                       clu_marker <- unique(clu_ann1[clu_ann1$value %in% cellsubtype2, ]$gene)
@@ -515,12 +513,12 @@
                       if (nrow(clu_ann_for_first) > 0) {
                         # calculting the first cell subtype1 max score of the same cell type
                         clu_first <- clu_ann1[clu_ann1$variable == "subtype1", ]
-                        clu_first_name <- as.data.frame(table(clu_first$value), stringsAsFactors = F)
+                        clu_first_name <- as.data.frame(table(clu_first$value), stringsAsFactors = FALSE)
                         m <- clu_first_name$Freq + 1
                         clu_first_name$Freq <- clu_first_name$Freq/m
                         clu_first_name <- clu_first_name[order(clu_first_name$Var1), ]
                         clu_first_article <- unique(clu_first[, c("pmid", "value")])
-                        clu_first_article <- as.data.frame(table(clu_first_article$value), stringsAsFactors = F)
+                        clu_first_article <- as.data.frame(table(clu_first_article$value), stringsAsFactors = FALSE)
                         m <- clu_first_article$Freq + 1
                         clu_first_article$Freq <- clu_first_article$Freq/m
                         clu_first_article <- clu_first_article[order(clu_first_article$Var1), ]
@@ -528,13 +526,13 @@
                         # matching cell first subtype1
                         clu_ann_first <- clu_ann_second[clu_ann_second$subtype2 == cellsubtype2, ]
                         clu_ann_first <- clu_ann_first[!is.na(clu_ann_first$subtype2), ]
-                        clu_ann_firstname <- as.data.frame(table(clu_ann_first$subtype1), stringsAsFactors = F)
+                        clu_ann_firstname <- as.data.frame(table(clu_ann_first$subtype1), stringsAsFactors = FALSE)
                         if (nrow(clu_ann_firstname) > 0) {
                           m <- clu_ann_firstname$Freq + 1
                           clu_ann_firstname$Freq <- clu_ann_firstname$Freq/m
                           clu_ann_firstname <- clu_ann_firstname[order(clu_ann_firstname$Var1), ]
                           clu_ann_firstarticle <- unique(clu_ann_first[, c("pmid", "subtype1")])
-                          clu_ann_firstarticle <- as.data.frame(table(clu_ann_firstarticle$subtype1), stringsAsFactors = F)
+                          clu_ann_firstarticle <- as.data.frame(table(clu_ann_firstarticle$subtype1), stringsAsFactors = FALSE)
                           m <- clu_ann_firstarticle$Freq + 1
                           clu_ann_firstarticle$Freq <- clu_ann_firstarticle$Freq/m
                           clu_ann_firstarticle <- clu_ann_firstarticle[order(clu_ann_firstarticle$Var1), ]

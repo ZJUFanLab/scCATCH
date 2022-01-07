@@ -5,7 +5,7 @@
 \alias{geneinfo}
 \title{geneinfo}
 \format{
-An object of class \code{data.frame} with 250934 rows and 3 columns.
+An object of class \code{data.frame} with 227791 rows and 3 columns.
 }
 \source{
 \url{https://www.ncbi.nlm.nih.gov/gene}
@@ -14,6 +14,6 @@ An object of class \code{data.frame} with 250934 rows and 3 columns.
 geneinfo
 }
 \description{
-Gene symbols of \code{'Human'} and \code{'Mouse'} updated on Jan. 1, 2022 for revising genes.
+Gene symbols of \code{'Human'} and \code{'Mouse'} updated on Jan. 2, 2022 for revising genes.
 }
 \keyword{datasets}
