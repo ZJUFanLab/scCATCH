@@ -22,7 +22,7 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 
 # <a name='devtools'>News</a>
 ### v3.0
-- __`scCATCH` is available on CRAN__
+- __`scCATCH` is available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
 - Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in Jan. 2, 2022, https://www.ncbi.nlm.nih.gov/gene).
 - __Allow users to use custom `cellmatch`__
 - __Allow users to select different combination of tissues or cancers for annotation.__
