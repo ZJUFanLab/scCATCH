@@ -36,7 +36,7 @@ install.packages("scCATCH")
 ```
 
 # Usage
-Please refer to the tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)
+Please refer to the [document](https://github.com/ZJUFanLab/scCATCH/blob/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)
 
 # Issues
 [![bug](https://img.shields.io/badge/reported-bug-orange.svg)](https://github.com/ZJUFanLab/scCATCH/issues?q=is%3Aissue+is%3Aclosed) [![error](https://img.shields.io/badge/reported-error-red.svg)](https://github.com/ZJUFanLab/scCATCH/issues?q=is%3Aissue+is%3Aclosed)
