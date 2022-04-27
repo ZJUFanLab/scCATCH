@@ -149,8 +149,10 @@
         clu_marker2$pvalue <- .get_pvalue(ndata1, ndata2)
         # filtering genes with cell_min_pct logfc
         clu_marker2 <- clu_marker2[clu_marker2$pct >= cell_min_pct & clu_marker2$logfc >= logfc & clu_marker2$pvalue < pvalue, ]
-        # combine the results for each cluster
-        clu_marker1 <- rbind(clu_marker1, clu_marker2)
+        if (nrow(clu_marker2) > 0) {
+            # combine the results for each cluster
+            clu_marker1 <- rbind(clu_marker1, clu_marker2)
+        }
     }
     return(clu_marker1)
 }

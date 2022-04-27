@@ -34,6 +34,12 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 ```
 install.packages("scCATCH")
 ```
+OR
+```
+# install devtools and install
+install.packages(pkgs = 'devtools')
+devtools::install_github('ZJUFanLab/scCATCH')
+```
 
 # Usage
 Please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)
