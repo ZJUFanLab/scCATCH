@@ -63,10 +63,11 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
     if (!if_use_custom_marker) {
         marker <- .filter_marker(marker, species, cancer, tissue)
     }
-    ndata <- ndata[rownames(ndata) %in% marker$gene, ]
-    if (nrow(ndata) == 0) {
+    marker_match <- marker[marker$gene %in% rownames(ndata),]$gene
+    if (length(marker) < 2) {
         stop("No matched potential marker genes in the matrix!")
     }
+    ndata <- ndata[rownames(ndata) %in% marker_match, ]
     # generating pair-wise clusters
     clu_pair <- .get_clu_pair(meta, cluster)
     clu_num <- clu_pair[[2]]
