@@ -1,4 +1,4 @@
-# scCATCH v3.0
+# scCATCH v3.1
 [![R >4.0](https://img.shields.io/badge/R-%3E%3D4.0-brightgreen)](https://www.r-project.org/) <a href='#cran'>![installed with CRAN](https://img.shields.io/badge/installed%20with-CRAN-blue)</a> 
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
