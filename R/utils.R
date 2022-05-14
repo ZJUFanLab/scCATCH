@@ -167,7 +167,6 @@
         clu_pair1 <- clu_pair[clu_pair$cluster1 == clu_num[i], ]
         ndata1 <- ndata[, meta[meta$cluster == clu_num[i], ]$cell]
         pct_ndata1 <- .get_pct_ndata1(ndata1)
-        ndata1 <- ndata1[which(pct_ndata1 >= cell_min_pct), ]
         clu_marker1 <- .get_marker(ndata, meta, ndata1, clu_pair1, logfc, pvalue, pct_ndata1, cell_min_pct)
         # generating result file for each cluster
         if (is.null(comp_cluster)) {
@@ -206,6 +205,7 @@
         pct_ndata1 <- .get_pct_ndata1(ndata1)
         ndata1 <- ndata1[which(pct_ndata1 >= cell_min_pct), ]
         ndata_temp <- ndata[rownames(ndata1), ]
+        pct_ndata1 <- .get_pct_ndata1(ndata_temp)
         clu_marker2 <- as.data.frame(matrix(data = 0, nrow = nrow(ndata_temp), ncol = 5))
         colnames(clu_marker2) <- c("cluster", "gene", "pct", "logfc", "pvalue")
         clu_marker2$cluster <- unique(clu_pair1$cluster1)
