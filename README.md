@@ -21,7 +21,7 @@ The scCATCH mainly includes two function `findmarkergene()` and `findcelltype()`
 Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)
 
 # <a name='cran'>News</a>
-### v3.0
+### v3.1
 - __`scCATCH` is available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
 - Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in Jan. 2, 2022, https://www.ncbi.nlm.nih.gov/gene).
 - __Allow users to use custom `cellmatch`__
