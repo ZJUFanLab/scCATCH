@@ -6,7 +6,7 @@
 #' @param species Species of the data.\code{'Human'} or \code{'Mouse'}.
 #' @param geneinfo A data.frame of the system data containing gene symbols of \code{'Human'} and \code{'Mouse'} updated on Jan. 1, 2022.
 #' @return A new matrix or data.frame.
-#' @export rev_gene
+#' @export
 
 rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = NULL) {
     if (is.null(data)) {
@@ -86,7 +86,6 @@ rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = N
             if (length(genename1) == 0) {
                 stop("Please ensure the gene of data are gene symbols! See demo_marker()!")
             }
-            genename2 <- genename[!genename %in% geneinfo$symbol]
             genename2 <- genename[!genename %in% geneinfo$symbol]
             if (length(genename2) > 0) {
                 genename3 <- genename2[genename2 %in% geneinfo$synonyms]

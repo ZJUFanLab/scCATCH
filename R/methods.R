@@ -48,7 +48,7 @@ createscCATCH <- function(data, cluster) {
 #' @importFrom stats wilcox.test
 #' @export
 
-setMethod("findmarkergene", signature("scCATCH"), function(object, species = NULL, cluster = "All", if_use_custom_marker = FALSE,
+findmarkergene <- function(object, species = NULL, cluster = "All", if_use_custom_marker = FALSE,
     marker = NULL, cancer = "Normal", tissue = NULL, use_method = "1", comp_cluster = NULL, cell_min_pct = 0.25, logfc = 0.25,
     pvalue = 0.05, verbose = TRUE) {
     if (!is(object, "scCATCH")) {
@@ -63,11 +63,11 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
     if (!if_use_custom_marker) {
         marker <- .filter_marker(marker, species, cancer, tissue)
     }
-    marker_match <- marker[marker$gene %in% rownames(ndata),]$gene
-    if (length(marker) < 2) {
+    marker <- marker[marker$gene %in% rownames(ndata),]
+    if (length(unique(marker$gene)) < 2) {
         stop("No matched potential marker genes in the matrix!")
     }
-    ndata <- ndata[rownames(ndata) %in% marker_match, ]
+    ndata <- ndata[rownames(ndata) %in% unique(marker$gene), ]
     # generating pair-wise clusters
     clu_pair <- .get_clu_pair(meta, cluster)
     clu_num <- clu_pair[[2]]
@@ -93,7 +93,7 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
     object@para <- para
     object@marker <- marker
     return(object)
-})
+}
 
 #' Evidence-based score and annotation for each cluster
 #'
@@ -105,7 +105,7 @@ setMethod("findmarkergene", signature("scCATCH"), function(object, species = NUL
 #' @importFrom reshape2 melt
 #' @export
 
-setMethod("findcelltype", signature("scCATCH"), function(object, verbose = TRUE) {
+findcelltype <- function(object, verbose = TRUE) {
     if (!is(object, "scCATCH")) {
         stop("object must be scCATCH obect generated from createscCATCH()!")
     }
@@ -207,18 +207,18 @@ setMethod("findcelltype", signature("scCATCH"), function(object, verbose = TRUE)
         }
     }
     for (i in 1:nrow(clu_ann_res)) {
-      d1 <- as.character(clu_ann_res[i, c("cellsubtype3", "cellsubtype2", "cellsubtype1", "cell_type")])
-      d1 <- d1[!is.na(d1)]
-      d1 <- d1[!d1 == "NA"]
-      d2 <- d1[1]
-      if (length(d1) > 1) {
-        for (j in 2:length(d1)) {
-          d2 <- paste(d2, d1[j], sep = " ")
+        d1 <- as.character(clu_ann_res[i, c("cellsubtype3", "cellsubtype2", "cellsubtype1", "cell_type")])
+        d1 <- d1[!is.na(d1)]
+        d1 <- d1[!d1 == "NA"]
+        d2 <- d1[1]
+        if (length(d1) > 1) {
+            for (j in 2:length(d1)) {
+                d2 <- paste(d2, d1[j], sep = " ")
+            }
         }
-      }
-      clu_ann_res[i, "cell_type"] <- d2
+        clu_ann_res[i, "cell_type"] <- d2
     }
     clu_ann_res <- clu_ann_res[, -c(3, 4, 5)]
     object@celltype <- clu_ann_res
     return(object)
-})
+}

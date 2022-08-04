@@ -1,8 +1,13 @@
 ---
-title: "tutorial"
-output: rmarkdown::html_vignette
+title: "scCATCH tutorial"
+author: "Xin Shao"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 vignette: >
-  %\VignetteIndexEntry{tutorial}
+  %\VignetteIndexEntry{scCATCH tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

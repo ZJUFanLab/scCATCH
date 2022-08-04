@@ -1,0 +1,23 @@
+# CreatSeuratObject 
+human_liver <- CreateSeuratObject(counts = human_liver)
+# Normalization
+human_liver <- NormalizeData(object = human_liver)
+# Find Variable Genes
+human_liver <- FindVariableFeatures(object = human_liver)
+# Scale data
+all.genes <- rownames(x = human_liver)
+human_liver <- ScaleData(object = human_liver,features = all.genes)
+# Run PCA using variable genes
+human_liver <- RunPCA(object = human_liver)
+
+# graph based cluster
+human_liver <- FindNeighbors(object = human_liver, dims = 1:30)
+human_liver <- FindClusters(object = human_liver, resolution = 0.6)
+
+# tSNE
+human_liver <- RunTSNE(object = human_liver, dims = 1:30)
+DimPlot(object = human_liver,reduction = 'tsne')
+
+# UMAP
+human_liver <- RunUMAP(object = human_liver, dims = 1:30)
+DimPlot(object = human_liver,reduction = 'umap')
