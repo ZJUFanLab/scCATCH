@@ -29,7 +29,6 @@ Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-
 - __Allow users to add more marker genes to `cellmatch` for annotation.__
 - __Allow users to use markers from different species other than human and mouse.__
 - __Allow users to use more methods to identify highly expressed genes.__
-
 - __Create scCATCH object from Seurat object with the following code__
 
 `obj <- createscCATCH(data = Seurat_obj[['RNA']]@data, cluster = as.character(Idents(Seurat_obj)))`
