@@ -19,5 +19,5 @@ rev_gene(data = NULL, data_type = NULL, species = NULL, geneinfo = NULL)
 A new matrix or data.frame.
 }
 \description{
-Revise genes according to NCBI Gene symbols updated in Jan. 2, 2022 for count matrix, user-custom cell marker data.frame.
+Revise genes according to NCBI Gene symbols updated in June 19, 2022 for count matrix, user-custom cell marker data.frame.
 }

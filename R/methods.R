@@ -5,6 +5,7 @@
 #' @param cluster A character containing the cluster information for each cell. The length of it must be equal to the ncol of the data.
 #' @return scCATCH object
 #' @importFrom methods as
+#' @import Matrix
 #' @export createscCATCH
 
 createscCATCH <- function(data, cluster) {
@@ -44,7 +45,7 @@ createscCATCH <- function(data, cluster) {
 #' @param verbose Show progress messages.
 #' @return scCATCH object
 #' @details Details of available tissues see \url{https://github.com/ZJUFanLab/scCATCH/wiki}
-#' @import methods progress
+#' @import methods progress Matrix
 #' @importFrom stats wilcox.test
 #' @export
 
@@ -101,7 +102,7 @@ findmarkergene <- function(object, species = NULL, cluster = "All", if_use_custo
 #' @param object scCATCH object generated from \code{\link{findmarkergene}}.
 #' @param verbose Show progress messages.
 #' @return scCATCH object containing the results of predicted cell types for each cluster.
-#' @import methods progress
+#' @import methods progress Matrix
 #' @importFrom reshape2 melt
 #' @export
 

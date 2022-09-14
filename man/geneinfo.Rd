@@ -5,7 +5,7 @@
 \alias{geneinfo}
 \title{geneinfo}
 \format{
-An object of class \code{data.frame} with 227791 rows and 3 columns.
+An object of class \code{data.frame} with 240502 rows and 3 columns.
 }
 \source{
 \url{https://www.ncbi.nlm.nih.gov/gene}

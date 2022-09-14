@@ -1,4 +1,4 @@
-# scCATCH v3.1
+# scCATCH v3.2
 [![R >4.0](https://img.shields.io/badge/R-%3E%3D4.0-brightgreen)](https://www.r-project.org/) <a href='#cran'>![installed with CRAN](https://img.shields.io/badge/installed%20with-CRAN-blue)</a> 
 
 ### Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data
@@ -21,9 +21,9 @@ The scCATCH mainly includes two function `findmarkergene()` and `findcelltype()`
 Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)
 
 # <a name='cran'>News</a>
-### v3.1
+### v3.2
 - __`scCATCH` is available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
-- Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in Jan. 2, 2022, https://www.ncbi.nlm.nih.gov/gene).
+- Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in June. 19, 2022, https://www.ncbi.nlm.nih.gov/gene).
 - __Allow users to use custom `cellmatch`__
 - __Allow users to select different combination of tissues or cancers for annotation.__
 - __Allow users to add more marker genes to `cellmatch` for annotation.__

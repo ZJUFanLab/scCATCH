@@ -1,6 +1,6 @@
 #' @title Pre-processing step: revising gene symbols
 #'
-#' @description Revise genes according to NCBI Gene symbols updated in Jan. 2, 2022 for count matrix, user-custom cell marker data.frame.
+#' @description Revise genes according to NCBI Gene symbols updated in June 19, 2022 for count matrix, user-custom cell marker data.frame.
 #' @param data A matrix or dgCMatrix containing count or normalized data, each column representing a spot or a cell, each row representing a gene; Or a data.frame containing cell markers, use \code{\link{demo_marker}}.
 #' @param data_type A character to define the type of \code{data}, select \code{'data'} for the data matrix, \code{'marker'} for the data.frame containing cell markers.
 #' @param species Species of the data.\code{'Human'} or \code{'Mouse'}.

@@ -5,7 +5,7 @@
 \alias{cellmatch}
 \title{cellmatch}
 \format{
-An object of class \code{data.frame} with 49625 rows and 11 columns.
+An object of class \code{data.frame} with 49560 rows and 11 columns.
 }
 \source{
 \url{https://github.com/ZJUFanLab/scCATCH/tree/master/data}
