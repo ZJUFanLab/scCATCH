@@ -13,13 +13,13 @@ __CellMatch includes a panel of 353 cell types and related 686 subtypes associat
 
 # <a name='cran'>News</a>
 ### v3.2.1
-- __`scCATCH` is available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
+- __Now available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
 - __Allow users to [use custom `cellmatch`](https://github.com/ZJUFanLab/scCATCH/wiki/Use-custom-cellmatch)__
 - __Allow users to [select different combination of tissues or cancers for annotation](https://github.com/ZJUFanLab/scCATCH/wiki/Select-different-combination-of-tissues-or-cancers-for-annotation)__
-- __Allow users to add more marker genes to `cellmatch` for annotation.__
-- __Allow users to use markers from different species other than human and mouse.__
-- __Allow users to use more methods to identify highly expressed genes.__
-- __Create scCATCH object from Seurat object with the following code__
+- __Allow users to add more marker genes to `cellmatch` for annotation__
+- __Allow users to use markers from different species other than human and mouse__
+- __Allow users to use more methods to identify highly expressed genes__
+- __Create scCATCH object from Seurat object with the following code:__
 
 `obj <- createscCATCH(data = Seurat_obj[['RNA']]@data, cluster = as.character(Idents(Seurat_obj)))`
 
@@ -40,5 +40,6 @@ Please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/
 
 # About
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://pubmed.ncbi.nlm.nih.gov/32062421/)
+
 scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn.
-Please cite us as Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)
+Please cite us as __Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)__
