@@ -38,9 +38,7 @@ devtools::install_github('ZJUFanLab/scCATCH')
 Please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)
 
 
-# About
+# Cite
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://pubmed.ncbi.nlm.nih.gov/32062421/)
-
-scCATCH was developed by Xin Shao. Should you have any questions, please contact Xin Shao at xin_shao@zju.edu.cn.
 
 Please cite us as __Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)__
