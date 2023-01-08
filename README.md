@@ -14,9 +14,8 @@ __CellMatch includes a panel of 353 cell types and related 686 subtypes associat
 # <a name='cran'>News</a>
 ### v3.2.1
 - __`scCATCH` is available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
-- Update Gene symbols in CellMatch according to NCBI Gene symbols (updated in June. 19, 2022, https://www.ncbi.nlm.nih.gov/gene).
-- __Allow users to use custom `cellmatch`__
-- __Allow users to select different combination of tissues or cancers for annotation.__
+- __Allow users to [use custom `cellmatch`](https://github.com/ZJUFanLab/scCATCH/wiki/Use-custom-cellmatch)__
+- __Allow users to [select different combination of tissues or cancers for annotation](https://github.com/ZJUFanLab/scCATCH/wiki/Select-different-combination-of-tissues-or-cancers-for-annotation)__
 - __Allow users to add more marker genes to `cellmatch` for annotation.__
 - __Allow users to use markers from different species other than human and mouse.__
 - __Allow users to use more methods to identify highly expressed genes.__
