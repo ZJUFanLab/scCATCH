@@ -42,7 +42,7 @@ obj <- findcelltype(obj)
 
 ```
 
-For more detailed information, __please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)__
+For more detailed information, __please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH_performance_comparison/master/scCATCH/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)__
 
 # <a name='cran'>News</a>
 - __Now available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
