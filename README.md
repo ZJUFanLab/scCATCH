@@ -26,7 +26,7 @@ devtools::install_github('ZJUFanLab/scCATCH')
 ```
 
 # Usage
-The scCATCH mainly includes two function `findmarkergene()` and `findcelltype()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
+The scCATCH mainly includes two function __`findmarkergene()`__ and __`findcelltype()`__ to realize the automatic annotation for each identified cluster as detailed below:
 
 ```
 # sc_data is the scRNA-seq data matrix 
@@ -42,10 +42,9 @@ obj <- findcelltype(obj)
 
 ```
 
-__For more detailed information, please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)__
+For more detailed information, __please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)__
 
 # <a name='cran'>News</a>
-### v3.2.1
 - __Now available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
 - __Allow users to [use custom `cellmatch`](https://github.com/ZJUFanLab/scCATCH/wiki/Use-custom-cellmatch)__
 - __Allow users to [select different combination of tissues or cancers for annotation](https://github.com/ZJUFanLab/scCATCH/wiki/Select-different-combination-of-tissues-or-cancers-for-annotation)__
