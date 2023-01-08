@@ -39,6 +39,4 @@ Please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/
 
 
 # Cite
-[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.isci.2020.100882-brightgreen.svg)](https://www.sciencedirect.com/science/article/pii/S2589004220300663) [![PMID:32062421](https://img.shields.io/badge/PMID-32062421-blue.svg)](https://pubmed.ncbi.nlm.nih.gov/32062421/)
-
 Please cite us as __Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020. [doi: 10.1016/j.isci.2020.100882](https://www.sciencedirect.com/science/article/pii/S2589004220300663). [PMID:32062421](https://pubmed.ncbi.nlm.nih.gov/32062421/)__
