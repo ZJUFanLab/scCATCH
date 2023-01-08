@@ -26,7 +26,23 @@ devtools::install_github('ZJUFanLab/scCATCH')
 ```
 
 # Usage
-Please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)
+The scCATCH mainly includes two function `findmarkergene()` and `findcelltype()` to realize the automatic annotation for each identified cluster. Usage and Examples are detailed below.
+
+```
+# sc_data is the scRNA-seq data matrix 
+# sc_cluster is a character containing the cluster information
+
+obj <- createscCATCH(data = sc_data, cluster = sc_cluster)
+
+# find marker gene for each cluster
+obj <- findmarkergene(obj, species, marker, tissue, cancer)
+
+# find cell type for each cluster
+obj <- findcelltype(obj)
+
+```
+
+__For more detailed information, please refer to the [document](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/scCATCH.pdf) and tutorial [vignette](https://raw.githack.com/ZJUFanLab/scCATCH/master/vignettes/tutorial.html). Available tissues and cancers see the [wiki page](https://github.com/ZJUFanLab/scCATCH/wiki)__
 
 # <a name='cran'>News</a>
 ### v3.2.1
