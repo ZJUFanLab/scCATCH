@@ -48,9 +48,9 @@ For more detailed information, __please refer to the [document](https://raw.gith
 - __Now available on [CRAN](https://CRAN.R-project.org/package=scCATCH)__
 - __Allow users to [use custom `cellmatch`](https://github.com/ZJUFanLab/scCATCH/wiki/Use-custom-cellmatch)__
 - __Allow users to [select different combination of tissues or cancers for annotation](https://github.com/ZJUFanLab/scCATCH/wiki/Select-different-combination-of-tissues-or-cancers-for-annotation)__
-- __Allow users to add more marker genes to `cellmatch` for annotation__
-- __Allow users to use markers from different species other than human and mouse__
-- __Allow users to use more methods to identify highly expressed genes__
+- __Allow users to [add more marker genes to `cellmatch` for annotation](https://github.com/ZJUFanLab/scCATCH/wiki/Add-more-marker-genes-to-cellmatch-for-annotation)__
+- __Allow users to [use markers from different species other than human and mouse](https://github.com/ZJUFanLab/scCATCH/wiki/Use-markers-from-different-species)__
+- __Allow users to [use more methods to identify highly expressed genes](https://github.com/ZJUFanLab/scCATCH/wiki/Use-more-methods-to-identify-highly-expressed-genes)__
 - __Create scCATCH object from Seurat object with the following code:__
 
 `obj <- createscCATCH(data = Seurat_obj[['RNA']]@data, cluster = as.character(Idents(Seurat_obj)))`
