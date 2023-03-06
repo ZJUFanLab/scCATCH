@@ -93,7 +93,7 @@ rev_gene <- function(data = NULL, data_type = NULL, species = NULL, geneinfo = N
                   for (i in 1:length(genename3)) {
                     d1 <- geneinfo[geneinfo$synonyms == genename3[i], ]$symbol
                     if (length(d1) == 1) {
-                      data[data$ligand == genename3[i], ]$ligand <- d1
+                      data[data$gene == genename3[i], ]$gene <- d1
                     }
                   }
                 }
