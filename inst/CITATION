@@ -1,9 +1,9 @@
 citHeader("Please cite Shao X (2020) for using scCATCH")
 
-citEntry(
+bibentry(
   entry    = "Article",
   title    = "scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data",
-  author = personList(
+  author = c(
              as.person("Xin Shao"),
              as.person("Jie Liao"),
              as.person("Xiaoyan Lu"),
