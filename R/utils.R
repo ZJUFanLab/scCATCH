@@ -317,7 +317,7 @@
                   clu_second_article <- clu_second_article[order(clu_second_article$Var1), ]
                   clu_second_name$Freq <- sqrt(clu_second_name$Freq * clu_second_article$Freq)
                   # matching cell second subtype2
-                  clu_ann_second <- clu_ann[clu_ann$first == cellsubtype1, ]
+                  clu_ann_second <- clu_ann[clu_ann$subtype1 == cellsubtype1, ]
                   clu_ann_second <- clu_ann_second[!is.na(clu_ann_second$subtype1), ]
                   clu_ann_secondname <- as.data.frame(table(clu_ann_second$subtype2), stringsAsFactors = FALSE)
                   if (nrow(clu_ann_secondname) > 0) {
