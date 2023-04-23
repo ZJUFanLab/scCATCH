@@ -1,22 +1,18 @@
-citHeader("Please cite Shao X (2020) for using scCATCH")
-
 bibentry(
-  entry    = "Article",
+  bibtype    = "Article",
   title    = "scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data",
   author = c(
-             as.person("Xin Shao"),
-             as.person("Jie Liao"),
-             as.person("Xiaoyan Lu"),
-             as.person("Rui Xue"),
-             as.person("Ni Ai"),
-             as.person("Xiaohui Fan")
+             person("Xin Shao"),
+             person("Jie Liao"),
+             person("Xiaoyan Lu"),
+             person("Rui Xue"),
+             person("Ni Ai"),
+             person("Xiaohui Fan")
              ),
   journal  = "iScience",
   year     = "2020",
   volume   = "23",
   number   = "3",
   pages    = "100882",
-  url      = "https://www.sciencedirect.com/science/article/pii/S2589004220300663",
-  textVersion = paste("Shao et al., scCATCH:Automatic Annotation on Cell Types of Clusters from Single-Cell RNA Sequencing Data, iScience, Volume 23, Issue 3, 27 March 2020."
-  )
+  url      = "https://www.sciencedirect.com/science/article/pii/S2589004220300663"
 )
