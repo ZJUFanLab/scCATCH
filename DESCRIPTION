@@ -21,5 +21,4 @@ Imports:
     methods,
     progress,
     stats,
-    crayon,
     reshape2
