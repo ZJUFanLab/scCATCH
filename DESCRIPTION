@@ -14,7 +14,8 @@ RoxygenNote: 7.1.2
 Suggests: 
     rmarkdown,
     knitr,
-    testthat
+    testthat,
+    prettydoc
 VignetteBuilder: knitr
 Imports: 
     Matrix,
